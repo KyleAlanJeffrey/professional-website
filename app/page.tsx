@@ -41,7 +41,7 @@ export default function HomePage() {
 
     // Get jobs
     fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/jobs.json`
+      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/jobs.json`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -54,7 +54,7 @@ export default function HomePage() {
 
     // Get work projects
     fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/work_projects.json`
+      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/work_projects.json`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -66,7 +66,7 @@ export default function HomePage() {
       });
 
     fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/bio.txt`
+      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/bio.txt`,
     )
       .then((response) => response.text())
       .then((data) => {
@@ -509,7 +509,7 @@ export default function HomePage() {
                     key={`repo-${index}`}
                     index={index}
                   />
-                ) : null
+                ) : null,
               )}
             </div>
           </div>
@@ -971,7 +971,7 @@ export default function HomePage() {
             <div className="lg:col-span-7">
               <form className="space-y-6 relative p-3">
                 <div className="absolute left-0 top-0 w-full h-full cursor-not-allowed bg-gray-200 opacity-65">
-                  <div className="flex items-center justify-center h-full text-2xl font-bold text-gray-500 rotate-45 ">
+                  <div className="flex items-center justify-center h-full text-2xl font-bold text-gray-500 rotate ">
                     Under Construction
                   </div>
                 </div>
