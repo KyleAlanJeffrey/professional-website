@@ -86,9 +86,23 @@ function Job(props: { job: JobType; index: number }) {
         >
           {props.job.company.toUpperCase()}
         </h4>
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+        <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
           {props.job.description}
         </p>
+        <div
+          className="text-sm text-gray-600 dark:text-gray-400 mb-3 font-bold tracking-[0.2em]"
+          style={{ fontFamily: "monospace" }}
+        >
+          ACCOMPLISHMENTS
+        </div>
+
+        <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-inside">
+          {props.job.accomplishments.map((accomplishment, index) => (
+            <li key={index} className="break-words">
+              {accomplishment}
+            </li>
+          ))}
+        </ul>
         <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
           {props.job.skills.map((skill, index) => (
             <span

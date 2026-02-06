@@ -2,7 +2,7 @@
   "jobs": [
     {
       "title": "Senior Software Engineer",
-      "description": "Robotics Engineer, Full Stack Software Engineer:",
+      "description": "Robotics Engineer, Full Stack Software Engineer.",
       "skills": [
         "Python",
         "SaltStack",
@@ -53,7 +53,7 @@
     },
     {
       "title": "Teleoperator Tactician",
-      "description": "As data collection coordinator",
+      "description": "Data Collection and Evaluation for Machine Learning Models.",
       "skills": [
         "Python",
         "Google 3",

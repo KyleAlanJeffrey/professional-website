@@ -19,6 +19,12 @@ export default function HomePage() {
   const [jobsError, setJobsError] = useState(false);
   const [workProjectsError, setWorkProjectsError] = useState(false);
   const [bio, setBio] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactSubject, setContactSubject] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
+  const [contactError, setContactError] = useState<string | null>(null);
+  const [contactSent, setContactSent] = useState(false);
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -142,6 +148,34 @@ export default function HomePage() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setContactError(null);
+    setContactSent(false);
+
+    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) {
+      setContactError("Please fill out name, email, and message.");
+      return;
+    }
+
+    const to = "kyle.alan.jeffrey@gmail.com";
+    const subject = contactSubject.trim()
+      ? contactSubject.trim()
+      : `Website inquiry from ${contactName.trim()}`;
+
+    const bodyLines = [
+      `Name: ${contactName.trim()}`,
+      `Email: ${contactEmail.trim()}`,
+      "",
+      contactMessage.trim(),
+    ];
+
+    const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
+
+    window.location.href = mailto;
+    setContactSent(true);
   };
 
   return (
@@ -1002,12 +1036,10 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-7">
-              <form className="space-y-6 relative p-3">
-                <div className="absolute left-0 top-0 w-full h-full cursor-not-allowed bg-gray-200 opacity-65">
-                  <div className="flex items-center justify-center h-full text-2xl font-bold text-gray-500 rotate ">
-                    Under Construction
-                  </div>
-                </div>
+              <form
+                className="space-y-6 relative p-3"
+                onSubmit={handleContactSubmit}
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -1024,6 +1056,8 @@ export default function HomePage() {
                       className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 font-medium"
                       placeholder="Your name"
                       style={{ fontFamily: "monospace" }}
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
                     />
                   </div>
                   <div>
@@ -1041,6 +1075,8 @@ export default function HomePage() {
                       className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 font-medium"
                       placeholder="your@email.com"
                       style={{ fontFamily: "monospace" }}
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
                     />
                   </div>
                 </div>
@@ -1060,6 +1096,8 @@ export default function HomePage() {
                     className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 font-medium"
                     placeholder="What's this about?"
                     style={{ fontFamily: "monospace" }}
+                    value={contactSubject}
+                    onChange={(e) => setContactSubject(e.target.value)}
                   />
                 </div>
 
@@ -1078,12 +1116,33 @@ export default function HomePage() {
                     className="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 dark:focus:ring-gray-400 focus:border-transparent resize-none transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-600 font-medium"
                     placeholder="Tell me about your project..."
                     style={{ fontFamily: "monospace" }}
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
                   />
                 </div>
+
+                {contactError ? (
+                  <div
+                    className="border-2 border-red-500 bg-red-50 dark:bg-gray-800 p-3 text-sm font-bold text-red-700 dark:text-red-400 tracking-[0.1em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    {contactError}
+                  </div>
+                ) : null}
+
+                {contactSent ? (
+                  <div
+                    className="border-2 border-green-600 bg-green-50 dark:bg-gray-800 p-3 text-sm font-bold text-green-700 dark:text-green-400 tracking-[0.1em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    Opening your email client...
+                  </div>
+                ) : null}
 
                 <Button
                   className="w-full md:w-auto px-8 py-3 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 font-black tracking-[0.1em] transition-all duration-300 hover:scale-105 hover:shadow-lg border-2 border-black dark:border-white"
                   style={{ fontFamily: "monospace" }}
+                  type="submit"
                 >
                   SEND MESSAGE
                 </Button>
