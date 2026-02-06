@@ -92,6 +92,40 @@ export default function HomePage() {
     }
   }, []);
 
+  useEffect(() => {
+    const sectionIds = ["home", "projects", "github", "work", "contact"];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0,
+      },
+    );
+
+    const sections: HTMLElement[] = [];
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) {
+        sections.push(section);
+        observer.observe(section);
+      }
+    });
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+      observer.disconnect();
+    };
+  }, []);
+
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     if (!isDarkMode) {
@@ -104,7 +138,6 @@ export default function HomePage() {
   };
 
   const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
