@@ -73,11 +73,6 @@ export const metadata: Metadata = {
   },
 
   referrer: "origin-when-cross-origin",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0b" }
-  ],
-  colorScheme: "light dark",
 
   formatDetection: {
     telephone: false,
@@ -94,7 +89,12 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   width: "device-width",
-  initialScale: 1
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0b" }
+  ],
+  colorScheme: "light dark"
 }
 
 export default function RootLayout({

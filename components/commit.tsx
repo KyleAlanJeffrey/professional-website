@@ -108,14 +108,14 @@ function Commit(props: { commit: CommitType; index: number }) {
   return (
     <a
       href={props.commit.html_url}
-      className="flex items-center space-x-4 group cursor-pointer p-2 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group cursor-pointer p-2 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
     >
       <div
         className={`w-4 h-4 ${intensityColor} transition-all duration-300 group-hover:scale-110`}
       ></div>
-      <div className="flex-1">
+      <div className="flex-1 min-w-0">
         <div
-          className="text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em]"
+          className="text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em] break-words"
           style={{ fontFamily: "monospace" }}
         >
           {props.commit.commit.message}
@@ -128,7 +128,7 @@ function Commit(props: { commit: CommitType; index: number }) {
         </div>
       </div>
       <div
-        className="text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em]"
+        className="text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em] whitespace-nowrap sm:ml-auto"
         style={{ fontFamily: "monospace" }}
       >
         <span className="text-green-400">{diff.add}</span>{" "}

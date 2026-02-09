@@ -1004,15 +1004,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 md:p-6">
+          <div className="p-4 md:p-6">
             <div
               data-theme={isDarkMode ? "dark" : "light"}
               className="flex justify-center"
             >
               {tweetIds.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl mx-auto place-items-center">
                   {tweetIds.map((id) => (
-                    <Tweet key={id} id={id} />
+                    <div key={id} className="w-full flex justify-center">
+                      <Tweet id={id} />
+                    </div>
                   ))}
                 </div>
               ) : (
