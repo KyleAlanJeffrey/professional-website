@@ -103,7 +103,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <style>{`
 html {
@@ -112,6 +112,20 @@ html {
   --font-mono: ${GeistMono.variable};
 }
         `}</style>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+(() => {
+  try {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  } catch (_) {}
+})();
+            `,
+          }}
+        />
       </head>
       <body>{children}</body>
     </html>

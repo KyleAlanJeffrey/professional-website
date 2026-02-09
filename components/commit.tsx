@@ -75,6 +75,7 @@ function formatDateToRelative(date: Date): string {
 function Commit(props: { commit: CommitType; index: number }) {
   const [commitDiff, setCommitDiff] = useState<GitHubCompareResponse>({});
   const [repoName, setRepoName] = useState("");
+  const [relativeTime, setRelativeTime] = useState("");
   useEffect(() => {
     const _repoName =
       props.commit.html_url.split("/")[3] +
@@ -91,6 +92,11 @@ function Commit(props: { commit: CommitType; index: number }) {
     }
     setRepoName(_repoName);
   }, [props.commit]);
+  useEffect(() => {
+    setRelativeTime(
+      formatDateToRelative(new Date(props.commit.commit.author.date)),
+    );
+  }, [props.commit.commit.author.date]);
   const diff = constructDiffString(commitDiff.files);
   const { adds, dels } = getDiffCounts(commitDiff.files);
   const intensityColor =
@@ -118,8 +124,7 @@ function Commit(props: { commit: CommitType; index: number }) {
           className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.1em]"
           style={{ fontFamily: "monospace" }}
         >
-          {formatDateToRelative(new Date(props.commit.commit.author.date))} •{" "}
-          {repoName}
+          {relativeTime || "—"} • {repoName}
         </div>
       </div>
       <div

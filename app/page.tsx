@@ -538,7 +538,7 @@ export default function HomePage() {
                     {/* Grid Pattern */}
                     <div className="absolute inset-4 grid grid-cols-4 grid-rows-4 gap-4">
                       {Array.from({ length: 16 }).map((_, i) => {
-                        const rng = Math.floor(Math.random() * 4);
+                        const rng = i % 4;
                         let borderClass = "";
                         switch (rng) {
                           case 0:
@@ -637,7 +637,9 @@ export default function HomePage() {
 
           <div className="space-y-16">
             {jobs.length ? (
-              jobs.map((job, index) => <Job key={index} job={job} index={index} />)
+              jobs.map((job, index) => (
+                <Job key={index} job={job} index={index} />
+              ))
             ) : (
               <div className="space-y-8">
                 {[...Array(2)].map((_, i) => (
@@ -832,46 +834,6 @@ export default function HomePage() {
                     ACTIVE
                   </div>
                 </div>
-                {/* <div className="group border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
-                  <div
-                    className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    5
-                  </div>
-                  <div
-                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    LANGUAGES
-                  </div>
-                  <div
-                    className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    PRIMARY
-                  </div>
-                </div>
-                <div className="group border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
-                  <div
-                    className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    12
-                  </div>
-                  <div
-                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    PULL REQUESTS
-                  </div>
-                  <div
-                    className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]"
-                    style={{ fontFamily: "monospace" }}
-                  >
-                    MERGED
-                  </div>
-                </div> */}
               </div>
             </div>
 
@@ -895,9 +857,11 @@ export default function HomePage() {
                 {/* Commit Activity Visualization */}
                 <div className="space-y-4 mb-8">
                   {commits.length ? (
-                    commits.slice(0, 5).map((commit, index) => (
-                      <Commit key={index} commit={commit} index={index} />
-                    ))
+                    commits
+                      .slice(0, 5)
+                      .map((commit, index) => (
+                        <Commit key={index} commit={commit} index={index} />
+                      ))
                   ) : (
                     <div className="space-y-4">
                       {[...Array(5)].map((_, i) => (
@@ -940,7 +904,10 @@ export default function HomePage() {
                           languageColors[stat.language.toLowerCase()] ??
                           "#6b7280";
                         return (
-                          <div key={stat.language} className="flex items-center gap-4 group">
+                          <div
+                            key={stat.language}
+                            className="flex items-center gap-4 group"
+                          >
                             <div className="flex items-center space-x-3 min-w-[160px]">
                               <div
                                 className="w-3 h-3 transition-all duration-300 group-hover:scale-110"
