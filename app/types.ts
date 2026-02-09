@@ -67,3 +67,12 @@ type GitHubFile = {
   contents_url: string;
   patch?: string;
 };
+
+export type GitHubRepoAPI = {
+  name: string;
+  homepage: string | null;
+  topics: string[];
+  description: string | null;
+  fork: boolean;
+  languages_url: string;
+};

@@ -58,13 +58,16 @@ export default function HomePage() {
     // Get pinned repositories
     getAllRepos().then((data) => {
       const allRepos = data.map((repo) => {
-        repo.pinned = false;
-        let i = repo.topics.indexOf("pinned");
-        if (i > -1) {
-          repo.topics.splice(i, 1);
-          repo.pinned = true;
-        }
-        return repo;
+        const topics = Array.isArray(repo.topics) ? [...repo.topics] : [];
+        const isPinned = topics.includes("pinned");
+        const cleanedTopics = topics.filter((topic) => topic !== "pinned");
+        return {
+          pinned: isPinned,
+          name: repo.name,
+          homepage: repo.homepage ?? "",
+          topics: cleanedTopics,
+          description: repo.description ?? "",
+        };
       });
       setGithubRepos(allRepos);
     });

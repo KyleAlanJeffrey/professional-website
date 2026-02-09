@@ -1,4 +1,4 @@
-import { GitHubCompareResponse } from "./types";
+import { GitHubCompareResponse, GitHubRepoAPI } from "./types";
 
 const username = "Kylealanjeffrey";
 const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -15,10 +15,10 @@ export async function getCommitDiffToMain(
   repoPath: string,
   parentSha: string,
   sha: string,
-): Promise<GitHubCompareResponse> {
+): Promise<GitHubCompareResponse | null> {
   if (!accessToken) {
     console.error("No GitHub access token found.");
-    return;
+    return null;
   }
   try {
     const response = await fetch(
@@ -33,14 +33,14 @@ export async function getCommitDiffToMain(
     return data;
   } catch (error) {
     console.error(`Error fetching repos: ${error}`);
-    return;
+    return null;
   }
 }
 
-export async function getAllRepos() {
+export async function getAllRepos(): Promise<GitHubRepoAPI[]> {
   if (!accessToken) {
     console.error("No GitHub access token found.");
-    return;
+    return [];
   }
   try {
     const response = await fetch(
@@ -52,10 +52,10 @@ export async function getAllRepos() {
       },
     );
     const data = await response.json();
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error(`Error fetching repos: ${error}`);
-    return;
+    return [];
   }
 }
 
@@ -68,7 +68,6 @@ export async function getLanguageStats() {
   const totals: Record<string, number> = {};
   await Promise.all(
     repos.map(async (repo) => {
-      console.log(repo);
       if (repo.fork || !repo.languages_url) {
         return;
       }
@@ -108,14 +107,9 @@ export async function getLanguageStats() {
     }))
     .sort((a, b) => b.percent - a.percent);
 }
-export async function getAllCommits() {
-  let all_commits = [];
+export async function getAllCommits(): Promise<any[]> {
+  let all_commits: any[] = [];
   const repos = await getAllRepos();
-
-  if (!Array.isArray(repos)) {
-    console.error("Expected repos array but received:", repos);
-    return [];
-  }
 
   console.log(`found ${repos.length} repos`);
   // Get all commits for each repo

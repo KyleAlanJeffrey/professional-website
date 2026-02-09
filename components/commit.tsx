@@ -42,13 +42,13 @@ export type CommitType = {
   }[];
 };
 
-function constructDiffString(files: GitHubCompareResponse["files"]) {
+function constructDiffString(files?: GitHubCompareResponse["files"]) {
   if (!files || files.length === 0) return { add: "", del: "" };
   let adds = files.reduce((acc, file) => acc + (file.additions || 0), 0);
   let dels = files.reduce((acc, file) => acc + (file.deletions || 0), 0);
   return { add: `+${adds}`, del: `-${dels}` };
 }
-function getDiffCounts(files: GitHubCompareResponse["files"]) {
+function getDiffCounts(files?: GitHubCompareResponse["files"]) {
   if (!files || files.length === 0) return { adds: 0, dels: 0 };
   return {
     adds: files.reduce((acc, file) => acc + (file.additions || 0), 0),
@@ -73,7 +73,7 @@ function formatDateToRelative(date: Date): string {
   return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
 }
 function Commit(props: { commit: CommitType; index: number }) {
-  const [commitDiff, setCommitDiff] = useState<GitHubCompareResponse>({});
+  const [commitDiff, setCommitDiff] = useState<GitHubCompareResponse | null>(null);
   const [repoName, setRepoName] = useState("");
   const [relativeTime, setRelativeTime] = useState("");
   useEffect(() => {
@@ -85,7 +85,7 @@ function Commit(props: { commit: CommitType; index: number }) {
       getCommitDiffToMain(
         _repoName,
         props.commit.parents[0].sha,
-        props.commit.sha
+        props.commit.sha,
       ).then((data) => {
         setCommitDiff(data);
       });
@@ -97,8 +97,8 @@ function Commit(props: { commit: CommitType; index: number }) {
       formatDateToRelative(new Date(props.commit.commit.author.date)),
     );
   }, [props.commit.commit.author.date]);
-  const diff = constructDiffString(commitDiff.files);
-  const { adds, dels } = getDiffCounts(commitDiff.files);
+  const diff = constructDiffString(commitDiff?.files);
+  const { adds, dels } = getDiffCounts(commitDiff?.files);
   const intensityColor =
     adds || dels
       ? adds >= dels
