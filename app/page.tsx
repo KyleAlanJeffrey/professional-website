@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Tweet } from "react-tweet";
-import { getAllCommits, getAllRepos } from "./api";
+import { getAllCommits, getAllRepos, getLanguageStats } from "./api";
 
 import Image from "next/image";
 export default function HomePage() {
@@ -17,6 +17,9 @@ export default function HomePage() {
   const [workProjects, setWorkProjects] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [commits, setCommits] = useState([]);
+  const [languageStats, setLanguageStats] = useState<
+    { language: string; percent: number }[]
+  >([]);
   const [jobsError, setJobsError] = useState(false);
   const [workProjectsError, setWorkProjectsError] = useState(false);
   const [bio, setBio] = useState("");
@@ -28,6 +31,24 @@ export default function HomePage() {
   const [contactSent, setContactSent] = useState(false);
   const twitterHandle = "KyleJef84225678";
   const [tweetIds, setTweetIds] = useState<string[]>([]);
+  const languageColors: Record<string, string> = {
+    typescript: "#3178c6",
+    javascript: "#f1e05a",
+    python: "#3572A5",
+    html: "#e34c26",
+    css: "#563d7c",
+    shell: "#89e051",
+    go: "#00ADD8",
+    rust: "#dea584",
+    java: "#b07219",
+    "c++": "#f34b7d",
+    "c#": "#178600",
+    kotlin: "#A97BFF",
+    swift: "#F05138",
+    php: "#4F5D95",
+    ruby: "#701516",
+    dart: "#00B4AB",
+  };
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -89,6 +110,10 @@ export default function HomePage() {
       console.log(`Found ${data.length} commits`);
       console.log(data);
       setCommits(data);
+    });
+
+    getLanguageStats().then((data) => {
+      setLanguageStats(data);
     });
   }, []);
 
@@ -611,9 +636,27 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-16">
-            {jobs.map((job, index) => (
-              <Job key={index} job={job} index={index} />
-            ))}
+            {jobs.length ? (
+              jobs.map((job, index) => <Job key={index} job={job} index={index} />)
+            ) : (
+              <div className="space-y-8">
+                {[...Array(2)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6 animate-pulse"
+                  >
+                    <div className="h-4 w-32 bg-gray-300 dark:bg-gray-700 mb-4"></div>
+                    <div className="h-6 w-64 bg-gray-300 dark:bg-gray-700 mb-3"></div>
+                    <div className="h-4 w-48 bg-gray-300 dark:bg-gray-700 mb-6"></div>
+                    <div className="space-y-2">
+                      <div className="h-3 w-full bg-gray-300 dark:bg-gray-700"></div>
+                      <div className="h-3 w-11/12 bg-gray-300 dark:bg-gray-700"></div>
+                      <div className="h-3 w-10/12 bg-gray-300 dark:bg-gray-700"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
@@ -667,14 +710,34 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-6">
-              {githubRepos.map((repo, index) =>
-                repo.pinned ? (
-                  <Project
-                    githubRepo={repo}
-                    key={`repo-${index}`}
-                    index={index}
-                  />
-                ) : null,
+              {githubRepos.length ? (
+                githubRepos.map((repo, index) =>
+                  repo.pinned ? (
+                    <Project
+                      githubRepo={repo}
+                      key={`repo-${index}`}
+                      index={index}
+                    />
+                  ) : null,
+                )
+              ) : (
+                <div className="space-y-6">
+                  {[...Array(2)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6 animate-pulse"
+                    >
+                      <div className="h-5 w-48 bg-gray-300 dark:bg-gray-700 mb-4"></div>
+                      <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                      <div className="h-3 w-5/6 bg-gray-300 dark:bg-gray-700 mb-6"></div>
+                      <div className="flex gap-2">
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -831,9 +894,27 @@ export default function HomePage() {
 
                 {/* Commit Activity Visualization */}
                 <div className="space-y-4 mb-8">
-                  {commits.slice(0, 5).map((commit, index) => (
-                    <Commit key={index} commit={commit} index={index} />
-                  ))}
+                  {commits.length ? (
+                    commits.slice(0, 5).map((commit, index) => (
+                      <Commit key={index} commit={commit} index={index} />
+                    ))
+                  ) : (
+                    <div className="space-y-4">
+                      {[...Array(5)].map((_, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center space-x-4 p-2 border border-gray-200 dark:border-gray-700 animate-pulse"
+                        >
+                          <div className="w-4 h-4 bg-gray-300 dark:bg-gray-700"></div>
+                          <div className="flex-1">
+                            <div className="h-3 w-3/4 bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                            <div className="h-2 w-1/3 bg-gray-300 dark:bg-gray-700"></div>
+                          </div>
+                          <div className="h-2 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Language Stats */}
@@ -849,79 +930,58 @@ export default function HomePage() {
                       className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.1em]"
                       style={{ fontFamily: "monospace" }}
                     >
-                      LAST 30 DAYS
+                      ALL REPOS
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between group">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-gray-700 dark:bg-gray-300 transition-all duration-300 group-hover:scale-110"></div>
-                        <span
-                          className="text-sm text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-black dark:group-hover:text-white font-bold tracking-[0.1em]"
-                          style={{ fontFamily: "monospace" }}
-                        >
-                          TYPESCRIPT
-                        </span>
+                    {languageStats.length ? (
+                      languageStats.slice(0, 5).map((stat) => {
+                        const color =
+                          languageColors[stat.language.toLowerCase()] ??
+                          "#6b7280";
+                        return (
+                          <div key={stat.language} className="flex items-center gap-4 group">
+                            <div className="flex items-center space-x-3 min-w-[160px]">
+                              <div
+                                className="w-3 h-3 transition-all duration-300 group-hover:scale-110"
+                                style={{ backgroundColor: color }}
+                              ></div>
+                              <span
+                                className="text-sm text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-black dark:group-hover:text-white font-bold tracking-[0.1em]"
+                                style={{ fontFamily: "monospace" }}
+                              >
+                                {stat.language.toUpperCase()}
+                              </span>
+                            </div>
+                            <div className="flex-1 bg-gray-300 dark:bg-gray-600 h-2 overflow-hidden border border-gray-400 dark:border-gray-500">
+                              <div
+                                className="h-2 transition-all duration-1000 group-hover:opacity-80"
+                                style={{
+                                  width: `${stat.percent}%`,
+                                  backgroundColor: color,
+                                }}
+                              ></div>
+                            </div>
+                            <span
+                              className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
+                              style={{ fontFamily: "monospace" }}
+                            >
+                              {stat.percent}%
+                            </span>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="space-y-3 animate-pulse">
+                        {[...Array(3)].map((_, i) => (
+                          <div key={i} className="flex items-center gap-4">
+                            <div className="h-3 w-32 bg-gray-300 dark:bg-gray-700"></div>
+                            <div className="flex-1 h-2 bg-gray-300 dark:bg-gray-700"></div>
+                            <div className="h-3 w-10 bg-gray-300 dark:bg-gray-700"></div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="flex-1 mx-4 bg-gray-300 dark:bg-gray-600 h-2 overflow-hidden border border-gray-400 dark:border-gray-500">
-                        <div
-                          className="bg-gray-700 dark:bg-gray-300 h-2 transition-all duration-1000 hover:bg-gray-600 dark:hover:bg-gray-200"
-                          style={{ width: "45%" }}
-                        ></div>
-                      </div>
-                      <span
-                        className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        45%
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between group">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-gray-600 dark:bg-gray-400 transition-all duration-300 group-hover:scale-110"></div>
-                        <span
-                          className="text-sm text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-black dark:group-hover:text-white font-bold tracking-[0.1em]"
-                          style={{ fontFamily: "monospace" }}
-                        >
-                          JAVASCRIPT
-                        </span>
-                      </div>
-                      <div className="flex-1 mx-4 bg-gray-300 dark:bg-gray-600 h-2 overflow-hidden border border-gray-400 dark:border-gray-500">
-                        <div
-                          className="bg-gray-600 dark:bg-gray-400 h-2 transition-all duration-1000 hover:bg-gray-500 dark:hover:bg-gray-300"
-                          style={{ width: "30%" }}
-                        ></div>
-                      </div>
-                      <span
-                        className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        30%
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between group">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 bg-gray-500 dark:bg-gray-500 transition-all duration-300 group-hover:scale-110"></div>
-                        <span
-                          className="text-sm text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-black dark:group-hover:text-white font-bold tracking-[0.1em]"
-                          style={{ fontFamily: "monospace" }}
-                        >
-                          PYTHON
-                        </span>
-                      </div>
-                      <div className="flex-1 mx-4 bg-gray-300 dark:bg-gray-600 h-2 overflow-hidden border border-gray-400 dark:border-gray-500">
-                        <div
-                          className="bg-gray-500 dark:bg-gray-500 h-2 transition-all duration-1000 hover:bg-gray-400 dark:hover:bg-gray-400"
-                          style={{ width: "25%" }}
-                        ></div>
-                      </div>
-                      <span
-                        className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        25%
-                      </span>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -989,16 +1049,19 @@ export default function HomePage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-700 dark:text-gray-300 font-medium text-center max-w-xl">
-                  Add your tweet IDs to render the feed. View the profile at{" "}
-                  <a
-                    className="underline underline-offset-4"
-                    href={`https://twitter.com/${twitterHandle}`}
-                  >
-                    @{twitterHandle}
-                  </a>
-                  .
-                </p>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl animate-pulse">
+                  {[...Array(2)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4"
+                    >
+                      <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 mb-3"></div>
+                      <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                      <div className="h-3 w-11/12 bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                      <div className="h-3 w-2/3 bg-gray-300 dark:bg-gray-700"></div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>

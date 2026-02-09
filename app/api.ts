@@ -58,6 +58,56 @@ export async function getAllRepos() {
     return;
   }
 }
+
+export async function getLanguageStats() {
+  const repos = await getAllRepos();
+  if (!Array.isArray(repos)) {
+    return [];
+  }
+
+  const totals: Record<string, number> = {};
+  await Promise.all(
+    repos.map(async (repo) => {
+      console.log(repo);
+      if (repo.fork || !repo.languages_url) {
+        return;
+      }
+      try {
+        const response = await fetch(repo.languages_url, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        if (!data || typeof data !== "object") {
+          return;
+        }
+        Object.entries(data).forEach(([language, bytes]) => {
+          if (typeof bytes === "number") {
+            totals[language] = (totals[language] || 0) + bytes;
+          }
+        });
+      } catch (error) {
+        console.error(`Error fetching languages for ${repo.name}: ${error}`);
+      }
+    }),
+  );
+
+  const totalBytes = Object.values(totals).reduce(
+    (sum, value) => sum + value,
+    0,
+  );
+  if (!totalBytes) {
+    return [];
+  }
+
+  return Object.entries(totals)
+    .map(([language, bytes]) => ({
+      language,
+      percent: Math.round((bytes / totalBytes) * 100),
+    }))
+    .sort((a, b) => b.percent - a.percent);
+}
 export async function getAllCommits() {
   let all_commits = [];
   const repos = await getAllRepos();

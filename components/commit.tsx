@@ -48,6 +48,13 @@ function constructDiffString(files: GitHubCompareResponse["files"]) {
   let dels = files.reduce((acc, file) => acc + (file.deletions || 0), 0);
   return { add: `+${adds}`, del: `-${dels}` };
 }
+function getDiffCounts(files: GitHubCompareResponse["files"]) {
+  if (!files || files.length === 0) return { adds: 0, dels: 0 };
+  return {
+    adds: files.reduce((acc, file) => acc + (file.additions || 0), 0),
+    dels: files.reduce((acc, file) => acc + (file.deletions || 0), 0),
+  };
+}
 export function getCommitColor(index: number): string {
   return COLOR_PALETTE[index % COLOR_PALETTE.length];
 }
@@ -84,15 +91,21 @@ function Commit(props: { commit: CommitType; index: number }) {
     }
     setRepoName(_repoName);
   }, [props.commit]);
-  const color = getCommitColor(props.index);
   const diff = constructDiffString(commitDiff.files);
+  const { adds, dels } = getDiffCounts(commitDiff.files);
+  const intensityColor =
+    adds || dels
+      ? adds >= dels
+        ? "bg-green-500"
+        : "bg-red-500"
+      : "bg-gray-400";
   return (
     <a
       href={props.commit.html_url}
       className="flex items-center space-x-4 group cursor-pointer p-2 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
     >
       <div
-        className={`w-4 h-4 ${color} transition-all duration-300 group-hover:scale-110`}
+        className={`w-4 h-4 ${intensityColor} transition-all duration-300 group-hover:scale-110`}
       ></div>
       <div className="flex-1">
         <div
