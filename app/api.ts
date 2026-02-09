@@ -14,7 +14,7 @@ const myGithubUsernames = [
 export async function getCommitDiffToMain(
   repoPath: string,
   parentSha: string,
-  sha: string
+  sha: string,
 ): Promise<GitHubCompareResponse> {
   if (!accessToken) {
     console.error("No GitHub access token found.");
@@ -27,7 +27,7 @@ export async function getCommitDiffToMain(
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -49,7 +49,7 @@ export async function getAllRepos() {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      }
+      },
     );
     const data = await response.json();
     return data;
@@ -62,6 +62,11 @@ export async function getAllCommits() {
   let all_commits = [];
   const repos = await getAllRepos();
 
+  if (!Array.isArray(repos)) {
+    console.error("Expected repos array but received:", repos);
+    return [];
+  }
+
   console.log(`found ${repos.length} repos`);
   // Get all commits for each repo
   await Promise.all(
@@ -73,15 +78,19 @@ export async function getAllCommits() {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
-          }
+          },
         );
         const data = await response.json();
+        if (!Array.isArray(data)) {
+          console.warn(`Unexpected commits response for ${repo.name}:`, data);
+          return;
+        }
         all_commits.push(...data);
       } catch (error) {
         console.error(`Error fetching commits for ${repo.name}: ${error}`);
         return;
       }
-    })
+    }),
   );
 
   //   sort by time
@@ -93,7 +102,7 @@ export async function getAllCommits() {
     (commit) =>
       (commit.author?.login &&
         myGithubUsernames.includes(commit.author.login.toLowerCase())) ||
-      myGithubUsernames.includes(commit.commit.author.name.toLowerCase())
+      myGithubUsernames.includes(commit.commit.author.name.toLowerCase()),
   );
   console.log(`found ${all_commits.length} commits in total`);
   return Promise.resolve(all_commits);
@@ -101,7 +110,7 @@ export async function getAllCommits() {
 
 export async function getWatchedYoutubeVideos() {
   const response = await fetch(
-    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCJbPGzawDH1njbqV-D5HqKw&maxResults=50&order=date&type=video&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCJbPGzawDH1njbqV-D5HqKw&maxResults=50&order=date&type=video&key=${process.env.REACT_APP_YOUTUBE_API_KEY}`,
   );
   const data = await response.json();
   return data.items;
@@ -128,7 +137,7 @@ export async function getDailyThoughts() {
         console.error(`Error fetching daily thought ${entry}: ${e}`);
         return [];
       }
-    })
+    }),
   );
   // Flatten the list of lists sorrted by date
   const flattened = responses.flat().sort((a, b) => {

@@ -6,6 +6,7 @@ import Project, { GithubRepoType } from "@/components/project";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Tweet } from "react-tweet";
 import { getAllCommits, getAllRepos } from "./api";
 
 import Image from "next/image";
@@ -25,6 +26,8 @@ export default function HomePage() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
+  const twitterHandle = "KyleJef84225678";
+  const [tweetIds, setTweetIds] = useState<string[]>([]);
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -99,7 +102,14 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    const sectionIds = ["home", "projects", "github", "work", "contact"];
+    const sectionIds = [
+      "home",
+      "work",
+      "projects",
+      "github",
+      "twitter",
+      "contact",
+    ];
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -130,6 +140,21 @@ export default function HomePage() {
       sections.forEach((section) => observer.unobserve(section));
       observer.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    fetch("/tweets.json")
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setTweetIds(data.map((id) => String(id)));
+        } else {
+          console.error("tweets.json is not an array:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading tweets.json:", error);
+      });
   }, []);
 
   const toggleDarkMode = () => {
@@ -261,9 +286,9 @@ export default function HomePage() {
             CONTACT
           </button>
           <button
-            onClick={() => scrollToSection("work")}
+            onClick={() => scrollToSection("twitter")}
             className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
-              activeSection === "work"
+              activeSection === "twitter"
                 ? "text-black dark:text-white"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
@@ -271,7 +296,7 @@ export default function HomePage() {
               fontFamily: "monospace",
             }}
           >
-            WORK
+            TWITTER
           </button>
           <button
             onClick={() => scrollToSection("github")}
@@ -298,6 +323,19 @@ export default function HomePage() {
             }}
           >
             PROJECTS
+          </button>
+          <button
+            onClick={() => scrollToSection("work")}
+            className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
+              activeSection === "work"
+                ? "text-black dark:text-white"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            }`}
+            style={{
+              fontFamily: "monospace",
+            }}
+          >
+            WORK
           </button>
           <button
             onClick={() => scrollToSection("home")}
@@ -519,6 +557,66 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Work Experience Section */}
+        <section id="work" className="mt-40 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+            <div className="lg:col-span-6 text-center lg:text-left">
+              <div className="mb-4">
+                <div
+                  className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                  style={{ fontFamily: "monospace" }}
+                >
+                  CAREER
+                </div>
+                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+                </div>
+              </div>
+              <h2
+                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                WORK
+              </h2>
+              <h2
+                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                EXPERIENCE
+              </h2>
+              <div
+                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                AT
+              </div>
+              <div
+                className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                02
+              </div>
+              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 text-center lg:text-left">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+                {/* Here's my journey as a developer, from learning the fundamentals
+                to building complex applications and leading teams to create
+                amazing digital experiences. */}
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-16">
+            {jobs.map((job, index) => (
+              <Job key={index} job={job} index={index} />
+            ))}
+          </div>
+        </section>
+
         {/* Projects Section */}
         <section id="projects" className="mt-40 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
@@ -536,7 +634,7 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mt-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                02
+                03
               </div>
             </div>
 
@@ -619,7 +717,7 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                03
+                04
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
@@ -831,8 +929,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Work Experience Section */}
-        <section id="work" className="mt-40 max-w-7xl mx-auto">
+        {/* Twitter Section */}
+        <section id="twitter" className="mt-40 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
@@ -840,7 +938,7 @@ export default function HomePage() {
                   className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
-                  CAREER
+                  SOCIAL
                 </div>
                 <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
@@ -850,13 +948,13 @@ export default function HomePage() {
                 className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                WORK
+                TWITTER
               </h2>
               <h2
                 className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                EXPERIENCE
+                FEED
               </h2>
               <div
                 className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
@@ -868,26 +966,41 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                04
+                05
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
-            </div>
-
-            <div className="lg:col-span-6 text-center lg:text-left">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
-                {/* Here's my journey as a developer, from learning the fundamentals
-                to building complex applications and leading teams to create
-                amazing digital experiences. */}
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-6 max-w-xl mx-auto lg:mx-0">
+                Latest thoughts, experiments, and links from my Twitter feed.
               </p>
             </div>
           </div>
 
-          <div className="space-y-16">
-            {jobs.map((job, index) => (
-              <Job key={index} job={job} index={index} />
-            ))}
+          <div className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 md:p-6">
+            <div
+              data-theme={isDarkMode ? "dark" : "light"}
+              className="flex justify-center"
+            >
+              {tweetIds.length > 0 ? (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl">
+                  {tweetIds.map((id) => (
+                    <Tweet key={id} id={id} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-700 dark:text-gray-300 font-medium text-center max-w-xl">
+                  Add your tweet IDs to render the feed. View the profile at{" "}
+                  <a
+                    className="underline underline-offset-4"
+                    href={`https://twitter.com/${twitterHandle}`}
+                  >
+                    @{twitterHandle}
+                  </a>
+                  .
+                </p>
+              )}
+            </div>
           </div>
         </section>
 
@@ -928,7 +1041,7 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                05
+                06
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>

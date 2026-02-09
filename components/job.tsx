@@ -106,6 +106,7 @@ function Job(props: { job: JobType; index: number }) {
         <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
           {props.job.skills.map((skill, index) => (
             <span
+              key={`${skill}-${index}`}
               className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-bold border border-gray-400 dark:border-gray-600 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-105 tracking-[0.1em]"
               style={{ fontFamily: "monospace" }}
             >
