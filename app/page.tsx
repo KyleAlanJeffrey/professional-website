@@ -9,7 +9,7 @@ import jobsData from "@/data/jobs.json";
 import tweetsData from "@/data/tweets.json";
 import workProjectsData from "@/data/work_projects.json";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tweet } from "react-tweet";
 import { getAllCommits, getAllRepos, getLanguageStats } from "./api";
 
@@ -24,6 +24,16 @@ export default function HomePage() {
   const [languageStats, setLanguageStats] = useState<
     { language: string; percent: number }[]
   >([]);
+  const [highlightSkill, setHighlightSkill] = useState<string | null>(null);
+  const [highlightSectionId, setHighlightSectionId] = useState<string | null>(
+    null,
+  );
+  const highlightSkillTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const highlightSectionTimeoutRef = useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactSubject, setContactSubject] = useState("");
@@ -154,6 +164,43 @@ export default function HomePage() {
     }
   };
 
+  const handleSkillClick = (skill: string) => {
+    setHighlightSkill(skill);
+    if (highlightSkillTimeoutRef.current) {
+      clearTimeout(highlightSkillTimeoutRef.current);
+    }
+    highlightSkillTimeoutRef.current = setTimeout(() => {
+      setHighlightSkill(null);
+    }, 3000);
+
+    const targetIndex = jobs.findIndex(
+      (job: { skills?: string[] }) =>
+        Array.isArray(job.skills) &&
+        job.skills.some(
+          (item) => String(item).toLowerCase() === skill.toLowerCase(),
+        ),
+    );
+
+    if (targetIndex >= 0) {
+      const target = document.getElementById(`job-${targetIndex}`);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  };
+
+  const handleFocusClick = (sectionId: string) => {
+    setHighlightSectionId(sectionId);
+    if (highlightSectionTimeoutRef.current) {
+      clearTimeout(highlightSectionTimeoutRef.current);
+    }
+    highlightSectionTimeoutRef.current = setTimeout(() => {
+      setHighlightSectionId(null);
+    }, 2500);
+
+    scrollToSection(sectionId);
+  };
+
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setContactError(null);
@@ -183,7 +230,13 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300 relative">
+    <div
+      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative"
+      style={{
+        backgroundImage:
+          "radial-gradient(900px_circle_at_8%_-10%, rgba(255,195,120,0.35), transparent 55%), radial-gradient(700px_circle_at_92%_0%, rgba(120,210,255,0.25), transparent 50%)",
+      }}
+    >
       {/* Animated Background Lines */}
       <div className="fixed inset-0 pointer-events-none">
         {/* Vertical Lines */}
@@ -358,89 +411,135 @@ export default function HomePage() {
         </div>
 
         {/* Home Section - Mobile responsive */}
-        <section id="home" className="max-w-7xl mx-auto pt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+        <section
+          id="home"
+          className="max-w-7xl mx-auto pt-12 lg:pt-20 pb-20 lg:pb-28 relative"
+        >
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
+          <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[70vh]">
             {/* Left Content */}
-            <div className="lg:col-span-5 text-center lg:text-left">
-              <div className="mb-6 lg:mb-4">
-                <div
-                  className="text-xs md:text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  ROBOTICS ENGINEER / SOFTWARE ENGINEER
-                </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
-                </div>
+            <div className="lg:col-span-6 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-700 dark:text-gray-300 backdrop-blur mb-6">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
+                OPEN TO COLLABS
               </div>
 
               <h1
-                className="text-4xl md:text-6xl lg:text-8xl font-black text-black dark:text-white leading-tight mb-8 transition-all duration-300"
-                style={{ fontFamily: "monospace", letterSpacing: "0.1em" }}
+                className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.9] mb-6 transition-all duration-300"
+                style={{
+                  letterSpacing: "0.06em",
+                  textShadow: "0 12px 40px rgba(0,0,0,0.12)",
+                }}
               >
-                <span className="inline-block hover:scale-105 transition-transform duration-300">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-white">
                   KYLE
                 </span>
                 <br />
-                <span className="inline-block hover:scale-105 transition-transform duration-300">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-500 to-sky-600 dark:from-amber-300 dark:via-orange-300 dark:to-sky-300">
                   JEFFREY
                 </span>
               </h1>
 
-              <Button
-                variant="ghost"
-                className="text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 p-0 h-auto font-bold group transition-all duration-300 tracking-[0.2em]"
-                onClick={() => scrollToSection("projects")}
-                style={{ fontFamily: "monospace" }}
-              >
-                <span className="relative">
+              <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto lg:mx-0 mb-8">
+                Robotics engineer. Agriculture AI Software Engineer. Humanoid
+                Robot Obsessed. Web Developer Occasionally.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+                <Button
+                  className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-semibold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
+                  onClick={() => scrollToSection("work")}
+                >
                   VIEW WORK
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-                </span>
-                <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Button>
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="group border-black/30 dark:border-white/30 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 px-6 h-11 text-sm font-semibold tracking-[0.2em] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)] transition-all duration-300"
+                  onClick={() => scrollToSection("contact")}
+                >
+                  CONTACT
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Button>
+              </div>
+
+              <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
+                {[
+                  "Robotics + Full Stack",
+                  "Human-Centered Systems",
+                  "Research → Product",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="text-xs md:text-sm px-3 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 text-gray-700 dark:text-gray-300 backdrop-blur"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Center Content - Industrial Elements */}
-            <div className="lg:col-span-4 relative order-first lg:order-none"></div>
+            <div className="lg:col-span-3 relative order-first lg:order-none">
+              <div className="relative mx-auto w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
+                <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
+                <Image
+                  src="/meme.jpeg"
+                  alt="Portrait"
+                  className="absolute inset-3 rounded-2xl object-cover"
+                  width={420}
+                  height={420}
+                  priority
+                />
+                <div className="absolute -bottom-4 left-6 right-6 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 px-4 py-3 text-xs font-semibold tracking-[0.2em] text-gray-700 dark:text-gray-200 text-center backdrop-blur">
+                  FULL STACK ROBOTICS ENGINEER
+                </div>
+              </div>
+            </div>
 
             {/* Right Content - Mobile responsive */}
             <div className="lg:col-span-3 text-center lg:text-left">
-              <div className="mb-8">
-                <h2
-                  className="text-2xl md:text-4xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {/* HOME */}
-                </h2>
-                <h2
-                  className="text-2xl md:text-4xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
-                  style={{ fontFamily: "monospace" }}
-                ></h2>
-                <div
-                  className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  {/* AT */}
+              <div className="mb-8 border border-black/10 dark:border-white/10 rounded-2xl bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)]">
+                <div className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-semibold mb-3">
+                  CURRENT FOCUS
                 </div>
-                <div
-                  className="text-4xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
-                  style={{ fontFamily: "monospace" }}
-                >
-                  01
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2">
+                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-[10px] font-bold">
+                    i
+                  </span>
+                  Click an item to jump to the section
                 </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+                <div className="space-y-3 text-left">
+                  {[
+                    { desc: "Autonomy for Agricultural", section: "work" },
+                    { desc: "Robot Fighting", section: "twitter" },
+                    { desc: "Mobile and Web Apps", section: "projects" },
+                  ].map((item) => (
+                    <div
+                      key={item.desc}
+                      className="group flex items-start gap-3 cursor-pointer rounded-lg px-2 py-2 -mx-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/10 hover:translate-x-1"
+                      onClick={() => handleFocusClick(item.section)}
+                    >
+                      <span className="mt-1 h-2 w-2 rounded-full bg-black dark:bg-white transition-transform duration-300 group-hover:scale-125"></span>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Section - Mobile responsive */}
-          <div className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-1 hidden lg:block">
+          <div className="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10">
+            <div className="lg:col-span-1 hidden lg:block self-start">
               <div
                 className="text-sm text-gray-500 dark:text-gray-400 tracking-[0.3em] font-bold -rotate-90 origin-center transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300"
                 style={{ fontFamily: "monospace" }}
@@ -449,14 +548,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-4 text-center lg:text-left">
+            <div className="lg:col-span-5 text-center lg:text-left">
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 {bio.bio}
               </p>
 
               <Button
                 variant="ghost"
-                className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white p-0 h-auto font-bold group transition-all duration-300 tracking-[0.2em]"
+                className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white p-0 h-auto font-bold group transition-all duration-300 tracking-[0.2em] hover:translate-x-1"
                 style={{ fontFamily: "monospace" }}
               >
                 <span className="relative">
@@ -465,60 +564,49 @@ export default function HomePage() {
                 </span>
               </Button>
             </div>
-            <div className="col-span-2" />
-            <div className="flex lg:block gap-4 lg:gap-0 justify-center">
-              {/* Industrial Grid Pattern */}
-              <div className="relative mb-0 lg:mb-8">
-                <div className="w-40 h-40 md:w-60 md:h-60 lg:w-96 lg:h-96 mx-auto transform transition-all duration-500 hover:scale-105 relative">
-                  <Image
-                    src="/meme.jpeg"
-                    alt="Industrial Element 1"
-                    className="absolute inset-0 w-40 h-40 md:w-60 md:h-60 lg:w-96 lg:h-96 object-cover left-0 top-0"
-                    width={400}
-                    height={400}
-                    priority
-                  />
-                  <div className="absolute inset-0 border-2 transition-all duration-300 hover:border-gray-600 dark:hover:border-gray-400">
-                    {/* Grid Pattern */}
-                    <div className="absolute inset-4 grid grid-cols-4 grid-rows-4 gap-4">
-                      {Array.from({ length: 16 }).map((_, i) => {
-                        const rng = i % 4;
-                        let borderClass = "";
-                        switch (rng) {
-                          case 0:
-                            borderClass = "border-b-2";
-                            break;
-                          case 1:
-                            borderClass = "border-l-2";
-                            break;
-                          case 2:
-                            borderClass = "border-l-2";
-                            break;
-                          case 3:
-                            borderClass = "border-b-2";
-                            break;
-                        }
-                        return (
-                          <div
-                            key={i}
-                            className={`bg-gray-400 dark:bg-gray-600 transition-all duration-300 hover:bg-gray-400 dark:hover:bg-gray-600`}
-                            style={{
-                              animationDelay: `${i * 0.1}s`,
-                              animation: "pulse 2s infinite",
-                            }}
-                          ></div>
-                        );
-                      })}
-                    </div>
-                    {/* Center Label */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span
-                        className="text-2xl md:text-4xl font-black text-gray-950 dark:text-gray-100 tracking-[0.2em]"
-                        style={{ fontFamily: "monospace" }}
-                      >
-                        01
-                      </span>
-                    </div>
+            <div className="lg:col-span-6 flex lg:block gap-4 lg:gap-0 justify-center">
+              <div className="grid gap-4 w-full max-w-xl">
+                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)]">
+                  <div className="text-xs tracking-[0.3em] text-gray-500 dark:text-gray-400 font-semibold mb-2">
+                    SIGNAL
+                  </div>
+                  <div className="text-3xl font-black text-black dark:text-white tracking-[0.08em]">
+                    ROBOTICS
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                    software systems and interfaces
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur">
+                  <div className="text-xs tracking-[0.3em] text-gray-500 dark:text-gray-400 font-semibold mb-3">
+                    TOOLBOX
+                  </div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2">
+                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-[10px] font-bold">
+                      i
+                    </span>
+                    Click a skill to jump to the matching role
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {Array.from(
+                      new Set(
+                        jobs
+                          .flatMap((job) => job.skills ?? [])
+                          .map((skill) => String(skill).trim())
+                          .filter(Boolean),
+                      ),
+                    )
+                      .slice(0, 99)
+                      .map((item) => (
+                        <button
+                          key={item}
+                          type="button"
+                          onClick={() => handleSkillClick(item)}
+                          className="text-xs px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
+                        >
+                          {item}
+                        </button>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -527,7 +615,14 @@ export default function HomePage() {
         </section>
 
         {/* Work Experience Section */}
-        <section id="work" className="mt-40 max-w-7xl mx-auto">
+        <section
+          id="work"
+          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+            highlightSectionId === "work"
+              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              : ""
+          }`}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
@@ -582,7 +677,13 @@ export default function HomePage() {
           <div className="space-y-16">
             {jobs.length ? (
               jobs.map((job, index) => (
-                <Job key={index} job={job} index={index} />
+                <div key={index} id={`job-${index}`}>
+                  <Job
+                    job={job}
+                    index={index}
+                    highlightSkill={highlightSkill}
+                  />
+                </div>
               ))
             ) : (
               <div className="space-y-8">
@@ -607,7 +708,14 @@ export default function HomePage() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="mt-40 max-w-7xl mx-auto">
+        <section
+          id="projects"
+          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+            highlightSectionId === "projects"
+              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              : ""
+          }`}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
             <div className="lg:col-span-2 text-center lg:text-left">
               <div
@@ -901,7 +1009,14 @@ export default function HomePage() {
         </section>
 
         {/* Twitter Section */}
-        <section id="twitter" className="mt-40 max-w-7xl mx-auto">
+        <section
+          id="twitter"
+          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+            highlightSectionId === "twitter"
+              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              : ""
+          }`}
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">

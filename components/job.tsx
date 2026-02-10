@@ -40,9 +40,26 @@ type JobType = {
   company: string;
   duration: string;
 };
-function Job(props: { job: JobType; index: number }) {
+function Job(props: {
+  job: JobType;
+  index: number;
+  highlightSkill?: string | null;
+}) {
+  const highlightSkill = props.highlightSkill?.toLowerCase() ?? null;
+  const isHighlighted =
+    highlightSkill &&
+    props.job.skills.some(
+      (skill) => skill.toLowerCase() === highlightSkill,
+    );
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start group">
+    <div
+      className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-start group transition-all duration-300 rounded-2xl ${
+        isHighlighted
+          ? "bg-amber-50/60 dark:bg-white/5 ring-2 ring-amber-400/60 shadow-[0_12px_30px_rgba(251,191,36,0.15)] p-4"
+          : ""
+      }`}
+    >
       <div className="lg:col-span-2 text-center lg:text-left">
         <div
           className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold mb-2 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
@@ -104,15 +121,23 @@ function Job(props: { job: JobType; index: number }) {
           ))}
         </ul>
         <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
-          {props.job.skills.map((skill, index) => (
+          {props.job.skills.map((skill, index) => {
+            const isSkillHighlighted =
+              highlightSkill &&
+              skill.toLowerCase() === highlightSkill;
+            return (
             <span
               key={`${skill}-${index}`}
-              className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-bold border border-gray-400 dark:border-gray-600 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-105 tracking-[0.1em]"
+              className={`px-3 py-1 text-xs font-bold border transition-all duration-300 hover:scale-105 tracking-[0.1em] ${
+                isSkillHighlighted
+                  ? "bg-amber-200 dark:bg-amber-300 text-gray-900 border-amber-400 dark:border-amber-300"
+                  : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-400 dark:border-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600"
+              }`}
               style={{ fontFamily: "monospace" }}
             >
               {skill.toUpperCase()}
             </span>
-          ))}
+          )})}
         </div>
       </div>
 
