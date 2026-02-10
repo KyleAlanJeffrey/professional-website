@@ -4,6 +4,7 @@ import Commit from "@/components/commit";
 import Job from "@/components/job";
 import Project, { GithubRepoType } from "@/components/project";
 import { Button } from "@/components/ui/button";
+import bio from "@/data/bio.json";
 import jobsData from "@/data/jobs.json";
 import tweetsData from "@/data/tweets.json";
 import workProjectsData from "@/data/work_projects.json";
@@ -19,20 +20,17 @@ export default function HomePage() {
   const [githubRepos, setGithubRepos] = useState<GithubRepoType[]>([]);
   const workProjects = workProjectsData.projects ?? [];
   const jobs = jobsData.jobs ?? [];
-  const [commits, setCommits] = useState([]);
+  const [commits, setCommits] = useState<any[]>([]);
   const [languageStats, setLanguageStats] = useState<
     { language: string; percent: number }[]
   >([]);
-  const [bio, setBio] = useState("");
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactSubject, setContactSubject] = useState("");
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
-  const twitterHandle = "KyleJef84225678";
-  const thisRepoUrl =
-    "https://raw.githubusercontent.com/KyleAlanJeffrey/professional-website/";
+
   const tweetIds = Array.isArray(tweetsData)
     ? tweetsData.map((id) => String(id))
     : [];
@@ -76,15 +74,6 @@ export default function HomePage() {
       });
       setGithubRepos(allRepos);
     });
-
-    fetch(`${thisRepoUrl}main/data/bio.txt`)
-      .then((response) => response.text())
-      .then((data) => {
-        setBio(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
     getAllCommits().then((data) => {
       console.log(`Found ${data.length} commits`);
@@ -462,17 +451,7 @@ export default function HomePage() {
 
             <div className="lg:col-span-4 text-center lg:text-left">
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
-                Hi I'm Kyle! I recieved my degree in robotics where I did a
-                Senior Thesis on simulating Milipede movements with cheap leg
-                actuators (See Projects Below). For 3 years I worked throughout
-                Googles robotics departments, getting robots to pickup kitchens
-                (see Project Saycan), dance (see Project Starling), and make
-                music (See Project Music Mode). After leaving Google, I've been
-                working at Stout Industrial Technology, empowering Farmers with
-                plant level data on their fields and improving their yield with
-                our autonomous smart cultivator what uses AI vision to detect
-                weeds in the field. In my free time I program odds and ends for
-                fun.
+                {bio.bio}
               </p>
 
               <Button
