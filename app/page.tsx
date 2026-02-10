@@ -695,7 +695,7 @@ export default function HomePage() {
           }`}
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-            <div className="lg:col-span-2 text-center lg:text-left">
+            <div className="lg:col-span-5 text-center lg:text-left">
               <div
                 className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
                 style={{ fontFamily: "monospace" }}
@@ -705,17 +705,8 @@ export default function HomePage() {
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
-              <div
-                className="text-6xl font-black text-black dark:text-white mt-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
-                style={{ fontFamily: "monospace" }}
-              >
-                03
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 text-center lg:text-left">
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 FEATURED
@@ -732,8 +723,15 @@ export default function HomePage() {
               >
                 AT
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-8 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+              </div>
+
+              <div
+                className="text-6xl font-black text-black dark:text-white mb-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                03
               </div>
 
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
@@ -741,7 +739,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-7">
               {githubRepos.length ? (
                 githubRepos.map((repo, index) =>
                   repo.pinned ? (
