@@ -420,7 +420,7 @@ export default function HomePage() {
               </div>
 
               <h1
-                className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.62] mb-6 transition-all duration-300"
+                className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.78] sm:leading-[0.62] mb-6 transition-all duration-300"
                 style={{
                   letterSpacing: "0.06em",
                   textShadow: "0 12px 40px rgba(0,0,0,0.12)",
@@ -430,7 +430,7 @@ export default function HomePage() {
                   KYLE
                 </span>
                 <br />
-                <span className="-mt-8 block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-500 to-sky-600 dark:from-amber-300 dark:via-orange-300 dark:to-sky-300">
+                <span className="-mt-4 sm:-mt-8 block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-500 to-sky-600 dark:from-amber-300 dark:via-orange-300 dark:to-sky-300">
                   JEFFREY
                 </span>
               </h1>
