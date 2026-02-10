@@ -4,6 +4,9 @@ import Commit from "@/components/commit";
 import Job from "@/components/job";
 import Project, { GithubRepoType } from "@/components/project";
 import { Button } from "@/components/ui/button";
+import jobsData from "@/data/jobs.json";
+import tweetsData from "@/data/tweets.json";
+import workProjectsData from "@/data/work_projects.json";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Tweet } from "react-tweet";
@@ -14,14 +17,12 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState("home");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [githubRepos, setGithubRepos] = useState<GithubRepoType[]>([]);
-  const [workProjects, setWorkProjects] = useState([]);
-  const [jobs, setJobs] = useState([]);
+  const workProjects = workProjectsData.projects ?? [];
+  const jobs = jobsData.jobs ?? [];
   const [commits, setCommits] = useState([]);
   const [languageStats, setLanguageStats] = useState<
     { language: string; percent: number }[]
   >([]);
-  const [jobsError, setJobsError] = useState(false);
-  const [workProjectsError, setWorkProjectsError] = useState(false);
   const [bio, setBio] = useState("");
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
@@ -32,7 +33,9 @@ export default function HomePage() {
   const twitterHandle = "KyleJef84225678";
   const thisRepoUrl =
     "https://raw.githubusercontent.com/KyleAlanJeffrey/professional-website/";
-  const [tweetIds, setTweetIds] = useState<string[]>([]);
+  const tweetIds = Array.isArray(tweetsData)
+    ? tweetsData.map((id) => String(id))
+    : [];
   const languageColors: Record<string, string> = {
     typescript: "#3178c6",
     javascript: "#f1e05a",
@@ -73,28 +76,6 @@ export default function HomePage() {
       });
       setGithubRepos(allRepos);
     });
-
-    // Get jobs
-    fetch(`${thisRepoUrl}main/data/jobs.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        setJobs(data["jobs"]);
-      })
-      .catch((error) => {
-        setJobsError(true);
-        console.log(error);
-      });
-
-    // Get work projects
-    fetch(`${thisRepoUrl}main/data/work_projects.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        setWorkProjects(data["projects"]);
-      })
-      .catch((error) => {
-        setWorkProjectsError(true);
-        console.log(error);
-      });
 
     fetch(`${thisRepoUrl}main/data/bio.txt`)
       .then((response) => response.text())
@@ -164,21 +145,6 @@ export default function HomePage() {
       sections.forEach((section) => observer.unobserve(section));
       observer.disconnect();
     };
-  }, []);
-
-  useEffect(() => {
-    fetch(`${thisRepoUrl}main/data/tweets.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setTweetIds(data.map((id) => String(id)));
-        } else {
-          console.error("tweets.json is not an array:", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error loading tweets.json:", error);
-      });
   }, []);
 
   const toggleDarkMode = () => {
