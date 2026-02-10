@@ -209,6 +209,71 @@ export default function HomePage() {
     scrollToSection(sectionId);
   };
 
+  const scrollToPublication = (index: number) => {
+    setActivePublicationIndex(index);
+    scrollToSection("publications");
+  };
+
+  const scrollToPublicationByName = (name: string) => {
+    const targetIndex = workProjects.findIndex((project) =>
+      project.name.toLowerCase().includes(name.toLowerCase()),
+    );
+    if (targetIndex >= 0) {
+      scrollToPublication(targetIndex);
+    } else {
+      scrollToSection("publications");
+    }
+  };
+
+  const renderBioWithLinks = (text: string) => {
+    const parts = text.split(/(\(see[^)]+\))/i);
+    return parts.map((part, index) => {
+      const trimmed = part.trim();
+      const isLink =
+        trimmed.startsWith("(") &&
+        trimmed.endsWith(")") &&
+        /^(\(see[^)]+\))$/i.test(trimmed);
+
+      if (!isLink) {
+        return <span key={`bio-${index}`}>{part}</span>;
+      }
+
+      const label = trimmed.slice(1, -1);
+      const target = label.replace(/^see\s+/i, "").toLowerCase();
+
+      const onClick = () => {
+        if (target.includes("projects below")) {
+          scrollToSection("projects");
+          return;
+        }
+        if (target.includes("project saycan")) {
+          scrollToPublicationByName("Project SayCan");
+          return;
+        }
+        if (target.includes("project starling")) {
+          scrollToPublicationByName("Project Starling");
+          return;
+        }
+        if (target.includes("project music mode")) {
+          scrollToPublicationByName("Project Music Mode");
+          return;
+        }
+      };
+
+      return (
+        <button
+          key={`bio-link-${index}`}
+          type="button"
+          onClick={onClick}
+          data-keep-highlight="true"
+          className="inline-flex items-center text-amber-700 dark:text-amber-300 font-bold tracking-[0.03em] underline underline-offset-4 decoration-2 hover:text-black dark:hover:text-white transition-colors duration-300"
+        >
+          {trimmed}
+        </button>
+      );
+    });
+  };
+
   const scrollToJob = (index: number) => {
     setHighlightSectionId(null);
     setHighlightJobIndex(index);
@@ -246,7 +311,12 @@ export default function HomePage() {
 
     document.addEventListener("click", handleDocumentClick);
     return () => document.removeEventListener("click", handleDocumentClick);
-  }, [highlightSkill, highlightSectionId, highlightJobIndex, highlightTweetIndex]);
+  }, [
+    highlightSkill,
+    highlightSectionId,
+    highlightJobIndex,
+    highlightTweetIndex,
+  ]);
 
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -528,33 +598,58 @@ export default function HomePage() {
                 </Button>
               </div>
 
-              <div className="mt-8 border border-black/10 dark:border-white/10 rounded-2xl bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] text-left">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-semibold">
-                    CURRENT FOCUS
+              <div className="mt-8 text-left">
+                <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-amber-50/80 via-white/80 to-sky-50/60 dark:from-white/5 dark:via-white/3 dark:to-slate-900/60 p-5 shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
+                  <div className="absolute -top-6 -right-8 h-24 w-32 rotate-12 bg-gradient-to-r from-amber-300/40 to-orange-300/20 blur-2xl dark:from-amber-400/10 dark:to-orange-400/5"></div>
+                  <div className="absolute -bottom-6 -left-10 h-24 w-32 -rotate-12 bg-gradient-to-r from-sky-300/40 to-indigo-300/20 blur-2xl dark:from-sky-400/10 dark:to-indigo-400/5"></div>
+                  <div className="relative z-10">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.7)]"></span>
+                        <div className="text-xs font-black tracking-[0.3em] text-gray-700 dark:text-gray-300">
+                          CURRENT FOCUS
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                        TAP TO JUMP
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {[
+                        {
+                          desc: "Autonomy for Agricultural",
+                          onClick: () => scrollToJob(0),
+                        },
+                        {
+                          desc: "Robot Fighting",
+                          onClick: () => scrollToTweet(0),
+                        },
+                      ].map((item) => (
+                        <button
+                          key={item.desc}
+                          type="button"
+                          className="group relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-white/90 dark:bg-white/10 px-4 py-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_26px_rgba(0,0,0,0.14)] hover:bg-white dark:hover:bg-white/20"
+                          onClick={item.onClick}
+                          data-keep-highlight="true"
+                        >
+                          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400/40 via-orange-400/20 to-sky-400/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                          <div className="flex items-start gap-3">
+                            <div className="mt-1 h-6 w-6 rounded-lg border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center text-[10px] font-black text-gray-700 dark:text-gray-200">
+                              →
+                            </div>
+                            <div>
+                              <p className="text-sm text-gray-800 dark:text-gray-100 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white font-semibold tracking-[0.03em]">
+                                {item.desc}
+                              </p>
+                              <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em] mt-2">
+                                VIEW
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                    TAP TO JUMP
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {[
-                    { desc: "Autonomy for Agricultural", onClick: () => scrollToJob(0) },
-                    { desc: "Robot Fighting", onClick: () => scrollToTweet(0) },
-                  ].map((item) => (
-                    <button
-                      key={item.desc}
-                      type="button"
-                      className="group flex items-start gap-3 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 px-3 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
-                      onClick={item.onClick}
-                      data-keep-highlight="true"
-                    >
-                      <span className="mt-1 h-2 w-2 rounded-full bg-black dark:bg-white transition-transform duration-300 group-hover:scale-125"></span>
-                      <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
-                        {item.desc}
-                      </p>
-                    </button>
-                  ))}
                 </div>
               </div>
             </div>
@@ -588,20 +683,10 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-5 text-center lg:text-left">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
-                {bio.bio}
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-white font-semibold text-base md:text-lg">
+                {renderBioWithLinks(bio.bio)}
               </p>
 
-              <Button
-                variant="ghost"
-                className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white p-0 h-auto font-bold group transition-all duration-300 tracking-[0.2em] hover:translate-x-1"
-                style={{ fontFamily: "monospace" }}
-              >
-                <span className="relative">
-                  — ABOUT PROJECT
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gray-600 dark:bg-gray-400 transition-all duration-300 group-hover:w-full group-hover:bg-black dark:group-hover:bg-white"></span>
-                </span>
-              </Button>
             </div>
             <div className="lg:col-span-6 flex lg:block gap-4 lg:gap-0 justify-center">
               <div className="grid gap-4 w-full max-w-xl">
