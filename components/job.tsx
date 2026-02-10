@@ -44,13 +44,15 @@ function Job(props: {
   job: JobType;
   index: number;
   highlightSkill?: string | null;
+  highlightJob?: boolean;
 }) {
   const highlightSkill = props.highlightSkill?.toLowerCase() ?? null;
   const isHighlighted =
-    highlightSkill &&
-    props.job.skills.some(
-      (skill) => skill.toLowerCase() === highlightSkill,
-    );
+    !!props.highlightJob ||
+    (highlightSkill &&
+      props.job.skills.some(
+        (skill) => skill.toLowerCase() === highlightSkill,
+      ));
 
   return (
     <div

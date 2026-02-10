@@ -28,6 +28,12 @@ export default function HomePage() {
   const [highlightSectionId, setHighlightSectionId] = useState<string | null>(
     null,
   );
+  const [highlightJobIndex, setHighlightJobIndex] = useState<number | null>(
+    null,
+  );
+  const [highlightTweetIndex, setHighlightTweetIndex] = useState<number | null>(
+    null,
+  );
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactSubject, setContactSubject] = useState("");
@@ -179,6 +185,8 @@ export default function HomePage() {
 
   const handleSkillClick = (skill: string) => {
     setHighlightSkill(skill);
+    setHighlightJobIndex(null);
+    setHighlightTweetIndex(null);
 
     const targetIndex = jobs.findIndex(
       (job: { skills?: string[] }) =>
@@ -201,18 +209,44 @@ export default function HomePage() {
     scrollToSection(sectionId);
   };
 
+  const scrollToJob = (index: number) => {
+    setHighlightSectionId(null);
+    setHighlightJobIndex(index);
+    setHighlightTweetIndex(null);
+    const target = document.getElementById(`job-${index}`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      scrollToSection("work");
+    }
+  };
+
+  const scrollToTweet = (index: number) => {
+    setHighlightSectionId(null);
+    setHighlightTweetIndex(index);
+    setHighlightJobIndex(null);
+    const target = document.getElementById(`tweet-${index}`);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      scrollToSection("twitter");
+    }
+  };
+
   useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
       if (!target) return;
       if (target.closest("[data-keep-highlight='true']")) return;
       if (highlightSkill) setHighlightSkill(null);
+      if (highlightJobIndex !== null) setHighlightJobIndex(null);
+      if (highlightTweetIndex !== null) setHighlightTweetIndex(null);
       if (highlightSectionId) setHighlightSectionId(null);
     };
 
     document.addEventListener("click", handleDocumentClick);
     return () => document.removeEventListener("click", handleDocumentClick);
-  }, [highlightSkill, highlightSectionId]);
+  }, [highlightSkill, highlightSectionId, highlightJobIndex, highlightTweetIndex]);
 
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -439,13 +473,13 @@ export default function HomePage() {
         {/* Home Section - Mobile responsive */}
         <section
           id="home"
-          className="max-w-7xl mx-auto pt-12 lg:pt-20 pb-20 lg:pb-28 relative"
+          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative"
         >
           <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
           <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[70vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
             {/* Left Content */}
-            <div className="lg:col-span-6 text-center lg:text-left">
+            <div className="lg:col-span-7 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-700 dark:text-gray-300 backdrop-blur mb-6">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
                 OPEN TO COLLABS
@@ -493,10 +527,40 @@ export default function HomePage() {
                   </span>
                 </Button>
               </div>
+
+              <div className="mt-8 border border-black/10 dark:border-white/10 rounded-2xl bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] text-left">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-semibold">
+                    CURRENT FOCUS
+                  </div>
+                  <div className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                    TAP TO JUMP
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {[
+                    { desc: "Autonomy for Agricultural", onClick: () => scrollToJob(0) },
+                    { desc: "Robot Fighting", onClick: () => scrollToTweet(0) },
+                  ].map((item) => (
+                    <button
+                      key={item.desc}
+                      type="button"
+                      className="group flex items-start gap-3 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 px-3 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
+                      onClick={item.onClick}
+                      data-keep-highlight="true"
+                    >
+                      <span className="mt-1 h-2 w-2 rounded-full bg-black dark:bg-white transition-transform duration-300 group-hover:scale-125"></span>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
+                        {item.desc}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Center Content - Industrial Elements */}
-            <div className="lg:col-span-3 relative">
+            <div className="lg:col-span-5 relative">
               <div className="relative mx-auto w-80 md:w-[26rem] lg:w-[34rem] aspect-[3/2]">
                 <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
@@ -508,40 +572,6 @@ export default function HomePage() {
                   sizes="(min-width: 1024px) 26rem, (min-width: 768px) 20rem, 16rem"
                   priority
                 />
-              </div>
-            </div>
-
-            {/* Right Content - Mobile responsive */}
-            <div className="lg:col-span-3 text-center lg:text-left lg:sticky lg:top-24 self-start lg:pl-10">
-              <div className="mb-8 border border-black/10 dark:border-white/10 rounded-2xl bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)]">
-                <div className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-semibold mb-3">
-                  CURRENT FOCUS
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2">
-                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-black/10 dark:border-white/10 text-[10px] font-bold">
-                    i
-                  </span>
-                  Click an item to jump to the section
-                </div>
-                <div className="space-y-3 text-left">
-                  {[
-                    { desc: "Autonomy for Agricultural", section: "work" },
-                    { desc: "Robot Fighting", section: "twitter" },
-                    { desc: "Mobile and Web Apps", section: "projects" },
-                  ].map((item) => (
-                    <div
-                      key={item.desc}
-                      className="group flex items-start gap-3 cursor-pointer rounded-lg px-2 py-2 -mx-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/10 hover:translate-x-1"
-                      onClick={() => handleFocusClick(item.section)}
-                      data-keep-highlight="true"
-                    >
-                      <span className="mt-1 h-2 w-2 rounded-full bg-black dark:bg-white transition-transform duration-300 group-hover:scale-125"></span>
-                      <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
-                        {item.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
@@ -692,6 +722,7 @@ export default function HomePage() {
                     job={job}
                     index={index}
                     highlightSkill={highlightSkill}
+                    highlightJob={highlightJobIndex === index}
                   />
                 </div>
               ))
@@ -1260,8 +1291,16 @@ export default function HomePage() {
             >
               {tweetIds.length > 0 ? (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl mx-auto place-items-center">
-                  {tweetIds.map((id) => (
-                    <div key={id} className="w-full flex justify-center">
+                  {tweetIds.map((id, index) => (
+                    <div
+                      key={id}
+                      id={`tweet-${index}`}
+                      className={`w-full flex justify-center rounded-2xl transition-all duration-300 ${
+                        highlightTweetIndex === index
+                          ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+                          : ""
+                      }`}
+                    >
                       <Tweet id={id} />
                     </div>
                   ))}
