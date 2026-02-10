@@ -62,7 +62,7 @@ function getProjectColor(index: number): string {
 function Project(props: { githubRepo: GithubRepoType; index: number }) {
   return (
     <a href={props.githubRepo.homepage} className="space-y-12 p-2">
-      <div className="group cursor-pointer p-6 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500 hover:shadow-lg">
+      <div className="group cursor-pointer p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
         <div className="flex items-start justify-between mb-4">
           <h3
             className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
@@ -84,7 +84,7 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
           {props.githubRepo.topics.map((topic, index) => (
             <span
               key={index}
-              className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-bold border border-gray-400 dark:border-gray-600 transition-all duration-300 hover:bg-gray-300 dark:hover:bg-gray-600 hover:scale-105 tracking-[0.1em]"
+              className="px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 text-xs font-bold border border-black/10 dark:border-white/10 transition-all duration-300 hover:bg-white dark:hover:bg-white/20 hover:scale-105 tracking-[0.1em]"
               style={{ fontFamily: "monospace" }}
             >
               {topic}

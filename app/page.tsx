@@ -668,7 +668,7 @@ export default function HomePage() {
                 {[...Array(2)].map((_, i) => (
                   <div
                     key={i}
-                    className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6 animate-pulse"
+                    className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
                   >
                     <div className="h-4 w-32 bg-gray-300 dark:bg-gray-700 mb-4"></div>
                     <div className="h-6 w-64 bg-gray-300 dark:bg-gray-700 mb-3"></div>
@@ -757,7 +757,7 @@ export default function HomePage() {
                   {[...Array(2)].map((_, i) => (
                     <div
                       key={i}
-                      className="border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6 animate-pulse"
+                      className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
                     >
                       <div className="h-5 w-48 bg-gray-300 dark:bg-gray-700 mb-4"></div>
                       <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
@@ -824,7 +824,7 @@ export default function HomePage() {
               </p>
 
               <div className="grid grid-cols-2 gap-6">
-                <div className="group border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
+                <div className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
                   <div
                     className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
@@ -844,7 +844,7 @@ export default function HomePage() {
                     THIS YEAR
                   </div>
                 </div>
-                <div className="group border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
+                <div className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
                   <div
                     className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
@@ -868,7 +868,7 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="w-full bg-gray-50 dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 p-8 transition-all duration-300 hover:shadow-lg hover:border-gray-500 dark:hover:border-gray-500">
+              <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
                 <div className="flex items-center justify-between mb-6">
                   <h3
                     className="text-xl font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
@@ -897,7 +897,7 @@ export default function HomePage() {
                       {[...Array(5)].map((_, i) => (
                         <div
                           key={i}
-                          className="flex items-center space-x-4 p-2 border border-gray-200 dark:border-gray-700 animate-pulse"
+                          className="flex items-center space-x-4 p-2 border border-black/10 dark:border-white/10 animate-pulse"
                         >
                           <div className="w-4 h-4 bg-gray-300 dark:bg-gray-700"></div>
                           <div className="flex-1">
@@ -1059,7 +1059,7 @@ export default function HomePage() {
                   {[...Array(2)].map((_, i) => (
                     <div
                       key={i}
-                      className="border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 p-4"
+                      className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)]"
                     >
                       <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 mb-3"></div>
                       <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
@@ -1129,8 +1129,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
             <div className="lg:col-span-5">
               <div className="space-y-8">
-                <div className="flex items-start space-x-4 group cursor-pointer p-4 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
-                  <div className="w-12 h-12 border-2 border-gray-400 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:border-gray-600 dark:group-hover:border-gray-400">
+                <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+                  <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Mail className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div>
@@ -1151,9 +1151,9 @@ export default function HomePage() {
 
                 <a
                   href={"https://github.com/KyleAlanJeffrey"}
-                  className="flex items-start space-x-4 group cursor-pointer p-4 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500"
+                  className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]"
                 >
-                  <div className="w-12 h-12 border-2 border-gray-400 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:border-gray-600 dark:group-hover:border-gray-400">
+                  <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Github className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div>
@@ -1174,9 +1174,9 @@ export default function HomePage() {
 
                 <a
                   href={"https://www.linkedin.com/in/kyle-jeffrey-1651b5189/"}
-                  className="flex items-start space-x-4 group cursor-pointer p-4 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500"
+                  className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]"
                 >
-                  <div className="w-12 h-12 border-2 border-gray-400 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:border-gray-600 dark:group-hover:border-gray-400">
+                  <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div>
@@ -1195,8 +1195,8 @@ export default function HomePage() {
                   </div>
                 </a>
 
-                <div className="flex items-start space-x-4 group cursor-pointer p-4 border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 transition-all duration-300 hover:border-gray-500 dark:hover:border-gray-500">
-                  <div className="w-12 h-12 border-2 border-gray-400 dark:border-gray-600 bg-gray-200 dark:bg-gray-700 flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:border-gray-600 dark:group-hover:border-gray-400">
+                <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+                  <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <MapPin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div>

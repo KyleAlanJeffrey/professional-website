@@ -128,10 +128,10 @@ function Job(props: {
             return (
             <span
               key={`${skill}-${index}`}
-              className={`px-3 py-1 text-xs font-bold border transition-all duration-300 hover:scale-105 tracking-[0.1em] ${
+              className={`px-3 py-1 text-xs font-bold border rounded-full transition-all duration-300 hover:scale-105 tracking-[0.1em] ${
                 isSkillHighlighted
                   ? "bg-amber-200 dark:bg-amber-300 text-gray-900 border-amber-400 dark:border-amber-300"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-400 dark:border-gray-600 hover:bg-gray-300 dark:hover:bg-gray-600"
+                  : "bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 border-black/10 dark:border-white/10 hover:bg-white dark:hover:bg-white/20"
               }`}
               style={{ fontFamily: "monospace" }}
             >
@@ -142,7 +142,7 @@ function Job(props: {
       </div>
 
       <div className="lg:col-span-3 flex justify-center lg:justify-start">
-        <div className="w-24 h-24 md:w-32 md:h-32 border-2 border-gray-400 dark:border-gray-600 bg-gray-200 dark:bg-gray-800 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:border-gray-600 dark:group-hover:border-gray-400">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:scale-105">
           <div
             className="text-2xl md:text-3xl font-black text-gray-600 dark:text-gray-400 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 tracking-[0.1em]"
             style={{ fontFamily: "monospace" }}
