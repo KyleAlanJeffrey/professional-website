@@ -34,6 +34,7 @@ export default function HomePage() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
+  const [activePublicationIndex, setActivePublicationIndex] = useState(0);
 
   const tweetIds = Array.isArray(tweetsData)
     ? tweetsData.map((id) => String(id))
@@ -55,6 +56,23 @@ export default function HomePage() {
     php: "#4F5D95",
     ruby: "#701516",
     dart: "#00B4AB",
+  };
+
+  const getPublicationPreviewSrc = (url: string) => {
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname.includes("youtube.com")) {
+        const videoId = parsed.searchParams.get("v");
+        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+      }
+      if (parsed.hostname === "youtu.be") {
+        const videoId = parsed.pathname.replace("/", "");
+        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+      }
+      return url;
+    } catch {
+      return url;
+    }
   };
 
   useEffect(() => {
@@ -104,6 +122,7 @@ export default function HomePage() {
       "home",
       "work",
       "projects",
+      "publications",
       "github",
       "twitter",
       "contact",
@@ -336,6 +355,19 @@ export default function HomePage() {
             }}
           >
             GITHUB
+          </button>
+          <button
+            onClick={() => scrollToSection("publications")}
+            className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
+              activeSection === "publications"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            }`}
+            style={{
+              fontFamily: "monospace",
+            }}
+          >
+            PUBLICATIONS
           </button>
           <button
             onClick={() => scrollToSection("projects")}
@@ -773,6 +805,187 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Work Projects / Publications Section */}
+        <section id="publications" className="mt-28 max-w-7xl mx-auto">
+          <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/70 to-amber-50/40 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute -top-24 -right-12 h-60 w-60 rounded-full bg-gradient-to-br from-amber-200/60 via-orange-200/20 to-transparent blur-3xl dark:from-amber-400/10 dark:via-orange-400/5"></div>
+              <div className="absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-gradient-to-tr from-sky-200/60 via-indigo-200/20 to-transparent blur-3xl dark:from-sky-400/10 dark:via-indigo-400/5"></div>
+              <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+            </div>
+
+            <div className="relative z-10">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-12">
+                <div>
+                  <div
+                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    EDITIONS
+                  </div>
+                  <div className="w-16 h-1 bg-black dark:bg-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+                  </div>
+                  <h2
+                    className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    WORK
+                  </h2>
+                  <h2
+                    className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    PUBLICATIONS
+                  </h2>
+                </div>
+                <div className="flex items-center gap-6">
+                  <div
+                    className="text-sm text-gray-600 dark:text-gray-400 font-bold tracking-[0.2em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    AT
+                  </div>
+                  <div
+                    className="text-6xl font-black text-black dark:text-white transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                    style={{ fontFamily: "monospace" }}
+                  >
+                    04
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                <div className="lg:col-span-5 space-y-4">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+                    Editorial-style snapshots of work projects and publications,
+                    with context and a live preview whenever possible.
+                  </p>
+                  <div className="space-y-3">
+                    {workProjects.length ? (
+                      workProjects.map((project, index) => {
+                        const isActive = index === activePublicationIndex;
+                        return (
+                          <button
+                            key={`${project.name}-${index}`}
+                            onClick={() => setActivePublicationIndex(index)}
+                            className={`w-full text-left rounded-2xl border px-4 py-4 transition-all duration-300 ${
+                              isActive
+                                ? "border-black/40 dark:border-white/30 bg-black/5 dark:bg-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.15)]"
+                                : "border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-4">
+                              <div>
+                                <div
+                                  className="text-base font-black text-black dark:text-white tracking-[0.08em]"
+                                  style={{ fontFamily: "monospace" }}
+                                >
+                                  {project.name}
+                                </div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.2em] mt-1">
+                                  {project.company}
+                                </div>
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                                PREVIEW
+                              </div>
+                            </div>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 mt-3 line-clamp-3">
+                              {project.description}
+                            </p>
+                          </button>
+                        );
+                      })
+                    ) : (
+                      <div className="space-y-4">
+                        {[...Array(2)].map((_, i) => (
+                          <div
+                            key={i}
+                            className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
+                          >
+                            <div className="h-4 w-40 bg-gray-300 dark:bg-gray-700 mb-3"></div>
+                            <div className="h-3 w-3/4 bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                            <div className="h-3 w-2/3 bg-gray-300 dark:bg-gray-700"></div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7">
+                  <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur shadow-[0_24px_48px_rgba(0,0,0,0.18)] overflow-hidden">
+                    <div className="px-6 pt-6 pb-4 border-b border-black/10 dark:border-white/10 flex items-center justify-between">
+                      <div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                          LIVE PREVIEW
+                        </div>
+                        <div
+                          className="text-lg font-black text-black dark:text-white tracking-[0.08em]"
+                          style={{ fontFamily: "monospace" }}
+                        >
+                          {workProjects[activePublicationIndex]?.name ??
+                            "Select a publication"}
+                        </div>
+                      </div>
+                      {workProjects[activePublicationIndex]?.url ? (
+                        <a
+                          href={workProjects[activePublicationIndex].url}
+                          className="text-xs text-gray-600 dark:text-gray-300 font-bold tracking-[0.2em] hover:text-black dark:hover:text-white"
+                        >
+                          OPEN LINK
+                        </a>
+                      ) : null}
+                    </div>
+                    <div className="aspect-video bg-black/5 dark:bg-white/5">
+                      {workProjects[activePublicationIndex]?.url ? (
+                        <iframe
+                          key={workProjects[activePublicationIndex].url}
+                          src={getPublicationPreviewSrc(
+                            workProjects[activePublicationIndex].url,
+                          )}
+                          title={workProjects[activePublicationIndex].name}
+                          className="h-full w-full"
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          sandbox="allow-scripts allow-same-origin allow-popups"
+                        ></iframe>
+                      ) : (
+                        <div className="h-full w-full flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                          PREVIEW UNAVAILABLE
+                        </div>
+                      )}
+                    </div>
+                    <div className="px-6 py-5 space-y-3">
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {workProjects[activePublicationIndex]?.description ??
+                          "Choose a publication from the list to see more details."}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {workProjects[activePublicationIndex]?.topics?.map(
+                          (topic) => (
+                            <span
+                              key={`active-${topic}`}
+                              className="text-xs px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
+                            >
+                              {topic}
+                            </span>
+                          ),
+                        )}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                        Some publications may block embeds. Use OPEN LINK if
+                        preview is blank.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* GitHub Stats Section */}
         <section id="github" className="mt-28 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
@@ -810,7 +1023,7 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                04
+                05
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
@@ -883,13 +1096,13 @@ export default function HomePage() {
                 </div>
 
                 {/* Commit Activity Visualization */}
-                <div className="space-y-4 mb-8">
+                <div className="mb-8">
                   {commits.length ? (
-                    commits
-                      .slice(0, 5)
-                      .map((commit, index) => (
+                    <div className="space-y-4 max-h-80 overflow-y-auto pr-3 scrollbar-hidden">
+                      {commits.map((commit, index) => (
                         <Commit key={index} commit={commit} index={index} />
-                      ))
+                      ))}
+                    </div>
                   ) : (
                     <div className="space-y-4">
                       {[...Array(5)].map((_, i) => (
@@ -1028,7 +1241,7 @@ export default function HomePage() {
                 className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                05
+                06
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>

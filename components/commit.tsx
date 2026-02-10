@@ -108,10 +108,10 @@ function Commit(props: { commit: CommitType; index: number }) {
   return (
     <a
       href={props.commit.html_url}
-      className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 group cursor-pointer p-2 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:border-gray-400 dark:hover:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700"
+      className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
     >
       <div
-        className={`w-4 h-4 ${intensityColor} transition-all duration-300 group-hover:scale-110`}
+        className={`w-4 h-4 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}
       ></div>
       <div className="flex-1 min-w-0">
         <div
