@@ -868,8 +868,9 @@ export default function HomePage() {
                         return (
                           <button
                             key={`${project.name}-${index}`}
+                            type="button"
                             onClick={() => setActivePublicationIndex(index)}
-                            className={`w-full text-left rounded-2xl border px-4 py-4 transition-all duration-300 ${
+                            className={`w-full text-left rounded-2xl border px-4 py-4 transition-all duration-300 cursor-pointer ${
                               isActive
                                 ? "border-black/40 dark:border-white/30 bg-black/5 dark:bg-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.15)]"
                                 : "border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
