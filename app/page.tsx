@@ -225,7 +225,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative"
+      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16"
       style={{
         backgroundImage:
           "radial-gradient(900px_circle_at_8%_-10%, rgba(255,195,120,0.35), transparent 55%), radial-gradient(700px_circle_at_92%_0%, rgba(120,210,255,0.25), transparent 50%)",
@@ -302,7 +302,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("contact")}
             className={`blockorigin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "contact"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -315,7 +315,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("twitter")}
             className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "twitter"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -328,7 +328,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("github")}
             className={`block  origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "github"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -341,7 +341,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("projects")}
             className={`blocktext-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "projects"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -354,7 +354,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("work")}
             className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "work"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -367,7 +367,7 @@ export default function HomePage() {
             onClick={() => scrollToSection("home")}
             className={`block whitespace-nowrap text-sm tracking-[0.3em] font-bold transition-all duration-300 hover:scale-105 ${
               activeSection === "home"
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
             }`}
             style={{
@@ -420,7 +420,7 @@ export default function HomePage() {
               </div>
 
               <h1
-                className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.9] mb-6 transition-all duration-300"
+                className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.62] mb-6 transition-all duration-300"
                 style={{
                   letterSpacing: "0.06em",
                   textShadow: "0 12px 40px rgba(0,0,0,0.12)",
@@ -430,7 +430,7 @@ export default function HomePage() {
                   KYLE
                 </span>
                 <br />
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-500 to-sky-600 dark:from-amber-300 dark:via-orange-300 dark:to-sky-300">
+                <span className="-mt-8 block text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-500 to-sky-600 dark:from-amber-300 dark:via-orange-300 dark:to-sky-300">
                   JEFFREY
                 </span>
               </h1>
@@ -595,7 +595,7 @@ export default function HomePage() {
         {/* Work Experience Section */}
         <section
           id="work"
-          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
             highlightSectionId === "work"
               ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
               : ""
@@ -688,7 +688,7 @@ export default function HomePage() {
         {/* Projects Section */}
         <section
           id="projects"
-          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
             highlightSectionId === "projects"
               ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
               : ""
@@ -774,7 +774,7 @@ export default function HomePage() {
         </section>
 
         {/* GitHub Stats Section */}
-        <section id="github" className="mt-40 max-w-7xl mx-auto">
+        <section id="github" className="mt-28 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5 text-center lg:text-left">
               <div className="mb-4">
@@ -987,7 +987,7 @@ export default function HomePage() {
         {/* Twitter Section */}
         <section
           id="twitter"
-          className={`mt-40 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
             highlightSectionId === "twitter"
               ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
               : ""
@@ -1072,7 +1072,7 @@ export default function HomePage() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="mt-40 mb-16 max-w-7xl mx-auto">
+        <section id="contact" className="mt-28 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
