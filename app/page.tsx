@@ -30,6 +30,8 @@ export default function HomePage() {
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
   const twitterHandle = "KyleJef84225678";
+  const thisRepoUrl =
+    "https://raw.githubusercontent.com/KyleAlanJeffrey/professional-website/";
   const [tweetIds, setTweetIds] = useState<string[]>([]);
   const languageColors: Record<string, string> = {
     typescript: "#3178c6",
@@ -73,9 +75,7 @@ export default function HomePage() {
     });
 
     // Get jobs
-    fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/jobs.json`,
-    )
+    fetch(`${thisRepoUrl}main/data/jobs.json`)
       .then((response) => response.json())
       .then((data) => {
         setJobs(data["jobs"]);
@@ -86,9 +86,7 @@ export default function HomePage() {
       });
 
     // Get work projects
-    fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/work_projects.json`,
-    )
+    fetch(`${thisRepoUrl}main/data/work_projects.json`)
       .then((response) => response.json())
       .then((data) => {
         setWorkProjects(data["projects"]);
@@ -98,9 +96,7 @@ export default function HomePage() {
         console.log(error);
       });
 
-    fetch(
-      `https://raw.githubusercontent.com/KyleAlanJeffrey/UpdatedWebsite/main/data/bio.txt`,
-    )
+    fetch(`${thisRepoUrl}main/data/bio.txt`)
       .then((response) => response.text())
       .then((data) => {
         setBio(data);
@@ -171,7 +167,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    fetch("/tweets.json")
+    fetch(`${thisRepoUrl}main/data/tweets.json`)
       .then((response) => response.json())
       .then((data) => {
         if (Array.isArray(data)) {
