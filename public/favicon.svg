@@ -3,11 +3,15 @@
     <linearGradient id="accent" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#f59e0b"/>
       <stop offset="0.5" stop-color="#f97316"/>
-      <stop offset="1" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#0b0c0f"/>
+    </linearGradient>
+    <linearGradient id="accent-dark" x1="10" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b45309"/>
+      <stop offset="0.5" stop-color="#c2410c"/>
+      <stop offset="1" stop-color="#0b0c0f"/>
     </linearGradient>
   </defs>
-  <rect x="10" y="10" width="44" height="44" rx="12" stroke="url(#accent)" stroke-width="4"/>
-  <text x="32" y="39" text-anchor="middle" font-size="20" font-weight="800" font-family="Geist, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">
-    <tspan fill="url(#accent)">KJ</tspan>
+  <text x="32" y="50" text-anchor="middle" font-size="46" font-weight="900" font-family="Geist, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial">
+    <tspan fill="url(#accent-dark)">KJ</tspan>
   </text>
 </svg>
