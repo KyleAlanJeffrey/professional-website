@@ -9,7 +9,7 @@ import jobsData from "@/data/jobs.json";
 import tweetsData from "@/data/tweets.json";
 import workProjectsData from "@/data/work_projects.json";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Tweet } from "react-tweet";
 import { getAllCommits, getAllRepos, getLanguageStats } from "./api";
 
@@ -28,12 +28,6 @@ export default function HomePage() {
   const [highlightSectionId, setHighlightSectionId] = useState<string | null>(
     null,
   );
-  const highlightSkillTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
-  const highlightSectionTimeoutRef = useRef<ReturnType<
-    typeof setTimeout
-  > | null>(null);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactSubject, setContactSubject] = useState("");
@@ -166,12 +160,6 @@ export default function HomePage() {
 
   const handleSkillClick = (skill: string) => {
     setHighlightSkill(skill);
-    if (highlightSkillTimeoutRef.current) {
-      clearTimeout(highlightSkillTimeoutRef.current);
-    }
-    highlightSkillTimeoutRef.current = setTimeout(() => {
-      setHighlightSkill(null);
-    }, 3000);
 
     const targetIndex = jobs.findIndex(
       (job: { skills?: string[] }) =>
@@ -191,15 +179,21 @@ export default function HomePage() {
 
   const handleFocusClick = (sectionId: string) => {
     setHighlightSectionId(sectionId);
-    if (highlightSectionTimeoutRef.current) {
-      clearTimeout(highlightSectionTimeoutRef.current);
-    }
-    highlightSectionTimeoutRef.current = setTimeout(() => {
-      setHighlightSectionId(null);
-    }, 2500);
-
     scrollToSection(sectionId);
   };
+
+  useEffect(() => {
+    const handleDocumentClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest("[data-keep-highlight='true']")) return;
+      if (highlightSkill) setHighlightSkill(null);
+      if (highlightSectionId) setHighlightSectionId(null);
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+    return () => document.removeEventListener("click", handleDocumentClick);
+  }, [highlightSkill, highlightSectionId]);
 
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -467,44 +461,26 @@ export default function HomePage() {
                   </span>
                 </Button>
               </div>
-
-              <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-                {[
-                  "Robotics + Full Stack",
-                  "Human-Centered Systems",
-                  "Research → Product",
-                ].map((item) => (
-                  <span
-                    key={item}
-                    className="text-xs md:text-sm px-3 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 text-gray-700 dark:text-gray-300 backdrop-blur"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
             </div>
 
             {/* Center Content - Industrial Elements */}
-            <div className="lg:col-span-3 relative order-first lg:order-none">
-              <div className="relative mx-auto w-60 h-60 md:w-80 md:h-80 lg:w-96 lg:h-96">
+            <div className="lg:col-span-3 relative">
+              <div className="relative mx-auto w-80 md:w-[26rem] lg:w-[34rem] aspect-[3/2]">
                 <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
                 <Image
-                  src="/meme.jpeg"
+                  src="/me.jpeg"
                   alt="Portrait"
                   className="absolute inset-3 rounded-2xl object-cover"
-                  width={420}
-                  height={420}
+                  fill
+                  sizes="(min-width: 1024px) 26rem, (min-width: 768px) 20rem, 16rem"
                   priority
                 />
-                <div className="absolute -bottom-4 left-6 right-6 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 px-4 py-3 text-xs font-semibold tracking-[0.2em] text-gray-700 dark:text-gray-200 text-center backdrop-blur">
-                  FULL STACK ROBOTICS ENGINEER
-                </div>
               </div>
             </div>
 
             {/* Right Content - Mobile responsive */}
-            <div className="lg:col-span-3 text-center lg:text-left">
+            <div className="lg:col-span-3 text-center lg:text-left lg:sticky lg:top-24 self-start lg:pl-10">
               <div className="mb-8 border border-black/10 dark:border-white/10 rounded-2xl bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)]">
                 <div className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-semibold mb-3">
                   CURRENT FOCUS
@@ -525,6 +501,7 @@ export default function HomePage() {
                       key={item.desc}
                       className="group flex items-start gap-3 cursor-pointer rounded-lg px-2 py-2 -mx-2 transition-all duration-300 hover:bg-black/5 dark:hover:bg-white/10 hover:translate-x-1"
                       onClick={() => handleFocusClick(item.section)}
+                      data-keep-highlight="true"
                     >
                       <span className="mt-1 h-2 w-2 rounded-full bg-black dark:bg-white transition-transform duration-300 group-hover:scale-125"></span>
                       <p className="text-sm text-gray-700 dark:text-gray-300 transition-colors duration-300 group-hover:text-black dark:group-hover:text-white">
@@ -538,7 +515,7 @@ export default function HomePage() {
           </div>
 
           {/* Bottom Section - Mobile responsive */}
-          <div className="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10">
+          <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10">
             <div className="lg:col-span-1 hidden lg:block self-start">
               <div
                 className="text-sm text-gray-500 dark:text-gray-400 tracking-[0.3em] font-bold -rotate-90 origin-center transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300"
@@ -602,6 +579,7 @@ export default function HomePage() {
                           key={item}
                           type="button"
                           onClick={() => handleSkillClick(item)}
+                          data-keep-highlight="true"
                           className="text-xs px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
                         >
                           {item}
