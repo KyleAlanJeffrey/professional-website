@@ -209,41 +209,55 @@ export default function HomePage() {
     const sectionIds = [
       "home",
       "work",
-      "projects",
       "publications",
+      "projects",
       "github",
       "twitter",
       "contact",
     ];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section !== null);
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        root: null,
-        rootMargin: "-40% 0px -40% 0px",
-        threshold: 0,
-      },
-    );
+    if (!sections.length) return;
 
-    const sections: HTMLElement[] = [];
+    let ticking = false;
 
-    sectionIds.forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) {
-        sections.push(section);
-        observer.observe(section);
-      }
-    });
+    const updateActiveSection = () => {
+      const viewportCenter = window.innerHeight * 0.5;
+      let nearestSectionId = sections[0].id;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionCenter = rect.top + rect.height / 2;
+        const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
+
+        if (distanceFromCenter < nearestDistance) {
+          nearestDistance = distanceFromCenter;
+          nearestSectionId = section.id;
+        }
+      });
+
+      setActiveSection((current) =>
+        current === nearestSectionId ? current : nearestSectionId,
+      );
+      ticking = false;
+    };
+
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateActiveSection);
+    };
+
+    onScrollOrResize();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
 
     return () => {
-      sections.forEach((section) => observer.unobserve(section));
-      observer.disconnect();
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
     };
   }, []);
 
@@ -505,7 +519,7 @@ export default function HomePage() {
         <div className="hidden -rotate-90 lg:flex flex-row gap-3 items-center justify-center fixed left-0 h-full z-20 py-40 w-8">
           <button
             onClick={() => scrollToSection("contact")}
-            className={`blockorigin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
+            className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "contact"
                 ? "text-black dark:text-white underline decoration-2 underline-offset-4"
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
@@ -543,6 +557,19 @@ export default function HomePage() {
             GITHUB
           </button>
           <button
+            onClick={() => scrollToSection("projects")}
+            className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
+              activeSection === "projects"
+                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            }`}
+            style={{
+              fontFamily: "monospace",
+            }}
+          >
+            PROJECTS
+          </button>
+          <button
             onClick={() => scrollToSection("publications")}
             className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
               activeSection === "publications"
@@ -554,19 +581,6 @@ export default function HomePage() {
             }}
           >
             PUBLICATIONS
-          </button>
-          <button
-            onClick={() => scrollToSection("projects")}
-            className={`blocktext-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
-              activeSection === "projects"
-                ? "text-black dark:text-white underline decoration-2 underline-offset-4"
-                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-            }`}
-            style={{
-              fontFamily: "monospace",
-            }}
-          >
-            PROJECTS
           </button>
           <button
             onClick={() => scrollToSection("work")}
@@ -918,94 +932,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <section
-          id="projects"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
-            highlightSectionId === "projects"
-              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
-              : ""
-          }`}
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-            <div className="lg:col-span-5 text-center lg:text-left">
-              <div
-                className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
-                style={{ fontFamily: "monospace" }}
-              >
-                PORTFOLIO
-              </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
-                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
-              </div>
-              <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
-                style={{ fontFamily: "monospace" }}
-              >
-                FEATURED
-              </h2>
-              <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
-                style={{ fontFamily: "monospace" }}
-              >
-                PROJECTS
-              </h2>
-              <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
-                style={{ fontFamily: "monospace" }}
-              >
-                AT
-              </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
-              </div>
-
-              <div
-                className="text-6xl font-black text-black dark:text-white mb-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
-                style={{ fontFamily: "monospace" }}
-              >
-                03
-              </div>
-
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
-                A curated selection of my recent personal projects.
-              </p>
-            </div>
-
-            <div className="lg:col-span-7">
-              {githubRepos.length ? (
-                githubRepos.map((repo, index) =>
-                  repo.pinned ? (
-                    <Project
-                      githubRepo={repo}
-                      key={`repo-${index}`}
-                      index={index}
-                    />
-                  ) : null,
-                )
-              ) : (
-                <div className="space-y-6">
-                  {[...Array(2)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
-                    >
-                      <div className="h-5 w-48 bg-gray-300 dark:bg-gray-700 mb-4"></div>
-                      <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
-                      <div className="h-3 w-5/6 bg-gray-300 dark:bg-gray-700 mb-6"></div>
-                      <div className="flex gap-2">
-                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
-                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
-                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
         {/* Work Projects / Publications Section */}
         <section id="publications" className="mt-28 max-w-7xl mx-auto cv-auto">
           <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/70 to-amber-50/40 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
@@ -1051,7 +977,7 @@ export default function HomePage() {
                     className="text-6xl font-black text-black dark:text-white transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
                   >
-                    04
+                    03
                   </div>
                 </div>
               </div>
@@ -1256,6 +1182,94 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section
+          id="projects"
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+            highlightSectionId === "projects"
+              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              : ""
+          }`}
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
+            <div className="lg:col-span-5 text-center lg:text-left">
+              <div
+                className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                style={{ fontFamily: "monospace" }}
+              >
+                PORTFOLIO
+              </div>
+              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+              </div>
+              <h2
+                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                FEATURED
+              </h2>
+              <h2
+                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                PROJECTS
+              </h2>
+              <div
+                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                AT
+              </div>
+              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-6 relative overflow-hidden">
+                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+              </div>
+
+              <div
+                className="text-6xl font-black text-black dark:text-white mb-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                style={{ fontFamily: "monospace" }}
+              >
+                04
+              </div>
+
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+                A curated selection of my recent personal projects.
+              </p>
+            </div>
+
+            <div className="lg:col-span-7">
+              {githubRepos.length ? (
+                githubRepos.map((repo, index) =>
+                  repo.pinned ? (
+                    <Project
+                      githubRepo={repo}
+                      key={`repo-${index}`}
+                      index={index}
+                    />
+                  ) : null,
+                )
+              ) : (
+                <div className="space-y-6">
+                  {[...Array(2)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
+                    >
+                      <div className="h-5 w-48 bg-gray-300 dark:bg-gray-700 mb-4"></div>
+                      <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
+                      <div className="h-3 w-5/6 bg-gray-300 dark:bg-gray-700 mb-6"></div>
+                      <div className="flex gap-2">
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                        <div className="h-6 w-16 bg-gray-300 dark:bg-gray-700"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </section>
