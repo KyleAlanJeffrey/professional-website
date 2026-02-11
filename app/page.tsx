@@ -603,6 +603,9 @@ export default function HomePage() {
           id="home"
           className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative overflow-x-clip"
         >
+          <h2 className="sr-only">
+            Robotics Software Engineer Portfolio and AI Projects
+          </h2>
           <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[320px] h-[320px] sm:w-[520px] sm:h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
           <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
@@ -1346,7 +1349,7 @@ export default function HomePage() {
                 <div className="mb-8">
                   {commits.length ? (
                     <div className="space-y-4 max-h-80 overflow-y-auto overflow-x-hidden pr-3 scrollbar-hidden">
-                      {commits.map((commit, index) => (
+                      {commits.slice(0, 20).map((commit, index) => (
                         <Commit key={index} commit={commit} index={index} />
                       ))}
                     </div>

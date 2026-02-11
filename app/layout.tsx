@@ -2,15 +2,26 @@ import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://kylejeffrey.com'),
   title: {
-    default: "Kyle Jeffrey",
+    default: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
     template: "%s | Kyle Jeffrey"
   },
-  description: "Code, design, and writing by Kyle Jeffrey.",
-  keywords: ["Kyle Jeffrey", "software", "design", "writing", "portfolio", "blog"],
+  description:
+    "Kyle Jeffrey is a robotics software engineer building autonomy, AI systems, and full-stack web products. Explore projects, publications, and engineering work.",
+  keywords: [
+    "Kyle Jeffrey",
+    "robotics software engineer",
+    "autonomy engineer",
+    "AI software engineer",
+    "full stack developer portfolio",
+    "robotics portfolio",
+    "software projects",
+    "engineering publications",
+  ],
   authors: [{ name: "Kyle Jeffrey", url: "https://kylejeffrey.com" }],
   creator: "Kyle Jeffrey",
   category: "technology",
@@ -19,13 +30,14 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://kylejeffrey.com",
     siteName: "Kyle Jeffrey",
-    title: "Kyle Jeffrey",
-    description: "Code, design, and writing by Kyle Jeffrey.",
+    title: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
+    description:
+      "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
     images: [
       {
-        url: "/og.jpg", // put your OG image here (1200x630 recommended)
+        url: "/me.jpeg",
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: "Kyle Jeffrey — code, design, and writing"
       }
     ],
@@ -34,9 +46,10 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Kyle Jeffrey",
-    description: "Code, design, and writing by Kyle Jeffrey.",
-    images: ["/og.jpg"],
+    title: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
+    description:
+      "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
+    images: ["/me.jpeg"],
     // creator: "@yourhandle" // add if you have one
   },
 
@@ -52,6 +65,9 @@ export const metadata: Metadata = {
 
   alternates: {
     canonical: "/",
+    languages: {
+      "en-US": "/",
+    },
     types: {
       "application/rss+xml": "/rss.xml"
     }
@@ -96,6 +112,56 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://kylejeffrey.com/#website",
+        url: "https://kylejeffrey.com",
+        name: "Kyle Jeffrey",
+        inLanguage: "en-US",
+      },
+      {
+        "@type": "Person",
+        "@id": "https://kylejeffrey.com/#person",
+        name: "Kyle Jeffrey",
+        url: "https://kylejeffrey.com",
+        email: "mailto:kyle.alan.jeffrey@gmail.com",
+        jobTitle: "Robotics Software Engineer",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "San Francisco",
+          addressRegion: "CA",
+          addressCountry: "US",
+        },
+        sameAs: [
+          "https://github.com/KyleAlanJeffrey",
+          "https://www.linkedin.com/in/kyle-jeffrey-1651b5189/",
+          "https://x.com/kjeffrey6",
+        ],
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://kylejeffrey.com/#service",
+        name: "Kyle Jeffrey Engineering",
+        url: "https://kylejeffrey.com",
+        areaServed: "US",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "San Francisco",
+          addressRegion: "CA",
+          addressCountry: "US",
+        },
+        founder: {
+          "@id": "https://kylejeffrey.com/#person",
+        },
+      },
+    ],
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -120,8 +186,56 @@ html {
             `,
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schema),
+          }}
+        />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {gaId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}');
+                `,
+              }}
+            />
+          </>
+        ) : null}
+        {fbPixelId ? (
+          <Script
+            id="facebook-pixel"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${fbPixelId}');
+fbq('track', 'PageView');
+              `,
+            }}
+          />
+        ) : null}
+      </body>
     </html>
   )
 }
