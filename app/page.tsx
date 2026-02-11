@@ -462,7 +462,10 @@ export default function HomePage() {
       className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16 overflow-x-clip"
       style={{
         backgroundImage:
-          "radial-gradient(900px_circle_at_8%_-10%, rgba(255,195,120,0.35), transparent 55%), radial-gradient(700px_circle_at_92%_0%, rgba(120,210,255,0.25), transparent 50%)",
+          "radial-gradient(1100px circle at 12% -12%, rgba(245,158,11,0.08), transparent 58%), radial-gradient(900px circle at 82% -4%, rgba(249,115,22,0.06), transparent 54%), radial-gradient(950px circle at 54% 8%, rgba(56,189,248,0.05), transparent 62%)",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     >
       {/* Animated Background Lines */}
@@ -513,19 +516,6 @@ export default function HomePage() {
           style={{ animationDuration: "4.5s" }}
         ></div>
 
-        {/* Diagonal Lines */}
-        <div
-          className="absolute top-[20%] left-[20%] w-32 h-px bg-gray-400 dark:bg-gray-600 opacity-40 rotate-45 animate-pulse"
-          style={{ animationDelay: "3s" }}
-        ></div>
-        <div
-          className="absolute top-[50%] right-[30%] w-24 h-0.5 bg-gray-300 dark:bg-gray-700 opacity-60 -rotate-45 animate-bounce"
-          style={{ animationDuration: "2.8s" }}
-        ></div>
-        <div
-          className="absolute top-[70%] left-[60%] w-20 h-px bg-gray-500 dark:bg-gray-500 opacity-50 rotate-12 animate-pulse"
-          style={{ animationDelay: "1.2s" }}
-        ></div>
       </div>
 
       {/* Main Content */}
@@ -659,7 +649,6 @@ export default function HomePage() {
           <h2 className="sr-only">
             Robotics Software Engineer Portfolio and AI Projects
           </h2>
-          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[320px] h-[320px] sm:w-[520px] sm:h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
           <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
             {/* Left Content */}
@@ -713,8 +702,8 @@ export default function HomePage() {
               </div>
 
               <div className="mt-8 text-left">
-                <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-amber-50/80 via-white/80 to-sky-50/60 dark:from-white/5 dark:via-white/3 dark:to-slate-900/60 p-5 shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
-                  <div className="absolute -top-6 -right-8 h-24 w-32 rotate-12 bg-gradient-to-r from-amber-300/40 to-orange-300/20 blur-2xl dark:from-amber-400/10 dark:to-orange-400/5"></div>
+                <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-slate-50/90 via-white/85 to-sky-50/70 dark:from-white/5 dark:via-white/3 dark:to-slate-900/60 p-5 shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
+                  <div className="absolute -top-6 -right-8 h-24 w-32 rotate-12 bg-gradient-to-r from-sky-300/40 to-indigo-300/20 blur-2xl dark:from-sky-400/10 dark:to-indigo-400/5"></div>
                   <div className="absolute -bottom-6 -left-10 h-24 w-32 -rotate-12 bg-gradient-to-r from-sky-300/40 to-indigo-300/20 blur-2xl dark:from-sky-400/10 dark:to-indigo-400/5"></div>
                   <div className="relative z-10">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -746,7 +735,7 @@ export default function HomePage() {
                           onClick={item.onClick}
                           data-keep-highlight="true"
                         >
-                          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-amber-400/40 via-orange-400/20 to-sky-400/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400/40 via-cyan-300/20 to-indigo-400/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                           <div className="flex items-start gap-3">
                             <div className="mt-1 h-6 w-6 rounded-lg border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center text-[10px] font-black text-gray-700 dark:text-gray-200">
                               →
@@ -772,7 +761,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 relative">
               <div className="relative mx-auto w-full max-w-[20rem] md:max-w-[26rem] lg:max-w-[34rem] aspect-[3/2]">
                 <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
+                <div className="absolute top-6 -right-2 w-16 h-16 -rotate-6 rounded-2xl bg-gradient-to-br from-amber-400/65 to-orange-500/65 blur-sm"></div>
                 <Image
                   src="/me-hero.webp"
                   alt="Portrait"
@@ -856,12 +845,24 @@ export default function HomePage() {
         {/* Work Experience Section */}
         <section
           id="work"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
             highlightSectionId === "work"
-              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
           }`}
         >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="absolute -top-12 -left-10 h-52 w-52 rounded-full bg-gradient-to-br from-sky-200/40 via-indigo-200/20 to-transparent blur-3xl animate-pulse [animation-duration:7s] dark:from-sky-400/10 dark:via-indigo-400/5"></div>
+            <div className="absolute bottom-10 left-10 h-10 w-10 -rotate-6 rounded-2xl bg-gradient-to-br from-amber-400/55 to-orange-500/55 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
+            <div className="absolute top-20 right-28 h-16 w-16 rounded-full border border-sky-300/40 dark:border-sky-300/20"></div>
+            <div className="absolute top-24 right-6 h-28 w-28 rotate-12 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-14 right-24 h-8 w-24 -rotate-6 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-8 left-20 h-20 w-px bg-gradient-to-b from-transparent via-black/15 to-transparent dark:via-white/15"></div>
+            <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
@@ -949,12 +950,15 @@ export default function HomePage() {
 
         {/* Work Projects / Publications Section */}
         <section id="publications" className="mt-28 max-w-7xl mx-auto cv-auto">
-          <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/70 to-amber-50/40 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
+          <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/75 to-slate-100/45 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute -top-24 -right-12 h-60 w-60 rounded-full bg-gradient-to-br from-amber-200/60 via-orange-200/20 to-transparent blur-3xl dark:from-amber-400/10 dark:via-orange-400/5"></div>
-              <div className="absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-gradient-to-tr from-sky-200/60 via-indigo-200/20 to-transparent blur-3xl dark:from-sky-400/10 dark:via-indigo-400/5"></div>
-              <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
-            </div>
+            <div className="absolute -top-24 -right-12 h-60 w-60 rounded-full bg-gradient-to-br from-sky-200/60 via-indigo-200/20 to-transparent blur-3xl dark:from-sky-400/10 dark:via-indigo-400/5"></div>
+            <div className="absolute top-14 left-12 h-14 w-14 rotate-12 rounded-2xl bg-gradient-to-br from-amber-400/55 to-orange-500/55 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
+            <div className="absolute -bottom-20 -left-10 h-52 w-52 rounded-full bg-gradient-to-tr from-sky-200/60 via-indigo-200/20 to-transparent blur-3xl dark:from-sky-400/10 dark:via-indigo-400/5"></div>
+            <div className="absolute top-24 left-10 h-14 w-14 rotate-45 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-14 right-1/3 h-10 w-10 rounded-full border border-indigo-300/40 dark:border-indigo-300/20"></div>
+            <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
 
             <div className="relative z-10">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-12">
@@ -1213,12 +1217,24 @@ export default function HomePage() {
         {/* Projects Section */}
         <section
           id="projects"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
             highlightSectionId === "projects"
-              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
           }`}
         >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="absolute -top-8 right-4 h-44 w-44 rounded-full bg-gradient-to-tr from-sky-200/45 via-indigo-200/20 to-transparent blur-3xl animate-pulse [animation-duration:8s] dark:from-sky-400/10 dark:via-indigo-400/5"></div>
+            <div className="absolute bottom-8 right-8 h-11 w-11 rotate-3 rounded-2xl bg-gradient-to-br from-amber-400/55 to-orange-500/55 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
+            <div className="absolute top-10 left-14 h-14 w-14 rounded-full border border-cyan-300/40 dark:border-cyan-300/20"></div>
+            <div className="absolute bottom-8 -left-8 h-24 w-32 -rotate-6 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute top-28 left-6 h-8 w-20 rotate-12 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-10 right-10 h-3 w-3 rounded-full bg-indigo-300/60 dark:bg-indigo-300/20 animate-pulse [animation-duration:6s]"></div>
+            <div className="absolute inset-x-12 bottom-6 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
             <div className="lg:col-span-5 text-center lg:text-left">
               <div
@@ -1299,7 +1315,22 @@ export default function HomePage() {
         </section>
 
         {/* GitHub Stats Section */}
-        <section id="github" className="mt-28 max-w-7xl mx-auto cv-auto">
+        <section
+          id="github"
+          className="mt-28 max-w-7xl mx-auto cv-auto relative isolate"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="absolute top-10 -right-10 h-56 w-56 rounded-full bg-gradient-to-br from-emerald-200/35 via-cyan-200/15 to-transparent blur-3xl animate-pulse [animation-duration:9s] dark:from-emerald-400/10 dark:via-cyan-400/5"></div>
+            <div className="absolute top-14 right-24 h-3 w-3 rounded-full bg-emerald-300/60 dark:bg-emerald-300/20"></div>
+            <div className="absolute bottom-16 right-24 h-12 w-12 -rotate-12 rounded-2xl bg-gradient-to-br from-amber-400/50 to-orange-500/50 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
+            <div className="absolute top-20 left-4 h-20 w-20 rounded-2xl border border-black/10 dark:border-white/10 rotate-12"></div>
+            <div className="absolute bottom-12 right-8 h-7 w-28 -rotate-3 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-8 left-10 h-16 w-16 rounded-full border border-emerald-300/40 dark:border-emerald-300/20"></div>
+            <div className="absolute inset-x-10 top-4 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5 text-center lg:text-left">
               <div className="mb-4">
@@ -1512,12 +1543,24 @@ export default function HomePage() {
         {/* Twitter Section */}
         <section
           id="twitter"
-          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl cv-auto ${
+          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl cv-auto relative isolate ${
             highlightSectionId === "twitter"
-              ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+              ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
           }`}
         >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="absolute -top-8 left-8 h-44 w-44 rounded-full bg-gradient-to-tr from-sky-200/45 via-blue-200/20 to-transparent blur-3xl animate-pulse [animation-duration:8s] dark:from-sky-400/10 dark:via-blue-400/5"></div>
+            <div className="absolute top-14 right-20 h-10 w-10 -rotate-12 rounded-2xl bg-gradient-to-br from-amber-400/55 to-orange-500/55 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
+            <div className="absolute top-10 right-28 h-12 w-12 rotate-45 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-10 right-8 h-24 w-36 border border-black/10 dark:border-white/10 -rotate-6"></div>
+            <div className="absolute bottom-24 left-6 h-7 w-24 rotate-6 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-8 left-1/3 h-14 w-14 rounded-full border border-sky-300/40 dark:border-sky-300/20"></div>
+            <div className="absolute inset-x-12 top-8 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-10 md:mb-12">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
@@ -1577,7 +1620,7 @@ export default function HomePage() {
                       id={`tweet-${index}`}
                       className={`w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] flex justify-center rounded-2xl transition-all duration-300 ${
                         highlightTweetIndex === index
-                          ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
+                          ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
                           : ""
                       }`}
                     >
@@ -1605,7 +1648,20 @@ export default function HomePage() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="mt-28 max-w-7xl mx-auto cv-auto">
+        <section
+          id="contact"
+          className="mt-28 max-w-7xl mx-auto cv-auto relative isolate"
+        >
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+          >
+            <div className="absolute top-16 right-36 h-14 w-14 rounded-full border border-indigo-300/40 dark:border-indigo-300/20"></div>
+            <div className="absolute top-14 left-6 h-20 w-28 rotate-6 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-10 right-10 h-8 w-24 -rotate-6 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute bottom-14 left-20 h-10 w-10 rotate-45 border border-black/10 dark:border-white/10"></div>
+            <div className="absolute inset-x-10 top-6 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
