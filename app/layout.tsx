@@ -35,7 +35,7 @@ export const metadata: Metadata = {
       "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
     images: [
       {
-        url: "/me.jpeg",
+        url: "/me-hero.webp",
         width: 1200,
         height: 1200,
         alt: "Kyle Jeffrey — code, design, and writing"
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     title: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
     description:
       "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
-    images: ["/me.jpeg"],
+    images: ["/me-hero.webp"],
     // creator: "@yourhandle" // add if you have one
   },
 

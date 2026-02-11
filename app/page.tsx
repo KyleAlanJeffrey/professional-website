@@ -9,11 +9,14 @@ import jobsData from "@/data/jobs.json";
 import tweetsData from "@/data/tweets.json";
 import workProjectsData from "@/data/work_projects.json";
 import { Github, Linkedin, Mail, MapPin, Moon, Sun } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Tweet } from "react-tweet";
 import { getAllCommits, getAllRepos, getLanguageStats } from "./api";
 
 import Image from "next/image";
+const Tweet = dynamic(() => import("react-tweet").then((mod) => mod.Tweet), {
+  ssr: false,
+});
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState("home");
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -41,6 +44,7 @@ export default function HomePage() {
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
   const [activePublicationIndex, setActivePublicationIndex] = useState(0);
+  const [shouldRenderTweets, setShouldRenderTweets] = useState(false);
   const [previewLoadState, setPreviewLoadState] = useState<
     "idle" | "loading" | "ready" | "failed"
   >("idle");
@@ -112,7 +116,7 @@ export default function HomePage() {
     : "";
   const activeProjectStaticPreviewSrc =
     activeProject?.name === "Project Music Mode"
-      ? "/Work-Projects/MusicMode.png"
+      ? "/Work-Projects/MusicMode.webp"
       : "";
   const activeProjectYoutubeId = activeProjectUrl
     ? getYoutubeVideoId(activeProjectUrl)
@@ -138,6 +142,26 @@ export default function HomePage() {
 
     return () => window.clearTimeout(timeoutId);
   }, [usesIframePreview]);
+
+  useEffect(() => {
+    const twitterSection = document.getElementById("twitter");
+    if (!twitterSection) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldRenderTweets(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "300px 0px" },
+    );
+
+    observer.observe(twitterSection);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -721,7 +745,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
                 <Image
-                  src="/me.jpeg"
+                  src="/me-hero.webp"
                   alt="Portrait"
                   className="absolute inset-3 rounded-2xl object-cover"
                   fill
@@ -983,7 +1007,7 @@ export default function HomePage() {
         </section>
 
         {/* Work Projects / Publications Section */}
-        <section id="publications" className="mt-28 max-w-7xl mx-auto">
+        <section id="publications" className="mt-28 max-w-7xl mx-auto cv-auto">
           <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/70 to-amber-50/40 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
             <div className="absolute inset-0 pointer-events-none">
               <div className="absolute -top-24 -right-12 h-60 w-60 rounded-full bg-gradient-to-br from-amber-200/60 via-orange-200/20 to-transparent blur-3xl dark:from-amber-400/10 dark:via-orange-400/5"></div>
@@ -1237,7 +1261,7 @@ export default function HomePage() {
         </section>
 
         {/* GitHub Stats Section */}
-        <section id="github" className="mt-28 max-w-7xl mx-auto">
+        <section id="github" className="mt-28 max-w-7xl mx-auto cv-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5 text-center lg:text-left">
               <div className="mb-4">
@@ -1450,7 +1474,7 @@ export default function HomePage() {
         {/* Twitter Section */}
         <section
           id="twitter"
-          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl cv-auto ${
             highlightSectionId === "twitter"
               ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
               : ""
@@ -1507,7 +1531,7 @@ export default function HomePage() {
               data-theme={isDarkMode ? "dark" : "light"}
               className="flex justify-center"
             >
-              {tweetIds.length > 0 ? (
+              {shouldRenderTweets && tweetIds.length > 0 ? (
                 <div className="flex flex-wrap justify-center items-start gap-4 md:gap-5 w-full mx-auto">
                   {tweetIds.map((id, index) => (
                     <div
@@ -1543,7 +1567,7 @@ export default function HomePage() {
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="mt-28 max-w-7xl mx-auto">
+        <section id="contact" className="mt-28 max-w-7xl mx-auto cv-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
