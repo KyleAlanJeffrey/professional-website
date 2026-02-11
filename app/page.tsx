@@ -654,7 +654,7 @@ export default function HomePage() {
         {/* Home Section - Mobile responsive */}
         <section
           id="home"
-          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative overflow-x-clip"
+          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative"
         >
           <h2 className="sr-only">
             Robotics Software Engineer Portfolio and AI Projects
@@ -1550,7 +1550,7 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                className="inline-block text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-center lg:origin-left tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 06
@@ -1638,10 +1638,10 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                className="inline-block text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-center lg:origin-left tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
-                06
+                07
               </div>
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
