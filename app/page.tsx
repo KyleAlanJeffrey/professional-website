@@ -1125,6 +1125,21 @@ export default function HomePage() {
                             className="object-cover"
                             sizes="(min-width: 1024px) 56rem, 100vw"
                           />
+                          <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center gap-3 text-center px-6">
+                            <div className="text-sm text-white font-bold tracking-[0.2em]">
+                              STATIC PREVIEW
+                            </div>
+                            {activeProjectUrl ? (
+                              <a
+                                href={activeProjectUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="text-xs text-white font-bold tracking-[0.2em] underline underline-offset-4"
+                              >
+                                GO TO PAGE
+                              </a>
+                            ) : null}
+                          </div>
                         </div>
                       ) : activeProjectYoutubeId ? (
                         <div className="h-full w-full relative">
@@ -1432,13 +1447,13 @@ export default function HomePage() {
         {/* Twitter Section */}
         <section
           id="twitter"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
+          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl ${
             highlightSectionId === "twitter"
               ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
               : ""
           }`}
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-10 md:mb-12">
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
                 <div
@@ -1478,24 +1493,24 @@ export default function HomePage() {
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-6 max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-auto lg:mx-0">
                 Latest thoughts, experiments, and links from my Twitter feed.
               </p>
             </div>
           </div>
 
-          <div className="p-4 md:p-6">
+          <div className="p-2 md:p-4">
             <div
               data-theme={isDarkMode ? "dark" : "light"}
               className="flex justify-center"
             >
               {tweetIds.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl mx-auto place-items-center">
+                <div className="flex flex-wrap justify-center items-start gap-4 md:gap-5 w-full mx-auto">
                   {tweetIds.map((id, index) => (
                     <div
                       key={id}
                       id={`tweet-${index}`}
-                      className={`w-full flex justify-center rounded-2xl transition-all duration-300 ${
+                      className={`w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] flex justify-center rounded-2xl transition-all duration-300 ${
                         highlightTweetIndex === index
                           ? "ring-2 ring-amber-400/70 bg-amber-50/40 dark:bg-white/5 shadow-[0_16px_40px_rgba(251,191,36,0.2)]"
                           : ""
@@ -1506,11 +1521,11 @@ export default function HomePage() {
                   ))}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-4xl animate-pulse">
+                <div className="flex flex-wrap justify-center items-start gap-4 md:gap-5 w-full animate-pulse">
                   {[...Array(2)].map((_, i) => (
                     <div
                       key={i}
-                      className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)]"
+                      className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)]"
                     >
                       <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 mb-3"></div>
                       <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
