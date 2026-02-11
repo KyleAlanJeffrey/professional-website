@@ -520,6 +520,10 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main className="relative px-4 md:px-8 z-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-white/25 dark:bg-black/20 backdrop-blur-[1px]"
+        ></div>
         {/* Left Sidebar Navigation - Hidden on mobile */}
         <div className="hidden -rotate-90 lg:flex flex-row gap-3 items-center justify-center fixed left-0 h-full z-20 py-40 w-8">
           <button
@@ -653,7 +657,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
             {/* Left Content */}
             <div className="lg:col-span-7 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-700 dark:text-gray-300 backdrop-blur mb-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-800 dark:text-gray-200 backdrop-blur mb-6">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
                 OPEN TO COLLABS
               </div>
@@ -674,7 +678,7 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 max-w-xl mx-auto lg:mx-0 mb-8">
+              <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mx-auto lg:mx-0 mb-8">
                 Robotics engineer. Agriculture AI Software Engineer. Humanoid
                 Robot Obsessed. Web Developer Occasionally.
               </p>
@@ -709,7 +713,7 @@ export default function HomePage() {
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                       <div className="flex items-center gap-2">
                         <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.7)]"></span>
-                        <div className="text-xs font-black tracking-[0.3em] text-gray-700 dark:text-gray-300">
+                        <div className="text-xs font-black tracking-[0.3em] text-gray-800 dark:text-gray-200">
                           CURRENT FOCUS
                         </div>
                       </div>
@@ -867,7 +871,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
                 <div
-                  className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                  className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
                   CAREER
@@ -889,7 +893,7 @@ export default function HomePage() {
                 EXPERIENCE
               </h2>
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]"
                 style={{ fontFamily: "monospace" }}
               >
                 AT
@@ -906,7 +910,7 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-6 text-center lg:text-left">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 {/* Here's my journey as a developer, from learning the fundamentals
                 to building complex applications and leading teams to create
                 amazing digital experiences. */}
@@ -964,7 +968,7 @@ export default function HomePage() {
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-12">
                 <div>
                   <div
-                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                    className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                     style={{ fontFamily: "monospace" }}
                   >
                     EDITIONS
@@ -987,7 +991,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div
-                    className="text-sm text-gray-600 dark:text-gray-400 font-bold tracking-[0.2em]"
+                    className="text-sm text-gray-700 dark:text-gray-300 font-bold tracking-[0.2em]"
                     style={{ fontFamily: "monospace" }}
                   >
                     AT
@@ -1003,7 +1007,7 @@ export default function HomePage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
                 <div className="lg:col-span-5 space-y-4">
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+                  <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                     Editorial-style snapshots of work projects and publications,
                     with context and a live preview whenever possible.
                   </p>
@@ -1030,7 +1034,7 @@ export default function HomePage() {
                                 >
                                   {project.name}
                                 </div>
-                                <div className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.2em] mt-1">
+                                <div className="text-xs text-gray-700 dark:text-gray-300 font-bold tracking-[0.2em] mt-1">
                                   {project.company}
                                 </div>
                               </div>
@@ -1038,7 +1042,7 @@ export default function HomePage() {
                                 PREVIEW
                               </div>
                             </div>
-                            <p className="text-sm text-gray-700 dark:text-gray-300 mt-3 line-clamp-3">
+                            <p className="text-sm text-gray-800 dark:text-gray-200 mt-3 line-clamp-3">
                               {project.description}
                             </p>
                           </button>
@@ -1184,7 +1188,7 @@ export default function HomePage() {
                         ) : null}
                       </div>
                       <div className="px-6 py-5 space-y-3 min-h-52">
-                        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed min-h-16 line-clamp-3">
+                        <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed min-h-16 line-clamp-3">
                           {workProjects[displayedPublicationIndex]
                             ?.description ??
                             "Choose a publication from the list to see more details."}
@@ -1238,7 +1242,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
             <div className="lg:col-span-5 text-center lg:text-left">
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                 style={{ fontFamily: "monospace" }}
               >
                 PORTFOLIO
@@ -1259,7 +1263,7 @@ export default function HomePage() {
                 PROJECTS
               </h2>
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]"
                 style={{ fontFamily: "monospace" }}
               >
                 AT
@@ -1275,7 +1279,7 @@ export default function HomePage() {
                 04
               </div>
 
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 A curated selection of my recent personal projects.
               </p>
             </div>
@@ -1335,7 +1339,7 @@ export default function HomePage() {
             <div className="lg:col-span-5 text-center lg:text-left">
               <div className="mb-4">
                 <div
-                  className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                  className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
                   DEVELOPMENT
@@ -1357,7 +1361,7 @@ export default function HomePage() {
                 ACTIVITY
               </h2>
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]"
                 style={{ fontFamily: "monospace" }}
               >
                 AT
@@ -1372,7 +1376,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
 
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 Here's a snapshot of my recent coding activity and
                 contributions.
               </p>
@@ -1386,7 +1390,7 @@ export default function HomePage() {
                     {commits.length ? commits.length : "NA"}
                   </div>
                   <div
-                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
+                    className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
                     style={{ fontFamily: "monospace" }}
                   >
                     COMMITS
@@ -1406,7 +1410,7 @@ export default function HomePage() {
                     {githubRepos.length ? githubRepos.length : "NA"}
                   </div>
                   <div
-                    className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
+                    className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
                     style={{ fontFamily: "monospace" }}
                   >
                     REPOSITORIES
@@ -1514,7 +1518,7 @@ export default function HomePage() {
                               ></div>
                             </div>
                             <span
-                              className="text-sm text-gray-600 dark:text-gray-400 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
+                              className="text-sm text-gray-700 dark:text-gray-300 w-12 text-right transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 font-bold tracking-[0.1em]"
                               style={{ fontFamily: "monospace" }}
                             >
                               {stat.percent}%
@@ -1565,7 +1569,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
                 <div
-                  className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                  className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
                   SOCIAL
@@ -1587,7 +1591,7 @@ export default function HomePage() {
                 FEED
               </h2>
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]"
                 style={{ fontFamily: "monospace" }}
               >
                 AT
@@ -1601,7 +1605,7 @@ export default function HomePage() {
               <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-auto lg:mx-0">
                 Latest thoughts, experiments, and links from my Twitter feed.
               </p>
             </div>
@@ -1666,7 +1670,7 @@ export default function HomePage() {
             <div className="lg:col-span-6 text-center lg:text-left">
               <div className="mb-4">
                 <div
-                  className="text-sm text-gray-600 dark:text-gray-400 tracking-[0.3em] font-bold mb-2"
+                  className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
                   GET IN TOUCH
@@ -1688,7 +1692,7 @@ export default function HomePage() {
                 TOGETHER
               </h2>
               <div
-                className="text-sm text-gray-600 dark:text-gray-400 mb-2 font-bold tracking-[0.2em]"
+                className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]"
                 style={{ fontFamily: "monospace" }}
               >
                 AT
@@ -1705,7 +1709,7 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-6 text-center lg:text-left">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 {/* I'm always excited to connect with fellow developers and work on
                 interesting projects. Drop me a line if you want to collaborate
                 or just chat about tech! */}
@@ -1718,7 +1722,7 @@ export default function HomePage() {
               <div className="space-y-8">
                 <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <Mail className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
+                    <Mail className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div className="min-w-0">
                     <h3
@@ -1727,10 +1731,10 @@ export default function HomePage() {
                     >
                       EMAIL
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
+                    <p className="text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
                       kyle.alan.jeffrey@gmail.com
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
                       I'll respond within 24 hours
                     </p>
                   </div>
@@ -1741,7 +1745,7 @@ export default function HomePage() {
                   className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]"
                 >
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <Github className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
+                    <Github className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div className="min-w-0">
                     <h3
@@ -1750,10 +1754,10 @@ export default function HomePage() {
                     >
                       GITHUB
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
+                    <p className="text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
                       @KyleAlanJeffrey
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
                       Check out my latest projects
                     </p>
                   </div>
@@ -1764,7 +1768,7 @@ export default function HomePage() {
                   className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]"
                 >
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
+                    <Linkedin className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div className="min-w-0">
                     <h3
@@ -1773,10 +1777,10 @@ export default function HomePage() {
                     >
                       LINKEDIN
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+                    <p className="text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
                       Kyle
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
                       Let's connect professionally
                     </p>
                   </div>
@@ -1784,7 +1788,7 @@ export default function HomePage() {
 
                 <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
-                    <MapPin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
+                    <MapPin className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
                   <div className="min-w-0">
                     <h3
@@ -1793,10 +1797,10 @@ export default function HomePage() {
                     >
                       LOCATION
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+                    <p className="text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
                       San Francisco, CA
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">
                       Open to remote work
                     </p>
                   </div>
