@@ -108,10 +108,10 @@ function Commit(props: { commit: CommitType; index: number }) {
   return (
     <a
       href={props.commit.html_url}
-      className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
+      className="w-full min-w-0 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
     >
       <div
-        className={`w-4 h-4 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}
+        className={`w-4 h-4 shrink-0 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}
       ></div>
       <div className="flex-1 min-w-0">
         <div
@@ -121,14 +121,14 @@ function Commit(props: { commit: CommitType; index: number }) {
           {props.commit.commit.message}
         </div>
         <div
-          className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.1em]"
+          className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.1em] break-all"
           style={{ fontFamily: "monospace" }}
         >
           {relativeTime || "—"} • {repoName}
         </div>
       </div>
       <div
-        className="text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em] whitespace-nowrap sm:ml-auto"
+        className="text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em] break-words sm:whitespace-nowrap sm:ml-auto"
         style={{ fontFamily: "monospace" }}
       >
         <span className="text-green-400">{diff.add}</span>{" "}

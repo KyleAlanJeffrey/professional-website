@@ -115,7 +115,7 @@ function Job(props: {
           ACCOMPLISHMENTS
         </div>
 
-        <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-inside">
+        <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-outside pl-5 text-left">
           {props.job.accomplishments.map((accomplishment, index) => (
             <li key={index} className="break-words">
               {accomplishment}

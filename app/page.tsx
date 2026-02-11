@@ -41,6 +41,9 @@ export default function HomePage() {
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
   const [activePublicationIndex, setActivePublicationIndex] = useState(0);
+  const [previewLoadState, setPreviewLoadState] = useState<
+    "idle" | "loading" | "ready" | "failed"
+  >("idle");
 
   const tweetIds = Array.isArray(tweetsData)
     ? tweetsData.map((id) => String(id))
@@ -64,9 +67,31 @@ export default function HomePage() {
     dart: "#00B4AB",
   };
 
+  const normalizePublicationUrl = (url: string) => {
+    const trimmed = url.trim();
+    if (!trimmed) return "";
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+  };
+
+  const getYoutubeVideoId = (url: string) => {
+    try {
+      const parsed = new URL(normalizePublicationUrl(url));
+      if (parsed.hostname.includes("youtube.com")) {
+        return parsed.searchParams.get("v");
+      }
+      if (parsed.hostname === "youtu.be") {
+        return parsed.pathname.replace("/", "");
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
   const getPublicationPreviewSrc = (url: string) => {
     try {
-      const parsed = new URL(url);
+      const parsed = new URL(normalizePublicationUrl(url));
       if (parsed.hostname.includes("youtube.com")) {
         const videoId = parsed.searchParams.get("v");
         if (videoId) return `https://www.youtube.com/embed/${videoId}`;
@@ -75,11 +100,44 @@ export default function HomePage() {
         const videoId = parsed.pathname.replace("/", "");
         if (videoId) return `https://www.youtube.com/embed/${videoId}`;
       }
-      return url;
+      return parsed.toString();
     } catch {
-      return url;
+      return normalizePublicationUrl(url);
     }
   };
+
+  const activeProject = workProjects[activePublicationIndex];
+  const activeProjectUrl = activeProject?.url
+    ? normalizePublicationUrl(activeProject.url)
+    : "";
+  const activeProjectStaticPreviewSrc =
+    activeProject?.name === "Project Music Mode"
+      ? "/Work-Projects/MusicMode.png"
+      : "";
+  const activeProjectYoutubeId = activeProjectUrl
+    ? getYoutubeVideoId(activeProjectUrl)
+    : null;
+  const activeProjectPreviewSrc = activeProjectUrl
+    ? getPublicationPreviewSrc(activeProjectUrl)
+    : "";
+  const usesIframePreview =
+    !activeProjectStaticPreviewSrc &&
+    !activeProjectYoutubeId &&
+    !!activeProjectPreviewSrc;
+
+  useEffect(() => {
+    if (!usesIframePreview) {
+      setPreviewLoadState("idle");
+      return;
+    }
+
+    setPreviewLoadState("loading");
+    const timeoutId = window.setTimeout(() => {
+      setPreviewLoadState((state) => (state === "ready" ? state : "failed"));
+    }, 7000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [usesIframePreview]);
 
   useEffect(() => {
     const accessToken = process.env.NEXT_PUBLIC_GITHUB_API_TOKEN;
@@ -348,7 +406,7 @@ export default function HomePage() {
 
   return (
     <div
-      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16"
+      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16 overflow-x-clip"
       style={{
         backgroundImage:
           "radial-gradient(900px_circle_at_8%_-10%, rgba(255,195,120,0.35), transparent 55%), radial-gradient(700px_circle_at_92%_0%, rgba(120,210,255,0.25), transparent 50%)",
@@ -543,9 +601,9 @@ export default function HomePage() {
         {/* Home Section - Mobile responsive */}
         <section
           id="home"
-          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative"
+          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative overflow-x-clip"
         >
-          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[520px] h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[320px] h-[320px] sm:w-[520px] sm:h-[520px] rounded-full bg-gradient-to-tr from-amber-200/50 via-orange-200/20 to-sky-200/40 blur-3xl pointer-events-none dark:from-amber-400/10 dark:via-orange-400/5 dark:to-sky-400/10"></div>
           <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
             {/* Left Content */}
@@ -656,7 +714,7 @@ export default function HomePage() {
 
             {/* Center Content - Industrial Elements */}
             <div className="lg:col-span-5 relative">
-              <div className="relative mx-auto w-80 md:w-[26rem] lg:w-[34rem] aspect-[3/2]">
+              <div className="relative mx-auto w-full max-w-[20rem] md:max-w-[26rem] lg:max-w-[34rem] aspect-[3/2]">
                 <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400/70 to-orange-500/70 blur-sm"></div>
                 <Image
@@ -1046,33 +1104,90 @@ export default function HomePage() {
                             "Select a publication"}
                         </div>
                       </div>
-                      {workProjects[activePublicationIndex]?.url ? (
+                      {activeProjectUrl ? (
                         <a
-                          href={workProjects[activePublicationIndex].url}
+                          href={activeProjectUrl}
+                          target="_blank"
+                          rel="noreferrer"
                           className="text-xs text-gray-600 dark:text-gray-300 font-bold tracking-[0.2em] hover:text-black dark:hover:text-white"
                         >
                           OPEN LINK
                         </a>
                       ) : null}
                     </div>
-                    <div className="aspect-video bg-black/5 dark:bg-white/5">
-                      {workProjects[activePublicationIndex]?.url ? (
+                    <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
+                      {activeProjectStaticPreviewSrc ? (
+                        <div className="h-full w-full relative">
+                          <Image
+                            src={activeProjectStaticPreviewSrc}
+                            alt={`${activeProject?.name ?? "Project"} preview`}
+                            fill
+                            className="object-cover"
+                            sizes="(min-width: 1024px) 56rem, 100vw"
+                          />
+                        </div>
+                      ) : activeProjectYoutubeId ? (
+                        <div className="h-full w-full relative">
+                          <Image
+                            src={`https://i.ytimg.com/vi/${activeProjectYoutubeId}/hqdefault.jpg`}
+                            alt={`${activeProject?.name ?? "Project"} preview`}
+                            fill
+                            className="object-cover"
+                            sizes="(min-width: 1024px) 56rem, 100vw"
+                            suppressHydrationWarning
+                          />
+                          <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center gap-3 text-center px-6">
+                            <div className="text-sm text-white font-bold tracking-[0.2em]">
+                              PREVIEW ON YOUTUBE
+                            </div>
+                            <a
+                              href={activeProjectUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-xs text-white font-bold tracking-[0.2em] underline underline-offset-4"
+                            >
+                              WATCH VIDEO
+                            </a>
+                          </div>
+                        </div>
+                      ) : activeProjectPreviewSrc &&
+                        previewLoadState !== "failed" ? (
                         <iframe
-                          key={workProjects[activePublicationIndex].url}
-                          src={getPublicationPreviewSrc(
-                            workProjects[activePublicationIndex].url,
-                          )}
-                          title={workProjects[activePublicationIndex].name}
+                          key={activeProjectPreviewSrc}
+                          src={activeProjectPreviewSrc}
+                          title={activeProject?.name}
                           className="h-full w-full"
                           loading="lazy"
                           referrerPolicy="no-referrer"
-                          sandbox="allow-scripts allow-same-origin allow-popups"
+                          sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                          onLoad={() => setPreviewLoadState("ready")}
+                          onError={() => setPreviewLoadState("failed")}
                         ></iframe>
                       ) : (
-                        <div className="h-full w-full flex items-center justify-center text-sm text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                          PREVIEW UNAVAILABLE
+                        <div className="h-full w-full flex flex-col items-center justify-center gap-3 text-center px-6">
+                          <div className="text-sm text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                            PREVIEW UNAVAILABLE
+                          </div>
+                          {activeProjectUrl ? (
+                            <a
+                              href={activeProjectUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-xs text-gray-700 dark:text-gray-200 font-bold tracking-[0.2em] underline underline-offset-4"
+                            >
+                              OPEN PROJECT IN NEW TAB
+                            </a>
+                          ) : null}
                         </div>
                       )}
+                      {usesIframePreview && previewLoadState === "loading" ? (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                            LOADING PREVIEW...
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                     <div className="px-6 py-5 space-y-3">
                       <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -1215,7 +1330,7 @@ export default function HomePage() {
                 {/* Commit Activity Visualization */}
                 <div className="mb-8">
                   {commits.length ? (
-                    <div className="space-y-4 max-h-80 overflow-y-auto pr-3 scrollbar-hidden">
+                    <div className="space-y-4 max-h-80 overflow-y-auto overflow-x-hidden pr-3 scrollbar-hidden">
                       {commits.map((commit, index) => (
                         <Commit key={index} commit={commit} index={index} />
                       ))}
@@ -1469,14 +1584,14 @@ export default function HomePage() {
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Mail className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3
                       className="text-lg font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
                       style={{ fontFamily: "monospace" }}
                     >
                       EMAIL
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
                       kyle.alan.jeffrey@gmail.com
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
@@ -1492,14 +1607,14 @@ export default function HomePage() {
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Github className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3
                       className="text-lg font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
                       style={{ fontFamily: "monospace" }}
                     >
                       GITHUB
                     </h3>
-                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+                    <p className="text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium break-all">
                       @KyleAlanJeffrey
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
@@ -1515,7 +1630,7 @@ export default function HomePage() {
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3
                       className="text-lg font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
                       style={{ fontFamily: "monospace" }}
@@ -1535,7 +1650,7 @@ export default function HomePage() {
                   <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110">
                     <MapPin className="h-5 w-5 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <h3
                       className="text-lg font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
                       style={{ fontFamily: "monospace" }}
