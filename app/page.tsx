@@ -648,15 +648,15 @@ export default function HomePage() {
         {/* Home Section - Mobile responsive */}
         <section
           id="home"
-          className="max-w-7xl mx-auto pt-6 lg:pt-12 pb-20 lg:pb-28 relative"
+          className="max-w-7xl mx-auto pt-4 lg:pt-12 pb-14 lg:pb-28 relative"
         >
           <h2 className="sr-only">
             Robotics Software Engineer Portfolio and AI Projects
           </h2>
           <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 min-h-[60vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 min-h-[48vh] lg:min-h-[60vh]">
             {/* Left Content */}
-            <div className="lg:col-span-7 text-center lg:text-left">
+            <div className="lg:col-span-7 text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-800 dark:text-gray-200 backdrop-blur mb-6">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
                 OPEN TO COLLABS
@@ -678,12 +678,12 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mx-auto lg:mx-0 mb-8">
+              <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mx-0 mb-8">
                 Robotics engineer. Agriculture AI Software Engineer. Humanoid
                 Robot Obsessed. Web Developer Occasionally.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 items-start justify-start">
                 <Button
                   className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-semibold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
                   onClick={() => scrollToSection("work")}
@@ -789,7 +789,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 text-center lg:text-left">
+            <div className="lg:col-span-5 text-left">
               <p className="text-gray-800 dark:text-gray-200 leading-relaxed mb-8 transition-all duration-300 hover:text-gray-900 dark:hover:text-white font-semibold text-base md:text-lg">
                 {renderBioWithLinks(bio.bio)}
               </p>
@@ -849,7 +849,7 @@ export default function HomePage() {
         {/* Work Experience Section */}
         <section
           id="work"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
+          className={`mt-16 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
             highlightSectionId === "work"
               ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
@@ -867,27 +867,27 @@ export default function HomePage() {
             <div className="absolute bottom-8 left-20 h-20 w-px bg-gradient-to-b from-transparent via-black/15 to-transparent dark:via-white/15"></div>
             <div className="absolute inset-x-8 top-8 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
-            <div className="lg:col-span-6 text-center lg:text-left">
-              <div className="mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-10 md:mb-16">
+            <div className="lg:col-span-6 text-left">
+              <div className="mb-3 md:mb-4">
                 <div
                   className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                   style={{ fontFamily: "monospace" }}
                 >
                   CAREER
                 </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
                 </div>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-1.5 md:mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 WORK
               </h2>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-3 md:mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 EXPERIENCE
@@ -899,17 +899,17 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                className="text-5xl md:text-6xl font-black text-black dark:text-white mb-3 md:mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 02
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
             </div>
 
-            <div className="lg:col-span-6 text-center lg:text-left">
+            <div className="lg:col-span-6 text-left">
               <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 {/* Here's my journey as a developer, from learning the fundamentals
                 to building complex applications and leading teams to create
@@ -918,7 +918,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="space-y-16">
+          <div className="space-y-10 md:space-y-16">
             {jobs.length ? (
               jobs.map((job, index) => (
                 <div key={index} id={`job-${index}`}>
@@ -953,8 +953,8 @@ export default function HomePage() {
         </section>
 
         {/* Work Projects / Publications Section */}
-        <section id="publications" className="mt-28 max-w-7xl mx-auto cv-auto">
-          <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/75 to-slate-100/45 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-8 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
+        <section id="publications" className="mt-16 md:mt-24 max-w-7xl mx-auto cv-auto">
+          <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/75 to-slate-100/45 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-6 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
             <div className="absolute inset-0 pointer-events-none">
             <div className="absolute -top-24 -right-12 h-60 w-60 rounded-full bg-gradient-to-br from-sky-200/60 via-indigo-200/20 to-transparent blur-3xl dark:from-sky-400/10 dark:via-indigo-400/5"></div>
             <div className="absolute top-14 left-12 h-14 w-14 rotate-12 rounded-2xl bg-gradient-to-br from-amber-400/55 to-orange-500/55 blur-sm dark:from-amber-300/20 dark:to-orange-300/20"></div>
@@ -965,7 +965,7 @@ export default function HomePage() {
           </div>
 
             <div className="relative z-10">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 mb-12">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 md:gap-8 mb-8 md:mb-12">
                 <div>
                   <div
                     className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
@@ -977,13 +977,13 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
                   </div>
                   <h2
-                    className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                    className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
                   >
                     WORK
                   </h2>
                   <h2
-                    className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                    className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
                   >
                     PUBLICATIONS
@@ -997,7 +997,7 @@ export default function HomePage() {
                     AT
                   </div>
                   <div
-                    className="text-6xl font-black text-black dark:text-white transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                    className="text-5xl md:text-6xl font-black text-black dark:text-white transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                     style={{ fontFamily: "monospace" }}
                   >
                     03
@@ -1221,7 +1221,7 @@ export default function HomePage() {
         {/* Projects Section */}
         <section
           id="projects"
-          className={`mt-28 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
+          className={`mt-16 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate ${
             highlightSectionId === "projects"
               ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
@@ -1239,25 +1239,25 @@ export default function HomePage() {
             <div className="absolute bottom-10 right-10 h-3 w-3 rounded-full bg-indigo-300/60 dark:bg-indigo-300/20 animate-pulse [animation-duration:6s]"></div>
             <div className="absolute inset-x-12 bottom-6 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-            <div className="lg:col-span-5 text-center lg:text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 md:mb-20">
+            <div className="lg:col-span-5 text-left">
               <div
                 className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
                 style={{ fontFamily: "monospace" }}
               >
                 PORTFOLIO
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 FEATURED
               </h2>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 PROJECTS
@@ -1268,12 +1268,12 @@ export default function HomePage() {
               >
                 AT
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-6 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 mb-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
 
               <div
-                className="text-6xl font-black text-black dark:text-white mb-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                className="text-5xl md:text-6xl font-black text-black dark:text-white mb-6 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 04
@@ -1321,7 +1321,7 @@ export default function HomePage() {
         {/* GitHub Stats Section */}
         <section
           id="github"
-          className="mt-28 max-w-7xl mx-auto cv-auto relative isolate"
+          className="mt-16 md:mt-24 max-w-7xl mx-auto cv-auto relative isolate"
         >
           <div
             aria-hidden="true"
@@ -1335,8 +1335,8 @@ export default function HomePage() {
             <div className="absolute bottom-8 left-10 h-16 w-16 rounded-full border border-emerald-300/40 dark:border-emerald-300/20"></div>
             <div className="absolute inset-x-10 top-4 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            <div className="lg:col-span-5 text-center lg:text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div className="lg:col-span-5 text-left">
               <div className="mb-4">
                 <div
                   className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
@@ -1344,18 +1344,18 @@ export default function HomePage() {
                 >
                   DEVELOPMENT
                 </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
                 </div>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 GITHUB
               </h2>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 ACTIVITY
@@ -1367,12 +1367,12 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
+                className="text-5xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 05
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 mb-8 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 mb-8 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
 
@@ -1426,7 +1426,7 @@ export default function HomePage() {
             </div>
 
             <div className="lg:col-span-7">
-              <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
+              <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-5 md:p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
                 <div className="flex items-center justify-between mb-6">
                   <h3
                     className="text-xl font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
@@ -1547,7 +1547,7 @@ export default function HomePage() {
         {/* Twitter Section */}
         <section
           id="twitter"
-          className={`mt-20 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl cv-auto relative isolate ${
+          className={`mt-14 md:mt-20 max-w-7xl mx-auto transition-all duration-300 rounded-2xl cv-auto relative isolate ${
             highlightSectionId === "twitter"
               ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
               : ""
@@ -1566,7 +1566,7 @@ export default function HomePage() {
             <div className="absolute inset-x-12 top-8 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-10 md:mb-12">
-            <div className="lg:col-span-6 text-center lg:text-left">
+            <div className="lg:col-span-6 text-left">
               <div className="mb-4">
                 <div
                   className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
@@ -1574,18 +1574,18 @@ export default function HomePage() {
                 >
                   SOCIAL
                 </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
                 </div>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 TWITTER
               </h2>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 FEED
@@ -1597,15 +1597,15 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="inline-block text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-center lg:origin-left tracking-[0.1em]"
+                className="inline-block text-5xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-left tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 06
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
-              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-auto lg:mx-0">
+              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-0">
                 Latest thoughts, experiments, and links from my Twitter feed.
               </p>
             </div>
@@ -1614,15 +1614,15 @@ export default function HomePage() {
           <div className="p-2 md:p-4">
             <div
               data-theme={isDarkMode ? "dark" : "light"}
-              className="flex justify-center"
+              className="flex justify-start"
             >
               {shouldRenderTweets && tweetIds.length > 0 ? (
-                <div className="flex flex-wrap justify-center items-start gap-4 md:gap-5 w-full mx-auto">
+                <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full">
                   {tweetIds.map((id, index) => (
                     <div
                       key={id}
                       id={`tweet-${index}`}
-                      className={`w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] flex justify-center rounded-2xl transition-all duration-300 ${
+                      className={`w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] flex justify-start rounded-2xl transition-all duration-300 ${
                         highlightTweetIndex === index
                           ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
                           : ""
@@ -1633,7 +1633,7 @@ export default function HomePage() {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-wrap justify-center items-start gap-4 md:gap-5 w-full animate-pulse">
+                <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full animate-pulse">
                   {[...Array(2)].map((_, i) => (
                     <div
                       key={i}
@@ -1654,7 +1654,7 @@ export default function HomePage() {
         {/* Contact Section */}
         <section
           id="contact"
-          className="mt-28 max-w-7xl mx-auto cv-auto relative isolate"
+          className="mt-16 md:mt-24 max-w-7xl mx-auto cv-auto relative isolate"
         >
           <div
             aria-hidden="true"
@@ -1666,8 +1666,8 @@ export default function HomePage() {
             <div className="absolute bottom-14 left-20 h-10 w-10 rotate-45 border border-black/10 dark:border-white/10"></div>
             <div className="absolute inset-x-10 top-6 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/10"></div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
-            <div className="lg:col-span-6 text-center lg:text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-10 md:mb-16">
+            <div className="lg:col-span-6 text-left">
               <div className="mb-4">
                 <div
                   className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2"
@@ -1675,18 +1675,18 @@ export default function HomePage() {
                 >
                   GET IN TOUCH
                 </div>
-                <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+                <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
                 </div>
               </div>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 LET'S WORK
               </h2>
               <h2
-                className="text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
+                className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 TOGETHER
@@ -1698,17 +1698,17 @@ export default function HomePage() {
                 AT
               </div>
               <div
-                className="inline-block text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-center lg:origin-left tracking-[0.1em]"
+                className="inline-block text-5xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-left tracking-[0.1em]"
                 style={{ fontFamily: "monospace" }}
               >
                 07
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white mx-auto lg:mx-0 relative overflow-hidden">
+              <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
               </div>
             </div>
 
-            <div className="lg:col-span-6 text-center lg:text-left">
+            <div className="lg:col-span-6 text-left">
               <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
                 {/* I'm always excited to connect with fellow developers and work on
                 interesting projects. Drop me a line if you want to collaborate
@@ -1717,7 +1717,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
             <div className="lg:col-span-5">
               <div className="space-y-8">
                 <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
