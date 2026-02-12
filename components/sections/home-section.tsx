@@ -39,11 +39,11 @@ export default function HomeSection({
               textShadow: "0 12px 40px rgba(0,0,0,0.12)",
             }}
           >
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-white">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-100 to-white">
               KYLE
             </span>
             <br />
-            <span className="-mt-4 sm:-mt-8 block text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 dark:from-white dark:via-gray-300 dark:to-white">
+            <span className="-mt-4 sm:-mt-8 block text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-orange-500 to-orange-600">
               JEFFREY
             </span>
           </h1>
