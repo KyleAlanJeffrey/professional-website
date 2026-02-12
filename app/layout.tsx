@@ -177,10 +177,8 @@ html {
             __html: `
 (() => {
   try {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
   } catch (_) {}
 })();
             `,

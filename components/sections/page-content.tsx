@@ -145,7 +145,7 @@ export default function PageContent(props: PageContentProps) {
       </div>
 
       <main className="relative px-4 md:px-8 z-10">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-white/25 dark:bg-black/20 backdrop-blur-[1px]"></div>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-white/10 dark:bg-black/20 backdrop-blur-[1px]"></div>
 
         <div className="hidden -rotate-90 lg:flex flex-row gap-3 items-center justify-center fixed left-0 h-full z-20 py-40 w-8">
           {[
@@ -163,7 +163,7 @@ export default function PageContent(props: PageContentProps) {
               className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
                 activeSection === id
                   ? "text-black dark:text-white underline decoration-2 underline-offset-4"
-                  : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  : "text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-gray-200"
               }`}
               style={{ fontFamily: "monospace" }}
             >
@@ -177,7 +177,7 @@ export default function PageContent(props: PageContentProps) {
             variant="ghost"
             size="icon"
             onClick={toggleDarkMode}
-            className="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800 transition-all duration-300"
+            className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition-all duration-300"
           >
             {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
@@ -185,7 +185,7 @@ export default function PageContent(props: PageContentProps) {
 
         <div className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 -rotate-90 origin-center -mr-24 z-20">
           <div
-            className="text-sm text-gray-500 dark:text-gray-400 tracking-[0.3em] font-bold whitespace-nowrap transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-200"
+            className="text-sm text-gray-700 dark:text-gray-400 tracking-[0.3em] font-bold whitespace-nowrap transition-all duration-300 hover:text-black dark:hover:text-gray-200"
             style={{ transform: "translateY(5px)", fontFamily: "monospace" }}
           >
             FULL STACK DEVELOPER

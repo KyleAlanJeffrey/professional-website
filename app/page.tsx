@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState("home");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const jobs = jobsData.jobs ?? [];
   const [highlightSkill, setHighlightSkill] = useState<string | null>(null);
   const [highlightSectionId, setHighlightSectionId] = useState<string | null>(
@@ -20,11 +20,8 @@ export default function HomePage() {
   );
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
   }, []);
 
   useEffect(() => {
