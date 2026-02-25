@@ -1,6 +1,8 @@
 import Job from "@/components/job";
 import SectionShell from "@/components/sections/section-shell";
+import { Button } from "@/components/ui/button";
 import jobsData from "@/data/jobs.json";
+import { Download } from "lucide-react";
 
 type WorkSectionProps = {
   highlightSectionId: string | null;
@@ -61,7 +63,20 @@ export default function WorkSection({
         </div>
 
         <div className="lg:col-span-6 text-left">
-          <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium"></p>
+          <div className="flex lg:justify-end">
+            <Button
+              asChild
+              variant="outline"
+              className="group h-11 rounded-full border-black/25 bg-white/70 px-5 text-black backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-black hover:bg-white dark:border-white/25 dark:bg-white/5 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
+            >
+              <a href="/resume.pdf" download aria-label="Download resume PDF">
+                <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+                <span className="text-xs font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>
+                  DOWNLOAD RESUME
+                </span>
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
 

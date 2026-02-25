@@ -9,7 +9,7 @@ import ProjectsSection from "@/components/sections/projects-section";
 import PublicationsSection from "@/components/sections/publications-section";
 import TwitterSection from "@/components/sections/twitter-section";
 import WorkSection from "@/components/sections/work-section";
-import { Moon, Sun } from "lucide-react";
+import { Download, Moon, Sun } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 
 type PageContentProps = {
@@ -172,7 +172,18 @@ export default function PageContent(props: PageContentProps) {
           ))}
         </div>
 
-        <div className="fixed top-4 right-4 z-50">
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition-all duration-300"
+          >
+            <a href="/resume.pdf" download aria-label="Download resume PDF">
+              <Download className="h-4 w-4" />
+              Resume
+            </a>
+          </Button>
           <Button
             variant="ghost"
             size="icon"
