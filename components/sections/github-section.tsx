@@ -31,7 +31,8 @@ export default function GithubSection() {
         </div>
       }
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      {/* Top two-column section */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-10">
         <div className="lg:col-span-5 text-left">
           <div className="mb-4">
             <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2" style={{ fontFamily: "monospace" }}>DEVELOPMENT</div>
@@ -65,19 +66,13 @@ export default function GithubSection() {
           </div>
         </div>
 
-        <div className="lg:col-span-7 min-w-0">
-          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-5 md:p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)] overflow-hidden">
+        <div className="lg:col-span-7">
+          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-5 md:p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
             <div className="flex items-center justify-between mb-6">
-              <h3
-                className="text-xl font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
-                style={{ fontFamily: "monospace" }}
-              >
+              <h3 className="text-xl font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
                 RECENT ACTIVITY
               </h3>
-              <div
-                className="text-sm text-red-500 animate-pulse font-bold tracking-[0.2em]"
-                style={{ fontFamily: "monospace" }}
-              >
+              <div className="text-sm text-red-500 animate-pulse font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>
                 LIVE
               </div>
             </div>
@@ -92,10 +87,7 @@ export default function GithubSection() {
               ) : (
                 <div className="space-y-4">
                   {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center space-x-4 p-2 border border-black/10 dark:border-white/10 animate-pulse"
-                    >
+                    <div key={i} className="flex items-center space-x-4 p-2 border border-black/10 dark:border-white/10 animate-pulse">
                       <div className="w-4 h-4 bg-gray-300 dark:bg-gray-700"></div>
                       <div className="flex-1">
                         <div className="h-3 w-3/4 bg-gray-300 dark:bg-gray-700 mb-2"></div>
@@ -108,22 +100,12 @@ export default function GithubSection() {
               )}
             </div>
 
-            <div className="mb-6">
-              <ContributionHeatmap commits={commits} />
-            </div>
-
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h4
-                  className="text-sm font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.2em]"
-                  style={{ fontFamily: "monospace" }}
-                >
+                <h4 className="text-sm font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.2em]" style={{ fontFamily: "monospace" }}>
                   TOP LANGUAGES
                 </h4>
-                <div
-                  className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.1em]"
-                  style={{ fontFamily: "monospace" }}
-                >
+                <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
                   ALL REPOS
                 </div>
               </div>
@@ -164,6 +146,13 @@ export default function GithubSection() {
           </div>
         </div>
       </div>
+
+      {/* Full-width heatmap row */}
+      {commits.length > 0 && (
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:p-8 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.1)]">
+          <ContributionHeatmap commits={commits} />
+        </div>
+      )}
     </SectionShell>
   );
 }
