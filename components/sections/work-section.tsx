@@ -35,7 +35,7 @@ export default function WorkSection({
         </div>
       }
     >
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-10 md:mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-6 md:mb-10">
         <div className="lg:col-span-6 text-left">
           <div className="mb-3 md:mb-4">
             <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2" style={{ fontFamily: "monospace" }}>
@@ -80,7 +80,7 @@ export default function WorkSection({
         </div>
       </div>
 
-      <div className="space-y-10 md:space-y-16">
+      <div className="space-y-6 md:space-y-10">
         {jobs.length ? (
           jobs.map((job, index) => (
             <div key={index} id={`job-${index}`}>

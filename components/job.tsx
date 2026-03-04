@@ -73,7 +73,7 @@ function Job(props: {
           <div className="absolute inset-0 bg-gray-400 dark:bg-gray-600 transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0"></div>
         </div>
         <div
-          className="text-xl md:text-2xl font-black text-black dark:text-white mt-3 md:mt-4 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
+          className="text-xl md:text-2xl font-black text-black dark:text-white mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
           style={{ fontFamily: "monospace" }}
         >
           0{props.index + 1}
@@ -88,7 +88,7 @@ function Job(props: {
           {props.job.title.toUpperCase()}
         </h3>
         <h3
-          className="text-xl sm:text-2xl md:text-3xl font-black text-black dark:text-white mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
+          className="text-xl sm:text-2xl md:text-3xl font-black text-black dark:text-white mb-2 md:mb-3 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
           style={{ fontFamily: "monospace" }}
         >
           DEVELOPER
@@ -100,12 +100,12 @@ function Job(props: {
           AT
         </div>
         <h4
-          className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-4 md:mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-bold tracking-[0.1em]"
+          className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-bold tracking-[0.1em]"
           style={{ fontFamily: "monospace" }}
         >
           {props.job.company.toUpperCase()}
         </h4>
-        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4 md:mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
+        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
           {props.job.description}
         </p>
         <div
@@ -115,7 +115,7 @@ function Job(props: {
           ACCOMPLISHMENTS
         </div>
 
-        <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-6 text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-outside pl-5 text-left">
+        <ul className="space-y-1.5 md:space-y-2 mb-3 md:mb-4 text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-outside pl-5 text-left">
           {props.job.accomplishments.map((accomplishment, index) => (
             <li key={index} className="break-words">
               {accomplishment}
