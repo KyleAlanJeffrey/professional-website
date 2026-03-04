@@ -25,7 +25,7 @@ const SKILL_CATEGORIES: Record<string, string> = {
 const MAX_SPEED   = 1.4;
 const MIN_SPEED   = 0.4;
 const PERCEPTION  = 120;
-const SEP_DIST    = 52;
+const SEP_DIST    = 62;
 const W_SEP       = 0.22;
 const W_ALIGN     = 0.05;
 const W_COH_SAME  = 0.007;  // strong pull toward same-category flockmates
@@ -166,7 +166,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       for (const b of boids) {
         const color     = CATEGORY_COLORS[b.category] ?? CATEGORY_COLORS.Other;
         const isHovered = b.id === hoveredId;
-        const size      = isHovered ? 16 : 11;
+        const size      = isHovered ? 22 : 15;
         const angle     = Math.atan2(b.vy, b.vx);
 
         ctx.save();
@@ -193,7 +193,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
 
         // Label below boid
         const label = b.id.toUpperCase();
-        ctx.font        = `bold ${isHovered ? 11 : 9}px monospace`;
+        ctx.font        = `bold ${isHovered ? 12 : 10}px monospace`;
         ctx.fillStyle   = color;
         ctx.globalAlpha = isHovered ? 1 : 0.6;
         ctx.textAlign   = "center";
@@ -253,6 +253,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       </div>
       <div
         ref={containerRef}
+        data-keep-highlight="true"
         className="w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur overflow-hidden"
       >
         <canvas ref={canvasRef} style={{ display: "block" }} />
