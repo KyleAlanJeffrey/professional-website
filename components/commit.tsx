@@ -115,7 +115,7 @@ function Commit(props: { commit: CommitType; index: number }) {
       ></div>
       <div className="flex-1 min-w-0">
         <div
-          className="text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em] break-words"
+          className="text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em] break-words line-clamp-2"
           style={{ fontFamily: "monospace" }}
         >
           {props.commit.commit.message}
