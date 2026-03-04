@@ -51,8 +51,8 @@ function buildTimeline(jobs: Job[]): TimelineNode[] {
       title:     job.title,
       start,
       end,
-      startPct:  ((start.getTime() - minMs) / span) * 100,
-      endPct:    ((end.getTime()   - minMs) / span) * 100,
+      startPct:  Math.round(((start.getTime() - minMs) / span) * 10000) / 100,
+      endPct:    Math.round(((end.getTime()   - minMs) / span) * 10000) / 100,
       isPresent: end.getTime() >= Date.now() - 30 * 24 * 3600 * 1000,
     }))
     .sort((a, b) => a.start.getTime() - b.start.getTime());
