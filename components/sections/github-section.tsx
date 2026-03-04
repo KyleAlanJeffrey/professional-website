@@ -1,6 +1,19 @@
 import Commit from "@/components/commit";
+import ContributionHeatmap from "@/components/contribution-heatmap";
 import { useGithubData } from "@/components/providers/github-data-provider";
+import { useTilt } from "@/hooks/use-tilt";
 import SectionShell from "@/components/sections/section-shell";
+import { useRef } from "react";
+
+function StatCard({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useTilt(ref, { maxDeg: 7, scale: 1.015, liftPx: 2 });
+  return (
+    <div ref={ref} className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+      {children}
+    </div>
+  );
+}
 
 export default function GithubSection() {
   const { commits, githubRepos, languageStats, languageColors } =
@@ -43,20 +56,16 @@ export default function GithubSection() {
           </p>
 
           <div className="grid grid-cols-2 gap-6">
-            <div className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
-              <div className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{commits.length ? commits.length : "NA"}</div>
+            <StatCard>
+              <div className="text-3xl font-black text-black dark:text-white mb-1 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{commits.length ? commits.length : "NA"}</div>
               <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>COMMITS</div>
-              <div className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                THIS YEAR
-              </div>
-            </div>
-            <div className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
-              <div className="text-3xl font-black text-black dark:text-white mb-1 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{githubRepos.length ? githubRepos.length : "NA"}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>THIS YEAR</div>
+            </StatCard>
+            <StatCard>
+              <div className="text-3xl font-black text-black dark:text-white mb-1 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{githubRepos.length ? githubRepos.length : "NA"}</div>
               <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>REPOSITORIES</div>
-              <div className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                ACTIVE
-              </div>
-            </div>
+              <div className="text-xs text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>ACTIVE</div>
+            </StatCard>
           </div>
         </div>
 
@@ -101,6 +110,10 @@ export default function GithubSection() {
                   ))}
                 </div>
               )}
+            </div>
+
+            <div className="mb-6 overflow-x-auto">
+              <ContributionHeatmap commits={commits} />
             </div>
 
             <div>

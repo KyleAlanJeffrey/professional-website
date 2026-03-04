@@ -1,6 +1,7 @@
 import { getCommitDiffToMain } from "@/app/api";
 import { GitHubCompareResponse } from "@/app/types";
-import { useEffect, useState } from "react";
+import { useTilt } from "@/hooks/use-tilt";
+import { useEffect, useRef, useState } from "react";
 
 const COLOR_PALETTE = [
   "bg-purple-400",
@@ -73,6 +74,8 @@ function formatDateToRelative(date: Date): string {
   return `${seconds} second${seconds > 1 ? "s" : ""} ago`;
 }
 function Commit(props: { commit: CommitType; index: number }) {
+  const cardRef = useRef<HTMLAnchorElement>(null);
+  useTilt(cardRef, { maxDeg: 6, scale: 1.012, liftPx: 2 });
   const [commitDiff, setCommitDiff] = useState<GitHubCompareResponse | null>(null);
   const [repoName, setRepoName] = useState("");
   const [relativeTime, setRelativeTime] = useState("");
@@ -107,8 +110,9 @@ function Commit(props: { commit: CommitType; index: number }) {
       : "bg-gray-400";
   return (
     <a
+      ref={cardRef}
       href={props.commit.html_url}
-      className="w-full min-w-0 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
+      className="w-full min-w-0 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
     >
       <div
         className={`w-4 h-4 shrink-0 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}

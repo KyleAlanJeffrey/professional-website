@@ -1,3 +1,4 @@
+import CareerTimeline from "@/components/career-timeline";
 import Job from "@/components/job";
 import SkillsGraph from "@/components/skills-graph";
 import SectionShell from "@/components/sections/section-shell";
@@ -82,6 +83,8 @@ export default function WorkSection({
           </div>
         </div>
       </div>
+
+      {jobs.length > 0 && <CareerTimeline jobs={jobs} />}
 
       <div className="space-y-6 md:space-y-10">
         {jobs.length ? (
