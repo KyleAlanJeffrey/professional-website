@@ -105,7 +105,7 @@ function Job(props: {
         >
           {props.job.company.toUpperCase()}
         </h4>
-        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
+        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words line-clamp-3">
           {props.job.description}
         </p>
         <div
@@ -117,7 +117,7 @@ function Job(props: {
 
         <ul className="space-y-1.5 md:space-y-2 mb-3 md:mb-4 text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-medium list-disc list-outside pl-5 text-left">
           {props.job.accomplishments.map((accomplishment, index) => (
-            <li key={index} className="break-words">
+            <li key={index} className="break-words line-clamp-2">
               {accomplishment}
             </li>
           ))}
