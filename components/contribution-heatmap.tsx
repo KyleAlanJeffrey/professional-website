@@ -69,12 +69,12 @@ export default function ContributionHeatmap({ commits }: { commits: CommitLike[]
 
   return (
     <div>
-      <div className="text-xs font-black tracking-[0.2em] text-black dark:text-white mb-3" style={{ fontFamily: "monospace" }}>
+      <div className="text-xs font-black tracking-[0.2em] text-black dark:text-white mb-3 text-center" style={{ fontFamily: "monospace" }}>
         CONTRIBUTIONS
       </div>
 
       <div>
-        <svg width={SVG_W} height={SVG_H} style={{ display: "block" }}>
+        <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} style={{ display: "block", width: "100%", height: "auto" }}>
           {/* Month labels */}
           {monthLabels.map(({ label, col }) => (
             <text
@@ -125,14 +125,14 @@ export default function ContributionHeatmap({ commits }: { commits: CommitLike[]
       </div>
 
       {/* Tooltip */}
-      <div className="h-4 mt-2 text-[10px] font-bold tracking-[0.08em] text-gray-500 dark:text-gray-400" style={{ fontFamily: "monospace" }}>
+      <div className="h-4 mt-2 text-[10px] font-bold tracking-[0.08em] text-gray-500 dark:text-gray-400 text-center" style={{ fontFamily: "monospace" }}>
         {tooltip
           ? `${tooltip.count} commit${tooltip.count !== 1 ? "s" : ""} · ${tooltip.date.toLocaleDateString("default", { month: "short", day: "numeric", year: "numeric" })}`
           : "\u00A0"}
       </div>
 
       {/* Legend */}
-      <div className="flex items-center gap-1.5 mt-1">
+      <div className="flex justify-center items-center gap-1.5 mt-1">
         <span className="text-[9px] font-bold text-gray-400 dark:text-gray-500 tracking-[0.05em]" style={{ fontFamily: "monospace" }}>LESS</span>
         <svg width={STEP * 4 - GAP} height={CELL} style={{ display: "block" }}>
           {[0, 1, 2, 3].map((t, i) => (
