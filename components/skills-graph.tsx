@@ -1,24 +1,13 @@
 "use client";
 
-import * as d3 from "d3";
 import { useEffect, useRef } from "react";
 
-type Node = d3.SimulationNodeDatum & {
-  id: string;
-  category: string;
-};
-
-type Link = d3.SimulationLinkDatum<Node> & {
-  source: string | Node;
-  target: string | Node;
-};
-
 const CATEGORY_COLORS: Record<string, string> = {
-  Frontend:  "#60a5fa", // blue-400
-  Backend:   "#34d399", // emerald-400
-  DevOps:    "#fb923c", // orange-400
-  Database:  "#a78bfa", // violet-400
-  Other:     "#94a3b8", // slate-400
+  Frontend: "#60a5fa",
+  Backend:  "#34d399",
+  DevOps:   "#fb923c",
+  Database: "#a78bfa",
+  Other:    "#94a3b8",
 };
 
 const SKILL_CATEGORIES: Record<string, string> = {
@@ -32,150 +21,228 @@ const SKILL_CATEGORIES: Record<string, string> = {
   "Automation Studio": "Other",
 };
 
-type SkillsGraphProps = {
+// Boids tuning
+const MAX_SPEED   = 1.4;
+const MIN_SPEED   = 0.4;
+const PERCEPTION  = 120;
+const SEP_DIST    = 42;
+const W_SEP       = 0.22;
+const W_ALIGN     = 0.05;
+const W_COH_SAME  = 0.007;  // strong pull toward same-category flockmates
+const W_COH_DIFF  = 0.0006; // weak pull toward everything else
+const MARGIN      = 70;
+const BOUNDARY    = 0.16;
+
+type Boid = {
+  id: string;
+  category: string;
+  x: number; y: number;
+  vx: number; vy: number;
+};
+
+function clampSpeed(vx: number, vy: number): [number, number] {
+  const mag = Math.hypot(vx, vy);
+  if (mag === 0) return [(Math.random() - 0.5) * 0.6, (Math.random() - 0.5) * 0.6];
+  if (mag > MAX_SPEED) return [(vx / mag) * MAX_SPEED, (vy / mag) * MAX_SPEED];
+  if (mag < MIN_SPEED) return [(vx / mag) * MIN_SPEED, (vy / mag) * MIN_SPEED];
+  return [vx, vy];
+}
+
+type Props = {
   jobs: { skills: string[] }[];
   onSkillClick?: (skill: string) => void;
 };
 
-export default function SkillsGraph({ jobs, onSkillClick }: SkillsGraphProps) {
-  const svgRef = useRef<SVGSVGElement>(null);
+export default function SkillsGraph({ jobs, onSkillClick }: Props) {
+  const canvasRef    = useRef<HTMLCanvasElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const onClickRef   = useRef(onSkillClick);
+
+  useEffect(() => { onClickRef.current = onSkillClick; }, [onSkillClick]);
 
   useEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
+    const canvas    = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    // Collect unique skills and build co-occurrence edges
+    const dpr = window.devicePixelRatio ?? 1;
+    const ctx  = canvas.getContext("2d")!;
+
+    let w = 0, h = 0;
+    function resize() {
+      w = container!.clientWidth;
+      h = container!.clientHeight;
+      canvas!.width  = w * dpr;
+      canvas!.height = h * dpr;
+      canvas!.style.width  = `${w}px`;
+      canvas!.style.height = `${h}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+
+    // Build boids from unique skills across all jobs
     const skillSet = new Set<string>();
-    jobs.forEach((job) => job.skills.forEach((s) => skillSet.add(s)));
-    const skills = Array.from(skillSet);
+    jobs.forEach((j) => j.skills.forEach((s) => skillSet.add(s)));
 
-    const nodes: Node[] = skills.map((id) => ({
+    const boids: Boid[] = Array.from(skillSet).map((id) => ({
       id,
       category: SKILL_CATEGORIES[id] ?? "Other",
+      x:  MARGIN + Math.random() * (w - MARGIN * 2),
+      y:  MARGIN + Math.random() * (h - MARGIN * 2),
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
     }));
 
-    const linkSet = new Set<string>();
-    const links: Link[] = [];
-    jobs.forEach((job) => {
-      for (let i = 0; i < job.skills.length; i++) {
-        for (let j = i + 1; j < job.skills.length; j++) {
-          const key = [job.skills[i], job.skills[j]].sort().join("||");
-          if (!linkSet.has(key)) {
-            linkSet.add(key);
-            links.push({ source: job.skills[i], target: job.skills[j] });
+    let mouse = { x: -9999, y: -9999 };
+    let hoveredId: string | null = null;
+
+    function update() {
+      boids.forEach((b) => {
+        let dvx = 0, dvy = 0;
+        let sepX = 0, sepY = 0;
+        let alignX = 0, alignY = 0, alignN = 0;
+        let sameCX = 0, sameCY = 0, sameN = 0;
+        let diffCX = 0, diffCY = 0, diffN = 0;
+
+        for (const o of boids) {
+          if (o === b) continue;
+          const dx = o.x - b.x, dy = o.y - b.y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < SEP_DIST && dist > 0) {
+            sepX -= dx / dist;
+            sepY -= dy / dist;
+          }
+          if (dist < PERCEPTION) {
+            alignX += o.vx; alignY += o.vy; alignN++;
+            if (o.category === b.category) { sameCX += o.x; sameCY += o.y; sameN++; }
+            else                           { diffCX += o.x; diffCY += o.y; diffN++; }
           }
         }
+
+        dvx += sepX * W_SEP;
+        dvy += sepY * W_SEP;
+
+        if (alignN > 0) {
+          dvx += (alignX / alignN - b.vx) * W_ALIGN;
+          dvy += (alignY / alignN - b.vy) * W_ALIGN;
+        }
+        if (sameN > 0) {
+          dvx += (sameCX / sameN - b.x) * W_COH_SAME;
+          dvy += (sameCY / sameN - b.y) * W_COH_SAME;
+        }
+        if (diffN > 0) {
+          dvx += (diffCX / diffN - b.x) * W_COH_DIFF;
+          dvy += (diffCY / diffN - b.y) * W_COH_DIFF;
+        }
+
+        // Soft boundary
+        if (b.x < MARGIN)     dvx += BOUNDARY * ((MARGIN - b.x) / MARGIN);
+        if (b.x > w - MARGIN) dvx -= BOUNDARY * ((b.x - (w - MARGIN)) / MARGIN);
+        if (b.y < MARGIN)     dvy += BOUNDARY * ((MARGIN - b.y) / MARGIN);
+        if (b.y > h - MARGIN) dvy -= BOUNDARY * ((b.y - (h - MARGIN)) / MARGIN);
+
+        b.vx += dvx;
+        b.vy += dvy;
+        [b.vx, b.vy] = clampSpeed(b.vx, b.vy);
+        b.x += b.vx;
+        b.y += b.vy;
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+
+      // Find hovered boid
+      hoveredId = null;
+      let minDist = 32;
+      for (const b of boids) {
+        const d = Math.hypot(b.x - mouse.x, b.y - mouse.y);
+        if (d < minDist) { minDist = d; hoveredId = b.id; }
       }
+
+      canvas!.style.cursor = hoveredId ? "pointer" : "default";
+
+      for (const b of boids) {
+        const color     = CATEGORY_COLORS[b.category] ?? CATEGORY_COLORS.Other;
+        const isHovered = b.id === hoveredId;
+        const size      = isHovered ? 11 : 7;
+        const angle     = Math.atan2(b.vy, b.vx);
+
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.rotate(angle);
+
+        // Triangle pointing in direction of travel
+        ctx.beginPath();
+        ctx.moveTo(size, 0);
+        ctx.lineTo(-size * 0.65, -size * 0.52);
+        ctx.lineTo(-size * 0.65,  size * 0.52);
+        ctx.closePath();
+
+        if (isHovered) {
+          ctx.shadowColor = color;
+          ctx.shadowBlur  = 14;
+        }
+        ctx.fillStyle   = color;
+        ctx.globalAlpha = isHovered ? 1 : 0.82;
+        ctx.fill();
+        ctx.shadowBlur  = 0;
+
+        ctx.restore();
+
+        // Label below boid
+        const label = b.id.toUpperCase();
+        ctx.font        = `bold ${isHovered ? 9 : 7}px monospace`;
+        ctx.fillStyle   = color;
+        ctx.globalAlpha = isHovered ? 1 : 0.6;
+        ctx.textAlign   = "center";
+        ctx.fillText(label, b.x, b.y + size + 11);
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    let rafId: number;
+    function loop() {
+      update();
+      draw();
+      rafId = requestAnimationFrame(loop);
+    }
+    rafId = requestAnimationFrame(loop);
+
+    const onMouseMove  = (e: MouseEvent) => {
+      const r = canvas!.getBoundingClientRect();
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+    const onMouseLeave = () => { mouse = { x: -9999, y: -9999 }; };
+    const onClick      = () => { if (hoveredId) onClickRef.current?.(hoveredId); };
+
+    canvas.addEventListener("mousemove",  onMouseMove);
+    canvas.addEventListener("mouseleave", onMouseLeave);
+    canvas.addEventListener("click",      onClick);
+
+    const ro = new ResizeObserver(() => {
+      resize();
+      boids.forEach((b) => {
+        b.x = Math.min(Math.max(b.x, MARGIN), w - MARGIN);
+        b.y = Math.min(Math.max(b.y, MARGIN), h - MARGIN);
+      });
     });
+    ro.observe(container);
 
-    const width = svg.clientWidth || 600;
-    const height = svg.clientHeight || 400;
-
-    d3.select(svg).selectAll("*").remove();
-
-    const root = d3.select(svg)
-      .attr("width", width)
-      .attr("height", height);
-
-    const simulation = d3.forceSimulation<Node>(nodes)
-      .force("link", d3.forceLink<Node, Link>(links).id((d) => d.id).distance(60))
-      .force("charge", d3.forceManyBody().strength(-120))
-      .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide(28));
-
-    const link = root.append("g")
-      .selectAll<SVGLineElement, Link>("line")
-      .data(links)
-      .join("line")
-      .attr("stroke", "rgba(128,128,128,0.25)")
-      .attr("stroke-width", 1);
-
-    const node = root.append("g")
-      .selectAll<SVGGElement, Node>("g")
-      .data(nodes)
-      .join("g")
-      .style("cursor", "pointer")
-      .call(
-        d3.drag<SVGGElement, Node>()
-          .on("start", (event, d) => {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x; d.fy = d.y;
-          })
-          .on("drag", (event, d) => { d.fx = event.x; d.fy = event.y; })
-          .on("end", (event, d) => {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null; d.fy = null;
-          })
-      );
-
-    node.append("circle")
-      .attr("r", 18)
-      .attr("fill", (d) => CATEGORY_COLORS[d.category] ?? CATEGORY_COLORS.Other)
-      .attr("fill-opacity", 0.85)
-      .attr("stroke", "rgba(0,0,0,0.15)")
-      .attr("stroke-width", 1);
-
-    node.append("text")
-      .attr("text-anchor", "middle")
-      .attr("dominant-baseline", "middle")
-      .attr("font-size", "7px")
-      .attr("font-weight", "bold")
-      .attr("font-family", "monospace")
-      .attr("fill", "#000")
-      .attr("fill-opacity", 0.75)
-      .text((d) => d.id.length > 8 ? d.id.slice(0, 7) + "…" : d.id);
-
-    // Hover: highlight connected nodes
-    node
-      .on("mouseenter", (_, hovered) => {
-        const connectedIds = new Set<string>();
-        links.forEach((l) => {
-          const s = typeof l.source === "object" ? l.source.id : l.source;
-          const t = typeof l.target === "object" ? l.target.id : l.target;
-          if (s === hovered.id) connectedIds.add(t);
-          if (t === hovered.id) connectedIds.add(s);
-        });
-        node.select("circle")
-          .attr("fill-opacity", (d) =>
-            d.id === hovered.id || connectedIds.has(d.id) ? 1 : 0.25
-          );
-        link
-          .attr("stroke-opacity", (l) => {
-            const s = typeof l.source === "object" ? l.source.id : l.source;
-            const t = typeof l.target === "object" ? l.target.id : l.target;
-            return s === hovered.id || t === hovered.id ? 0.8 : 0.1;
-          })
-          .attr("stroke-width", (l) => {
-            const s = typeof l.source === "object" ? l.source.id : l.source;
-            const t = typeof l.target === "object" ? l.target.id : l.target;
-            return s === hovered.id || t === hovered.id ? 2 : 1;
-          });
-      })
-      .on("mouseleave", () => {
-        node.select("circle").attr("fill-opacity", 0.85);
-        link.attr("stroke-opacity", 1).attr("stroke-width", 1);
-      })
-      .on("click", (_, d) => onSkillClick?.(d.id));
-
-    simulation.on("tick", () => {
-      link
-        .attr("x1", (d) => (d.source as Node).x ?? 0)
-        .attr("y1", (d) => (d.source as Node).y ?? 0)
-        .attr("x2", (d) => (d.target as Node).x ?? 0)
-        .attr("y2", (d) => (d.target as Node).y ?? 0);
-      node.attr("transform", (d) => `translate(${d.x ?? 0},${d.y ?? 0})`);
-    });
-
-    return () => { simulation.stop(); };
-  }, [jobs, onSkillClick]);
-
-  // Legend
-  const categories = Object.entries(CATEGORY_COLORS);
+    return () => {
+      cancelAnimationFrame(rafId);
+      canvas.removeEventListener("mousemove",  onMouseMove);
+      canvas.removeEventListener("mouseleave", onMouseLeave);
+      canvas.removeEventListener("click",      onClick);
+      ro.disconnect();
+    };
+  }, [jobs]);
 
   return (
     <div className="w-full">
       <div className="flex flex-wrap gap-3 mb-4">
-        {categories.map(([cat, color]) => (
+        {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
           <div key={cat} className="flex items-center gap-1.5">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
             <span className="text-xs font-bold tracking-[0.1em] text-gray-600 dark:text-gray-400" style={{ fontFamily: "monospace" }}>
@@ -184,12 +251,14 @@ export default function SkillsGraph({ jobs, onSkillClick }: SkillsGraphProps) {
           </div>
         ))}
       </div>
-      <svg
-        ref={svgRef}
-        className="w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur"
-      />
+      <div
+        ref={containerRef}
+        className="w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur overflow-hidden"
+      >
+        <canvas ref={canvasRef} style={{ display: "block" }} />
+      </div>
       <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 font-medium tracking-[0.05em]" style={{ fontFamily: "monospace" }}>
-        Drag nodes · Hover to highlight connections · Click to filter jobs
+        Same-color boids flock together · Hover to see skill · Click to filter jobs
       </p>
     </div>
   );
