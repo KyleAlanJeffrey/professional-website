@@ -1,5 +1,3 @@
-import { useTilt } from "@/hooks/use-tilt";
-import { useRef } from "react";
 //   "jobs": [
 //     {
 //       "title": "Senior Software Engineer",
@@ -48,8 +46,6 @@ function Job(props: {
   highlightSkill?: string | null;
   highlightJob?: boolean;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  useTilt(cardRef, { maxDeg: 5, scale: 1.01 });
   const highlightSkill = props.highlightSkill?.toLowerCase() ?? null;
   const isHighlighted =
     !!props.highlightJob ||
@@ -60,7 +56,6 @@ function Job(props: {
 
   return (
     <div
-      ref={cardRef}
       className={`grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 items-start group transition-all duration-300 rounded-2xl ${
         isHighlighted
           ? "bg-amber-50/60 dark:bg-white/5 ring-2 ring-amber-400/60 shadow-[0_12px_30px_rgba(251,191,36,0.15)] p-3 md:p-4"

@@ -1,15 +1,11 @@
 import Commit from "@/components/commit";
 import ContributionHeatmap from "@/components/contribution-heatmap";
 import { useGithubData } from "@/components/providers/github-data-provider";
-import { useTilt } from "@/hooks/use-tilt";
 import SectionShell from "@/components/sections/section-shell";
-import { useRef } from "react";
 
 function StatCard({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useTilt(ref, { maxDeg: 7, scale: 1.015, liftPx: 2 });
   return (
-    <div ref={ref} className="group rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
       {children}
     </div>
   );
@@ -112,7 +108,7 @@ export default function GithubSection() {
               )}
             </div>
 
-            <div className="mb-6 overflow-x-auto">
+            <div className="mb-6">
               <ContributionHeatmap commits={commits} />
             </div>
 
