@@ -215,6 +215,7 @@ export default function PageContent(props: PageContentProps) {
           highlightSectionId={highlightSectionId}
           highlightSkill={highlightSkill}
           highlightJobIndex={highlightJobIndex}
+          onSkillClick={handleSkillClick}
         />
 
         <PublicationsSection />

@@ -1,3 +1,6 @@
+"use client";
+
+import { useInView } from "@/hooks/use-in-view";
 import { ReactNode } from "react";
 
 type SectionShellProps = {
@@ -17,8 +20,16 @@ export default function SectionShell({
   decorations,
   children,
 }: SectionShellProps) {
+  const { ref, inView } = useInView();
+
   return (
-    <section id={id} className={`${className} ${highlighted ? highlightClassName : ""}`}>
+    <section
+      ref={ref}
+      id={id}
+      className={`${className} ${highlighted ? highlightClassName : ""} transition-all duration-700 ease-out ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+    >
       {decorations}
       {children}
     </section>

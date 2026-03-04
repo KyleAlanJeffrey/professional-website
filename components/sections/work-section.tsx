@@ -1,4 +1,5 @@
 import Job from "@/components/job";
+import SkillsGraph from "@/components/skills-graph";
 import SectionShell from "@/components/sections/section-shell";
 import { Button } from "@/components/ui/button";
 import jobsData from "@/data/jobs.json";
@@ -8,12 +9,14 @@ type WorkSectionProps = {
   highlightSectionId: string | null;
   highlightSkill: string | null;
   highlightJobIndex: number | null;
+  onSkillClick?: (skill: string) => void;
 };
 
 export default function WorkSection({
   highlightSectionId,
   highlightSkill,
   highlightJobIndex,
+  onSkillClick,
 }: WorkSectionProps) {
   const jobs = jobsData.jobs ?? [];
 
@@ -112,6 +115,15 @@ export default function WorkSection({
           </div>
         )}
       </div>
+
+      {jobs.length > 0 && (
+        <div className="mt-10 md:mt-14">
+          <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-4" style={{ fontFamily: "monospace" }}>
+            SKILLS GRAPH
+          </div>
+          <SkillsGraph jobs={jobs} onSkillClick={onSkillClick} />
+        </div>
+      )}
     </SectionShell>
   );
 }
