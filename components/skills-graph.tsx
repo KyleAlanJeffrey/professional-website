@@ -25,7 +25,7 @@ const SKILL_CATEGORIES: Record<string, string> = {
 const MAX_SPEED   = 1.4;
 const MIN_SPEED   = 0.4;
 const PERCEPTION  = 120;
-const SEP_DIST    = 42;
+const SEP_DIST    = 52;
 const W_SEP       = 0.22;
 const W_ALIGN     = 0.05;
 const W_COH_SAME  = 0.007;  // strong pull toward same-category flockmates
@@ -166,7 +166,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       for (const b of boids) {
         const color     = CATEGORY_COLORS[b.category] ?? CATEGORY_COLORS.Other;
         const isHovered = b.id === hoveredId;
-        const size      = isHovered ? 11 : 7;
+        const size      = isHovered ? 16 : 11;
         const angle     = Math.atan2(b.vy, b.vx);
 
         ctx.save();
@@ -193,11 +193,11 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
 
         // Label below boid
         const label = b.id.toUpperCase();
-        ctx.font        = `bold ${isHovered ? 9 : 7}px monospace`;
+        ctx.font        = `bold ${isHovered ? 11 : 9}px monospace`;
         ctx.fillStyle   = color;
         ctx.globalAlpha = isHovered ? 1 : 0.6;
         ctx.textAlign   = "center";
-        ctx.fillText(label, b.x, b.y + size + 11);
+        ctx.fillText(label, b.x, b.y + size + 13);
         ctx.globalAlpha = 1;
       }
     }
