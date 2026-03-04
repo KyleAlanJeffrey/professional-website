@@ -74,6 +74,7 @@ export default function ContributionHeatmap({ commits }: { commits: CommitLike[]
       </div>
 
       <div className="overflow-x-auto">
+        <div style={{ width: SVG_W }}>
         <svg width={SVG_W} height={SVG_H} style={{ display: "block" }}>
           {/* Month labels */}
           {monthLabels.map(({ label, col }) => (
@@ -122,6 +123,7 @@ export default function ContributionHeatmap({ commits }: { commits: CommitLike[]
             ))
           )}
         </svg>
+        </div>
       </div>
 
       {/* Tooltip */}

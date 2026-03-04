@@ -66,7 +66,7 @@ export default function GithubSection() {
         </div>
 
         <div className="lg:col-span-7 min-w-0">
-          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-5 md:p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
+          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-5 md:p-8 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)] overflow-hidden">
             <div className="flex items-center justify-between mb-6">
               <h3
                 className="text-xl font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]"
