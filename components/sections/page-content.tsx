@@ -148,21 +148,21 @@ export default function PageContent(props: PageContentProps) {
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-white/10 dark:bg-black/20 backdrop-blur-[1px]"></div>
 
         <div className="hidden -rotate-90 lg:flex flex-row gap-3 items-center justify-center fixed left-0 h-full z-20 py-40 w-8">
-          {[
-            "contact",
-            "twitter",
-            "github",
-            "projects",
-            "publications",
-            "work",
-            "home",
-          ].map((id) => (
+          {([
+            { id: "contact", active: "text-violet-500 dark:text-violet-400 decoration-violet-500 dark:decoration-violet-400" },
+            { id: "twitter", active: "text-sky-500 dark:text-sky-400 decoration-sky-500 dark:decoration-sky-400" },
+            { id: "github", active: "text-emerald-500 dark:text-emerald-400 decoration-emerald-500 dark:decoration-emerald-400" },
+            { id: "projects", active: "text-indigo-500 dark:text-indigo-400 decoration-indigo-500 dark:decoration-indigo-400" },
+            { id: "publications", active: "text-amber-500 dark:text-amber-400 decoration-amber-500 dark:decoration-amber-400" },
+            { id: "work", active: "text-sky-500 dark:text-sky-400 decoration-sky-500 dark:decoration-sky-400" },
+            { id: "home", active: "text-black dark:text-white decoration-black dark:decoration-white" },
+          ] as const).map(({ id, active }) => (
             <button
               key={id}
               onClick={() => scrollToSection(id)}
               className={`block origin-center text-sm tracking-[0.3em] font-bold transition-all duration-300 whitespace-nowrap hover:scale-105 ${
                 activeSection === id
-                  ? "text-black dark:text-white underline decoration-2 underline-offset-4"
+                  ? `${active} underline decoration-2 underline-offset-4`
                   : "text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-gray-200"
               }`}
               style={{ fontFamily: "monospace" }}

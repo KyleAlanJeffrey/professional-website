@@ -65,18 +65,17 @@ export default function TwitterSection({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-10 md:mb-12">
         <div className="lg:col-span-6 text-left">
-          <div className="mb-4">
-            <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2" style={{ fontFamily: "monospace" }}>SOCIAL</div>
-            <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden"><div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div></div>
+          <div className="flex items-center gap-3 mb-2 md:mb-3">
+            <div className="text-xs text-sky-600 dark:text-sky-400 tracking-[0.3em] font-bold" style={{ fontFamily: "monospace" }}>SOCIAL</div>
+            <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400"></div>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>TWITTER</h2>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>FEED</h2>
-          <div className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</div>
-          <div className="inline-block text-5xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-left tracking-[0.1em]" style={{ fontFamily: "monospace" }}>06</div>
-          <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden">
-            <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-sky-500 to-gray-900 dark:from-sky-400 dark:to-white bg-clip-text text-transparent transition-all duration-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>TWITTER FEED</h2>
+            <span className="text-xs text-sky-600 dark:text-sky-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
+            <span className="text-4xl md:text-5xl font-black text-sky-500 dark:text-sky-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>06</span>
           </div>
-          <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium mt-4 max-w-xl mx-0">
+          <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400 mb-3"></div>
+          <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium max-w-xl mx-0">
             Latest thoughts, experiments, and links from my Twitter feed.
           </p>
         </div>

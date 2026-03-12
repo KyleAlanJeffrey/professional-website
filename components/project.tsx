@@ -63,11 +63,11 @@ function getProjectColor(index: number): string {
 function Project(props: { githubRepo: GithubRepoType; index: number }) {
   return (
     <a href={props.githubRepo.homepage} className="space-y-12 p-2">
-      <div className="group cursor-pointer p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
-        <div className="flex items-start justify-between mb-4">
+      <div className="group cursor-pointer p-4 md:p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
+        <div className="flex items-start justify-between mb-3">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 min-w-0">
             <h3
-              className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em] truncate"
+              className="text-lg md:text-xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em] truncate"
               style={{ fontFamily: "monospace" }}
             >
               {props.githubRepo.name}
@@ -86,12 +86,12 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
                 <img
                   src={`https://img.shields.io/pypi/v/${props.githubRepo.pypiPackage}?style=for-the-badge&color=3572A5`}
                   alt={`PyPI version for ${props.githubRepo.pypiPackage}`}
-                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110"
+                  className="h-5 md:h-6 rounded-md transition-transform duration-200 hover:scale-110"
                 />
                 <img
                   src={`https://img.shields.io/pypi/dm/${props.githubRepo.pypiPackage}?style=for-the-badge&color=3572A5`}
                   alt={`PyPI downloads for ${props.githubRepo.pypiPackage}`}
-                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110 hidden sm:block"
+                  className="h-5 md:h-6 rounded-md transition-transform duration-200 hover:scale-110 hidden sm:block"
                 />
               </span>
             )}
@@ -103,14 +103,14 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
             0{props.index + 1}
           </div>
         </div>
-        <p className="text-gray-700 dark:text-gray-300 text-sm mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
+        <p className="text-gray-700 dark:text-gray-300 text-xs md:text-sm mb-3 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
           {props.githubRepo.description || "No description available"}
         </p>
-        <div className="flex flex-wrap gap-2 mb-6 items-center">
+        <div className="flex flex-wrap gap-1.5 items-center">
           {props.githubRepo.topics.map((topic, index) => (
             <span
               key={index}
-              className="px-3 py-1 rounded-full bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 text-xs font-bold border border-black/10 dark:border-white/10 transition-all duration-300 hover:bg-white dark:hover:bg-white/20 hover:scale-105 tracking-[0.1em]"
+              className="px-2 py-0.5 rounded-full bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 text-[10px] md:text-[11px] font-bold border border-black/10 dark:border-white/10 transition-all duration-300 hover:bg-white dark:hover:bg-white/20 hover:scale-105 tracking-[0.05em]"
               style={{ fontFamily: "monospace" }}
             >
               {topic}

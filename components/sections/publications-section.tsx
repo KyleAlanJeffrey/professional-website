@@ -364,25 +364,18 @@ export default function PublicationsSection() {
         <div className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 md:gap-8 mb-8 md:mb-12">
             <div>
-              <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2" style={{ fontFamily: "monospace" }}>
-                EDITIONS
+              <div className="flex items-center gap-3 mb-2 md:mb-3">
+                <div className="text-xs text-amber-600 dark:text-amber-400 tracking-[0.3em] font-bold" style={{ fontFamily: "monospace" }}>
+                  EDITIONS
+                </div>
+                <div className="w-12 h-0.5 bg-amber-500 dark:bg-amber-400"></div>
               </div>
-              <div className="w-16 h-1 bg-black dark:bg-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div>
-              </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 mt-6 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                WORK
-              </h2>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                PUBLICATIONS
-              </h2>
-            </div>
-            <div className="flex items-center gap-6">
-              <div className="text-sm text-gray-700 dark:text-gray-300 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>
-                AT
-              </div>
-              <div className="text-5xl md:text-6xl font-black text-black dark:text-white transition-all duration-300 hover:scale-105 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                03
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-amber-500 to-gray-900 dark:from-amber-400 dark:to-white bg-clip-text text-transparent transition-all duration-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
+                  WORK PUBLICATIONS
+                </h2>
+                <span className="text-xs text-amber-600 dark:text-amber-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
+                <span className="text-4xl md:text-5xl font-black text-amber-500 dark:text-amber-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>03</span>
               </div>
             </div>
           </div>

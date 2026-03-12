@@ -1,18 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type CommitLike = { commit: { author: { date: string } } };
 
-const CELL = 11;
-const GAP  = 2;
-const STEP = CELL + GAP; // 13 px per slot
+const CELL = 14;
+const GAP  = 3;
+const STEP = CELL + GAP; // 17 px per slot
 
-const LEFT = 28; // space for day-of-week labels
-const TOP  = 16; // space for month labels
+const LEFT = 32; // space for day-of-week labels
+const TOP  = 18; // space for month labels
 
-const SVG_W = LEFT + 52 * STEP - GAP; // 702
-const SVG_H = TOP  +  7 * STEP - GAP; // 105
+const MAX_WEEKS = 52;
 
 function cellFillClass(count: number): string {
   if (count === 0) return "fill-gray-200 dark:fill-white/10";
@@ -33,14 +32,14 @@ function buildGrid(commits: CommitLike[]) {
   gridEnd.setDate(today.getDate() + (6 - today.getDay()));
 
   const gridStart = new Date(gridEnd);
-  gridStart.setDate(gridEnd.getDate() - 364);
+  gridStart.setDate(gridEnd.getDate() - (MAX_WEEKS * 7 - 1));
 
   const weeks: { date: Date; count: number }[][] = [];
   const monthLabels: { label: string; col: number }[] = [];
   const seenMonths = new Set<string>();
 
   const cursor = new Date(gridStart);
-  for (let w = 0; w < 52; w++) {
+  for (let w = 0; w < MAX_WEEKS; w++) {
     const week: { date: Date; count: number }[] = [];
     for (let d = 0; d < 7; d++) {
       const key = cursor.toLocaleDateString("en-CA");
@@ -64,17 +63,43 @@ function buildGrid(commits: CommitLike[]) {
 const DAY_LABELS = ["", "Mon", "", "Wed", "", "Fri", ""];
 
 export default function ContributionHeatmap({ commits }: { commits: CommitLike[] }) {
-  const { weeks, monthLabels } = useMemo(() => buildGrid(commits), [commits]);
+  const { weeks: allWeeks, monthLabels: allMonthLabels } = useMemo(() => buildGrid(commits), [commits]);
   const [tooltip, setTooltip] = useState<{ date: Date; count: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [visibleWeeks, setVisibleWeeks] = useState(MAX_WEEKS);
+
+  const measure = useCallback(() => {
+    if (!containerRef.current) return;
+    const width = containerRef.current.clientWidth;
+    const availableWidth = width - LEFT;
+    const fits = Math.max(8, Math.min(MAX_WEEKS, Math.floor((availableWidth + GAP) / STEP)));
+    setVisibleWeeks(fits);
+  }, []);
+
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  // Show the most recent weeks
+  const startIdx = Math.max(0, allWeeks.length - visibleWeeks);
+  const weeks = allWeeks.slice(startIdx);
+  const monthLabels = allMonthLabels
+    .filter((m) => m.col >= startIdx)
+    .map((m) => ({ ...m, col: m.col - startIdx }));
+
+  const svgW = LEFT + visibleWeeks * STEP - GAP;
+  const svgH = TOP + 7 * STEP - GAP;
 
   return (
-    <div>
+    <div ref={containerRef}>
       <div className="text-xs font-black tracking-[0.2em] text-black dark:text-white mb-3 text-center" style={{ fontFamily: "monospace" }}>
         CONTRIBUTIONS
       </div>
 
       <div>
-        <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} style={{ display: "block", width: "100%", height: "auto" }}>
+        <svg viewBox={`0 0 ${svgW} ${svgH}`} style={{ display: "block", width: "100%", height: "auto" }}>
           {/* Month labels */}
           {monthLabels.map(({ label, col }) => (
             <text

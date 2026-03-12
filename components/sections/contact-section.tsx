@@ -57,15 +57,16 @@ export default function ContactSection() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-10 md:mb-16">
         <div className="lg:col-span-6 text-left">
-          <div className="mb-4">
-            <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-2" style={{ fontFamily: "monospace" }}>GET IN TOUCH</div>
-            <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden"><div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div></div>
+          <div className="flex items-center gap-3 mb-2 md:mb-3">
+            <div className="text-xs text-violet-600 dark:text-violet-400 tracking-[0.3em] font-bold" style={{ fontFamily: "monospace" }}>GET IN TOUCH</div>
+            <div className="w-12 h-0.5 bg-violet-500 dark:bg-violet-400"></div>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-2 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>LET'S WORK</h2>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>TOGETHER</h2>
-          <div className="text-sm text-gray-700 dark:text-gray-300 mb-2 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</div>
-          <div className="inline-block text-5xl md:text-6xl font-black text-black dark:text-white mb-4 transition-all duration-300 hover:scale-105 origin-left tracking-[0.1em]" style={{ fontFamily: "monospace" }}>07</div>
-          <div className="w-16 h-1 bg-black dark:bg-white mx-0 relative overflow-hidden"><div className="absolute inset-0 bg-black dark:bg-white transform -translate-x-full transition-transform duration-500 hover:translate-x-0"></div></div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-violet-500 to-gray-900 dark:from-violet-400 dark:to-white bg-clip-text text-transparent transition-all duration-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>LET'S WORK TOGETHER</h2>
+            <span className="text-xs text-violet-600 dark:text-violet-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
+            <span className="text-4xl md:text-5xl font-black text-violet-500 dark:text-violet-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>07</span>
+          </div>
+          <div className="w-12 h-0.5 bg-violet-500 dark:bg-violet-400"></div>
         </div>
       </div>
 
