@@ -1,5 +1,6 @@
 import Commit from "@/components/commit";
 import ContributionHeatmap from "@/components/contribution-heatmap";
+import SectionTitle from "@/components/section-title";
 import { useGithubData } from "@/components/providers/github-data-provider";
 import SectionShell from "@/components/sections/section-shell";
 
@@ -34,18 +35,7 @@ export default function GithubSection() {
       {/* Top two-column section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start mb-8">
         <div className="lg:col-span-5 text-left">
-          <div className="group/title cursor-default">
-            <div className="flex items-center gap-3 mb-2 md:mb-3">
-              <div className="text-xs text-emerald-600 dark:text-emerald-400 tracking-[0.3em] font-bold transition-all duration-300 group-hover/title:tracking-[0.4em]" style={{ fontFamily: "monospace" }}>DEVELOPMENT</div>
-              <div className="w-12 h-0.5 bg-emerald-500 dark:bg-emerald-400 transition-all duration-500 group-hover/title:w-24"></div>
-            </div>
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-emerald-500 to-gray-900 dark:from-emerald-400 dark:to-white bg-clip-text text-transparent transition-all duration-500 tracking-[0.1em] group-hover/title:from-gray-900 group-hover/title:to-emerald-500 dark:group-hover/title:from-white dark:group-hover/title:to-emerald-400" style={{ fontFamily: "monospace" }}>GITHUB ACTIVITY</h2>
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
-              <span className="text-4xl md:text-5xl font-black text-emerald-500 dark:text-emerald-400 tracking-[0.1em] transition-transform duration-300 group-hover/title:scale-110" style={{ fontFamily: "monospace" }}>05</span>
-            </div>
-            <div className="w-12 h-0.5 bg-emerald-500 dark:bg-emerald-400 mb-4 transition-all duration-500 group-hover/title:w-24"></div>
-          </div>
+          <SectionTitle category="DEVELOPMENT" title="GITHUB ACTIVITY" number="05" color="emerald" />
 
           <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed mb-5 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
             Here's a snapshot of my recent coding activity and contributions.

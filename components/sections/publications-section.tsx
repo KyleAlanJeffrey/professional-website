@@ -1,5 +1,6 @@
 "use client";
 
+import SectionTitle from "@/components/section-title";
 import SectionShell from "@/components/sections/section-shell";
 import workProjectsData from "@/data/work_projects.json";
 import Image from "next/image";
@@ -364,21 +365,7 @@ export default function PublicationsSection() {
         <div className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 md:gap-8 mb-8 md:mb-12">
             <div>
-              <div className="group/title cursor-default">
-                <div className="flex items-center gap-3 mb-2 md:mb-3">
-                  <div className="text-xs text-amber-600 dark:text-amber-400 tracking-[0.3em] font-bold transition-all duration-300 group-hover/title:tracking-[0.4em]" style={{ fontFamily: "monospace" }}>
-                    EDITIONS
-                  </div>
-                  <div className="w-12 h-0.5 bg-amber-500 dark:bg-amber-400 transition-all duration-500 group-hover/title:w-24"></div>
-                </div>
-                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-amber-500 to-gray-900 dark:from-amber-400 dark:to-white bg-clip-text text-transparent transition-all duration-500 tracking-[0.1em] group-hover/title:from-gray-900 group-hover/title:to-amber-500 dark:group-hover/title:from-white dark:group-hover/title:to-amber-400" style={{ fontFamily: "monospace" }}>
-                    WORK PUBLICATIONS
-                  </h2>
-                  <span className="text-xs text-amber-600 dark:text-amber-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
-                  <span className="text-4xl md:text-5xl font-black text-amber-500 dark:text-amber-400 tracking-[0.1em] transition-transform duration-300 group-hover/title:scale-110" style={{ fontFamily: "monospace" }}>03</span>
-                </div>
-              </div>
+              <SectionTitle category="EDITIONS" title="WORK PUBLICATIONS" number="03" color="amber" />
             </div>
           </div>
 

@@ -108,27 +108,27 @@ function Commit(props: { commit: CommitType; index: number }) {
   return (
     <a
       href={props.commit.html_url}
-      className="w-full min-w-0 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
+      className="w-full min-w-0 flex items-center gap-2 sm:gap-4 group cursor-pointer p-2 sm:p-4 rounded-xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_12px_24px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(0,0,0,0.16)] hover:border-black/20 dark:hover:border-white/20"
     >
       <div
-        className={`w-4 h-4 shrink-0 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}
+        className={`w-3 h-3 sm:w-4 sm:h-4 shrink-0 ${intensityColor} transition-all duration-300 group-hover:scale-110 border border-black/10 dark:border-white/10`}
       ></div>
       <div className="flex-1 min-w-0">
         <div
-          className="text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em] break-words line-clamp-2"
+          className="text-[11px] sm:text-sm text-black dark:text-white font-bold transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.05em] break-words line-clamp-1 sm:line-clamp-2"
           style={{ fontFamily: "monospace" }}
         >
           {props.commit.commit.message}
         </div>
         <div
-          className="text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.1em] break-all"
+          className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 font-bold tracking-[0.1em] truncate"
           style={{ fontFamily: "monospace" }}
         >
           {relativeTime || "—"} • {repoName}
         </div>
       </div>
       <div
-        className="text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em] break-words sm:whitespace-nowrap sm:ml-auto"
+        className="text-[10px] sm:text-xs transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.1em] whitespace-nowrap ml-auto shrink-0"
         style={{ fontFamily: "monospace" }}
       >
         <span className="text-green-400">{diff.add}</span>{" "}
