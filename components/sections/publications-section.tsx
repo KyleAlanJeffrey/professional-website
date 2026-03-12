@@ -54,6 +54,219 @@ const getPublicationPreviewSrc = (url: string) => {
   }
 };
 
+function MobilePublicationPreview({
+  project,
+  projectUrl,
+  staticPreviewSrc,
+  youtubeId,
+  previewSrc,
+  previewLoadState,
+  onIframeLoad,
+  onIframeError,
+}: {
+  project?: WorkProject;
+  projectUrl: string;
+  staticPreviewSrc: string;
+  youtubeId: string | null;
+  previewSrc: string;
+  previewLoadState: "idle" | "loading" | "ready" | "failed";
+  onIframeLoad: () => void;
+  onIframeError: () => void;
+}) {
+  const usesIframe = !staticPreviewSrc && !youtubeId && !!previewSrc;
+  return (
+    <>
+      <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
+        {staticPreviewSrc ? (
+          <div className="h-full w-full relative">
+            <Image
+              src={staticPreviewSrc}
+              alt={`${project?.name ?? "Project"} preview`}
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
+        ) : youtubeId ? (
+          <div className="h-full w-full relative">
+            <Image
+              src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
+              alt={`${project?.name ?? "Project"} preview`}
+              fill
+              className="object-cover"
+              sizes="100vw"
+              suppressHydrationWarning
+            />
+          </div>
+        ) : previewSrc && previewLoadState !== "failed" ? (
+          <iframe
+            key={previewSrc}
+            src={previewSrc}
+            title={project?.name}
+            className="h-full w-full"
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            onLoad={onIframeLoad}
+            onError={onIframeError}
+          ></iframe>
+        ) : null}
+        {usesIframe && previewLoadState === "loading" ? (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+              LOADING PREVIEW...
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <div className="px-4 py-3 flex items-center justify-between">
+        <div className="flex flex-wrap gap-1.5">
+          {project?.topics?.slice(0, 3).map((topic) => (
+            <span
+              key={`mobile-${topic}`}
+              className="text-xs px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200"
+            >
+              {topic}
+            </span>
+          ))}
+        </div>
+        {projectUrl ? (
+          <a
+            href={projectUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-xs text-gray-600 dark:text-gray-300 font-bold tracking-[0.2em] hover:text-black dark:hover:text-white shrink-0 ml-2"
+          >
+            OPEN LINK
+          </a>
+        ) : null}
+      </div>
+    </>
+  );
+}
+
+function PublicationPreview({
+  project,
+  projectUrl,
+  staticPreviewSrc,
+  youtubeId,
+  previewSrc,
+  usesIframePreview,
+  previewLoadState,
+  onIframeLoad,
+  onIframeError,
+  isTransitioning,
+}: {
+  project?: WorkProject;
+  projectUrl: string;
+  staticPreviewSrc: string;
+  youtubeId: string | null;
+  previewSrc: string;
+  usesIframePreview: boolean;
+  previewLoadState: "idle" | "loading" | "ready" | "failed";
+  onIframeLoad: () => void;
+  onIframeError: () => void;
+  isTransitioning: boolean;
+}) {
+  return (
+    <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur shadow-[0_24px_48px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col">
+      <div
+        className={`transition-all duration-200 ${
+          isTransitioning
+            ? "opacity-0 translate-y-1"
+            : "opacity-100 translate-y-0"
+        }`}
+      >
+        <div className="px-6 pt-6 pb-4 border-b border-black/10 dark:border-white/10 flex items-center justify-between min-h-24">
+          <div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+              LIVE PREVIEW
+            </div>
+            <div className="text-lg font-black text-black dark:text-white tracking-[0.08em] line-clamp-2" style={{ fontFamily: "monospace" }}>
+              {project?.name ?? "Select a publication"}
+            </div>
+          </div>
+          {projectUrl ? (
+            <a
+              href={projectUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-gray-600 dark:text-gray-300 font-bold tracking-[0.2em] hover:text-black dark:hover:text-white"
+            >
+              OPEN LINK
+            </a>
+          ) : null}
+        </div>
+        <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
+          {staticPreviewSrc ? (
+            <div className="h-full w-full relative">
+              <Image
+                src={staticPreviewSrc}
+                alt={`${project?.name ?? "Project"} preview`}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 56rem, 100vw"
+              />
+            </div>
+          ) : youtubeId ? (
+            <div className="h-full w-full relative">
+              <Image
+                src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
+                alt={`${project?.name ?? "Project"} preview`}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 56rem, 100vw"
+                suppressHydrationWarning
+              />
+            </div>
+          ) : previewSrc && previewLoadState !== "failed" ? (
+            <iframe
+              key={previewSrc}
+              src={previewSrc}
+              title={project?.name}
+              className="h-full w-full"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              onLoad={onIframeLoad}
+              onError={onIframeError}
+            ></iframe>
+          ) : null}
+          {usesIframePreview && previewLoadState === "loading" ? (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+                LOADING PREVIEW...
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <div className="px-6 py-5 space-y-3 min-h-52">
+          <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed min-h-16 line-clamp-3">
+            {project?.description ??
+              "Choose a publication from the list to see more details."}
+          </p>
+          <div className="flex flex-wrap gap-2 min-h-16 content-start">
+            {project?.topics?.map((topic) => (
+              <span
+                key={`active-${topic}`}
+                className="text-xs px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
+              >
+                {topic}
+              </span>
+            ))}
+          </div>
+          <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
+            Some publications may block embeds. Use OPEN LINK if
+            preview is blank.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PublicationsSection() {
   const [activePublicationIndex, setActivePublicationIndex] = useState(0);
   const [displayedPublicationIndex, setDisplayedPublicationIndex] = useState(0);
@@ -184,134 +397,73 @@ export default function PublicationsSection() {
                 {workProjects.length ? (
                   workProjects.map((project, index) => {
                     const isActive = index === activePublicationIndex;
+                    const isDisplayed = isActive && index === displayedPublicationIndex;
                     return (
-                      <button
+                      <div
                         key={`${project.name}-${index}`}
-                        type="button"
-                        onClick={() => setActivePublicationIndex(index)}
-                        className={`w-full text-left rounded-2xl border px-4 py-4 transition-all duration-300 cursor-pointer ${
+                        className={`rounded-2xl border overflow-hidden transition-all duration-300 ${
                           isActive
                             ? "border-black/40 dark:border-white/30 bg-black/5 dark:bg-white/10 shadow-[0_12px_30px_rgba(0,0,0,0.15)]"
                             : "border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(0,0,0,0.12)]"
                         }`}
                       >
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <div className="text-base font-black text-black dark:text-white tracking-[0.08em]" style={{ fontFamily: "monospace" }}>
-                              {project.name}
+                        <button
+                          type="button"
+                          onClick={() => setActivePublicationIndex(index)}
+                          className="w-full text-left px-4 py-4 cursor-pointer"
+                        >
+                          <div className="flex items-start justify-between gap-4">
+                            <div>
+                              <div className="text-base font-black text-black dark:text-white tracking-[0.08em]" style={{ fontFamily: "monospace" }}>
+                                {project.name}
+                              </div>
+                              <div className="text-xs text-gray-700 dark:text-gray-300 font-bold tracking-[0.2em] mt-1">
+                                {project.company}
+                              </div>
                             </div>
-                            <div className="text-xs text-gray-700 dark:text-gray-300 font-bold tracking-[0.2em] mt-1">
-                              {project.company}
-                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">PREVIEW</div>
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">PREVIEW</div>
+                          <p className="text-sm text-gray-800 dark:text-gray-200 mt-3 line-clamp-3">{project.description}</p>
+                        </button>
+                        {/* Mobile inline preview — slides out from bottom of card */}
+                        <div
+                          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+                            isDisplayed ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                          }`}
+                        >
+                          <div className="border-t border-black/10 dark:border-white/10">
+                            <MobilePublicationPreview
+                              project={project}
+                              projectUrl={project.url ? normalizePublicationUrl(project.url) : ""}
+                              staticPreviewSrc={project.name === "Project Music Mode" ? "/Work-Projects/MusicMode.webp" : ""}
+                              youtubeId={project.url ? getYoutubeVideoId(project.url) : null}
+                              previewSrc={project.url ? getPublicationPreviewSrc(project.url) : ""}
+                              previewLoadState={previewLoadState}
+                              onIframeLoad={() => setPreviewLoadState("ready")}
+                              onIframeError={() => setPreviewLoadState("failed")}
+                            />
+                          </div>
                         </div>
-                        <p className="text-sm text-gray-800 dark:text-gray-200 mt-3 line-clamp-3">{project.description}</p>
-                      </button>
+                      </div>
                     );
                   })
                 ) : null}
               </div>
             </div>
 
-            <div className="lg:col-span-7">
-              <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur shadow-[0_24px_48px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col">
-                <div
-                  className={`transition-all duration-200 ${
-                    isPublicationTransitioning
-                      ? "opacity-0 translate-y-1"
-                      : "opacity-100 translate-y-0"
-                  }`}
-                >
-                  <div className="px-6 pt-6 pb-4 border-b border-black/10 dark:border-white/10 flex items-center justify-between min-h-24">
-                    <div>
-                      <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                        LIVE PREVIEW
-                      </div>
-                      <div className="text-lg font-black text-black dark:text-white tracking-[0.08em] line-clamp-2" style={{ fontFamily: "monospace" }}>
-                        {workProjects[displayedPublicationIndex]?.name ??
-                          "Select a publication"}
-                      </div>
-                    </div>
-                    {activeProjectUrl ? (
-                      <a
-                        href={activeProjectUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs text-gray-600 dark:text-gray-300 font-bold tracking-[0.2em] hover:text-black dark:hover:text-white"
-                      >
-                        OPEN LINK
-                      </a>
-                    ) : null}
-                  </div>
-                  <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
-                    {activeProjectStaticPreviewSrc ? (
-                      <div className="h-full w-full relative">
-                        <Image
-                          src={activeProjectStaticPreviewSrc}
-                          alt={`${activeProject?.name ?? "Project"} preview`}
-                          fill
-                          className="object-cover"
-                          sizes="(min-width: 1024px) 56rem, 100vw"
-                        />
-                      </div>
-                    ) : activeProjectYoutubeId ? (
-                      <div className="h-full w-full relative">
-                        <Image
-                          src={`https://i.ytimg.com/vi/${activeProjectYoutubeId}/hqdefault.jpg`}
-                          alt={`${activeProject?.name ?? "Project"} preview`}
-                          fill
-                          className="object-cover"
-                          sizes="(min-width: 1024px) 56rem, 100vw"
-                          suppressHydrationWarning
-                        />
-                      </div>
-                    ) : activeProjectPreviewSrc && previewLoadState !== "failed" ? (
-                      <iframe
-                        key={activeProjectPreviewSrc}
-                        src={activeProjectPreviewSrc}
-                        title={activeProject?.name}
-                        className="h-full w-full"
-                        loading="lazy"
-                        referrerPolicy="no-referrer"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                        onLoad={() => setPreviewLoadState("ready")}
-                        onError={() => setPreviewLoadState("failed")}
-                      ></iframe>
-                    ) : null}
-                    {usesIframePreview && previewLoadState === "loading" ? (
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                          LOADING PREVIEW...
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                  <div className="px-6 py-5 space-y-3 min-h-52">
-                    <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed min-h-16 line-clamp-3">
-                      {workProjects[displayedPublicationIndex]?.description ??
-                        "Choose a publication from the list to see more details."}
-                    </p>
-                    <div className="flex flex-wrap gap-2 min-h-16 content-start">
-                      {workProjects[displayedPublicationIndex]?.topics?.map(
-                        (topic) => (
-                          <span
-                            key={`active-${topic}`}
-                            className="text-xs px-2.5 py-1 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)] hover:bg-white dark:hover:bg-white/20"
-                          >
-                            {topic}
-                          </span>
-                        ),
-                      )}
-                    </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                      Some publications may block embeds. Use OPEN LINK if
-                      preview is blank.
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="hidden lg:block lg:col-span-7">
+              <PublicationPreview
+                project={workProjects[displayedPublicationIndex]}
+                projectUrl={activeProjectUrl}
+                staticPreviewSrc={activeProjectStaticPreviewSrc}
+                youtubeId={activeProjectYoutubeId}
+                previewSrc={activeProjectPreviewSrc}
+                usesIframePreview={usesIframePreview}
+                previewLoadState={previewLoadState}
+                onIframeLoad={() => setPreviewLoadState("ready")}
+                onIframeError={() => setPreviewLoadState("failed")}
+                isTransitioning={isPublicationTransitioning}
+              />
             </div>
           </div>
         </div>
