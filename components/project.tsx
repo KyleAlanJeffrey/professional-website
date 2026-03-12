@@ -55,6 +55,7 @@ export type GithubRepoType = {
   homepage: string;
   topics: string[];
   description: string;
+  pypiPackage?: string;
 };
 function getProjectColor(index: number): string {
   return COLOR_PALETTE[index % COLOR_PALETTE.length];
@@ -64,12 +65,37 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
     <a href={props.githubRepo.homepage} className="space-y-12 p-2">
       <div className="group cursor-pointer p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
         <div className="flex items-start justify-between mb-4">
-          <h3
-            className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
-            style={{ fontFamily: "monospace" }}
-          >
-            {props.githubRepo.name}
-          </h3>
+          <div className="flex items-center gap-3">
+            <h3
+              className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
+              style={{ fontFamily: "monospace" }}
+            >
+              {props.githubRepo.name}
+            </h3>
+            {props.githubRepo.pypiPackage && (
+              <span
+                className="inline-flex gap-1.5 items-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    `https://pypi.org/project/${props.githubRepo.pypiPackage}`,
+                    "_blank",
+                  );
+                }}
+              >
+                <img
+                  src={`https://img.shields.io/pypi/v/${props.githubRepo.pypiPackage}?style=for-the-badge&color=3572A5`}
+                  alt={`PyPI version for ${props.githubRepo.pypiPackage}`}
+                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110"
+                />
+                <img
+                  src={`https://img.shields.io/pypi/dm/${props.githubRepo.pypiPackage}?style=for-the-badge&color=3572A5`}
+                  alt={`PyPI downloads for ${props.githubRepo.pypiPackage}`}
+                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110"
+                />
+              </span>
+            )}
+          </div>
           <div
             className="text-sm text-gray-500 dark:text-gray-400 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 font-bold tracking-[0.2em]"
             style={{ fontFamily: "monospace" }}
@@ -80,7 +106,7 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
         <p className="text-gray-700 dark:text-gray-300 text-sm mb-6 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium">
           {props.githubRepo.description || "No description available"}
         </p>
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-2 mb-6 items-center">
           {props.githubRepo.topics.map((topic, index) => (
             <span
               key={index}

@@ -61,12 +61,15 @@ export default function GithubDataProvider({
         const topics = Array.isArray(repo.topics) ? [...repo.topics] : [];
         const isPinned = topics.includes("pinned");
         const cleanedTopics = topics.filter((topic) => topic !== "pinned");
+        const description = repo.description ?? "";
+        const pypiMatch = description.match(/pip install (\S+)/i);
         return {
           pinned: isPinned,
           name: repo.name,
           homepage: repo.homepage ?? "",
           topics: cleanedTopics,
-          description: repo.description ?? "",
+          description,
+          ...(pypiMatch ? { pypiPackage: pypiMatch[1] } : {}),
         };
       });
       setGithubRepos(allRepos);
