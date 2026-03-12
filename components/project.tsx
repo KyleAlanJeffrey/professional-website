@@ -65,16 +65,16 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
     <a href={props.githubRepo.homepage} className="space-y-12 p-2">
       <div className="group cursor-pointer p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
         <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 min-w-0">
             <h3
-              className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
+              className="text-2xl font-black text-black dark:text-white transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em] truncate"
               style={{ fontFamily: "monospace" }}
             >
               {props.githubRepo.name}
             </h3>
             {props.githubRepo.pypiPackage && (
               <span
-                className="inline-flex gap-1.5 items-center"
+                className="inline-flex gap-1.5 items-center shrink-0"
                 onClick={(e) => {
                   e.preventDefault();
                   window.open(
@@ -91,7 +91,7 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
                 <img
                   src={`https://img.shields.io/pypi/dm/${props.githubRepo.pypiPackage}?style=for-the-badge&color=3572A5`}
                   alt={`PyPI downloads for ${props.githubRepo.pypiPackage}`}
-                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110"
+                  className="h-7 rounded-md transition-transform duration-200 hover:scale-110 hidden sm:block"
                 />
               </span>
             )}

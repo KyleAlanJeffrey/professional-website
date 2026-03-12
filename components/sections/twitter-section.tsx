@@ -101,16 +101,31 @@ export default function TwitterSection({
               ))}
             </div>
           ) : (
-            <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full animate-pulse">
-              {[...Array(2)].map((_, i) => (
+            <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full">
+              {tweetIds.map((_, i) => (
                 <div
                   key={i}
-                  className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)]"
+                  className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
                 >
-                  <div className="h-4 w-3/4 bg-gray-300 dark:bg-gray-700 mb-3"></div>
-                  <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>
-                  <div className="h-3 w-11/12 bg-gray-300 dark:bg-gray-700 mb-2"></div>
-                  <div className="h-3 w-2/3 bg-gray-300 dark:bg-gray-700"></div>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="flex-1">
+                      <div className="h-4 w-28 bg-gray-300 dark:bg-gray-700 mb-1.5"></div>
+                      <div className="h-3 w-20 bg-gray-300 dark:bg-gray-700"></div>
+                    </div>
+                  </div>
+                  <div className="space-y-2 mb-4">
+                    <div className="h-3.5 w-full bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="h-3.5 w-11/12 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="h-3.5 w-4/5 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="h-3.5 w-2/3 bg-gray-300 dark:bg-gray-700"></div>
+                  </div>
+                  <div className="h-40 w-full rounded-xl bg-gray-300 dark:bg-gray-700 mb-4"></div>
+                  <div className="flex gap-8">
+                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
+                  </div>
                 </div>
               ))}
             </div>
