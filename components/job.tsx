@@ -39,6 +39,7 @@ type JobType = {
   accomplishments: string[];
   company: string;
   duration: string;
+  website?: string;
 };
 function Job(props: {
   job: JobType;
@@ -99,12 +100,24 @@ function Job(props: {
         >
           AT
         </div>
-        <h4
-          className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-bold tracking-[0.1em]"
-          style={{ fontFamily: "monospace" }}
-        >
-          {props.job.company.toUpperCase()}
-        </h4>
+        {props.job.website ? (
+          <a
+            href={props.job.website}
+            target="_blank"
+            rel="noreferrer"
+            className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400 font-bold tracking-[0.1em] underline underline-offset-4 decoration-gray-400/50 hover:decoration-blue-500 inline-block"
+            style={{ fontFamily: "monospace" }}
+          >
+            {props.job.company.toUpperCase()}
+          </a>
+        ) : (
+          <h4
+            className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-bold tracking-[0.1em]"
+            style={{ fontFamily: "monospace" }}
+          >
+            {props.job.company.toUpperCase()}
+          </h4>
+        )}
         <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
           {props.job.description}
         </p>
