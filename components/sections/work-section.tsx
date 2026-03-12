@@ -40,20 +40,22 @@ export default function WorkSection({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-6 md:mb-10">
         <div className="lg:col-span-6 text-left">
-          <div className="flex items-center gap-3 mb-2 md:mb-3">
-            <div className="text-xs text-sky-600 dark:text-sky-400 tracking-[0.3em] font-bold" style={{ fontFamily: "monospace" }}>
-              CAREER
+          <div className="group/title cursor-default">
+            <div className="flex items-center gap-3 mb-2 md:mb-3">
+              <div className="text-xs text-sky-600 dark:text-sky-400 tracking-[0.3em] font-bold transition-all duration-300 group-hover/title:tracking-[0.4em]" style={{ fontFamily: "monospace" }}>
+                CAREER
+              </div>
+              <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400 transition-all duration-500 group-hover/title:w-24"></div>
             </div>
-            <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400"></div>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-sky-500 to-gray-900 dark:from-sky-400 dark:to-white bg-clip-text text-transparent transition-all duration-500 tracking-[0.1em] group-hover/title:from-gray-900 group-hover/title:to-sky-500 dark:group-hover/title:from-white dark:group-hover/title:to-sky-400" style={{ fontFamily: "monospace" }}>
+                WORK EXPERIENCE
+              </h2>
+              <span className="text-xs text-sky-600 dark:text-sky-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
+              <span className="text-4xl md:text-5xl font-black text-sky-500 dark:text-sky-400 tracking-[0.1em] transition-transform duration-300 group-hover/title:scale-110" style={{ fontFamily: "monospace" }}>02</span>
+            </div>
+            <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400 transition-all duration-500 group-hover/title:w-24"></div>
           </div>
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-sky-500 to-gray-900 dark:from-sky-400 dark:to-white bg-clip-text text-transparent transition-all duration-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-              WORK EXPERIENCE
-            </h2>
-            <span className="text-xs text-sky-600 dark:text-sky-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
-            <span className="text-4xl md:text-5xl font-black text-sky-500 dark:text-sky-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>02</span>
-          </div>
-          <div className="w-12 h-0.5 bg-sky-500 dark:bg-sky-400"></div>
         </div>
 
         <div className="lg:col-span-6 text-left">

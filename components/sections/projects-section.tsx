@@ -31,20 +31,22 @@ export default function ProjectsSection({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 md:mb-20">
         <div className="lg:col-span-5 text-left">
-          <div className="flex items-center gap-3 mb-2 md:mb-3">
-            <div className="text-xs text-indigo-600 dark:text-indigo-400 tracking-[0.3em] font-bold" style={{ fontFamily: "monospace" }}>
-              PORTFOLIO
+          <div className="group/title cursor-default">
+            <div className="flex items-center gap-3 mb-2 md:mb-3">
+              <div className="text-xs text-indigo-600 dark:text-indigo-400 tracking-[0.3em] font-bold transition-all duration-300 group-hover/title:tracking-[0.4em]" style={{ fontFamily: "monospace" }}>
+                PORTFOLIO
+              </div>
+              <div className="w-12 h-0.5 bg-indigo-500 dark:bg-indigo-400 transition-all duration-500 group-hover/title:w-24"></div>
             </div>
-            <div className="w-12 h-0.5 bg-indigo-500 dark:bg-indigo-400"></div>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-indigo-500 to-gray-900 dark:from-indigo-400 dark:to-white bg-clip-text text-transparent transition-all duration-500 tracking-[0.1em] group-hover/title:from-gray-900 group-hover/title:to-indigo-500 dark:group-hover/title:from-white dark:group-hover/title:to-indigo-400" style={{ fontFamily: "monospace" }}>
+                FEATURED PROJECTS
+              </h2>
+              <span className="text-xs text-indigo-600 dark:text-indigo-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
+              <span className="text-4xl md:text-5xl font-black text-indigo-500 dark:text-indigo-400 tracking-[0.1em] transition-transform duration-300 group-hover/title:scale-110" style={{ fontFamily: "monospace" }}>04</span>
+            </div>
+            <div className="w-12 h-0.5 bg-indigo-500 dark:bg-indigo-400 mb-4 transition-all duration-500 group-hover/title:w-24"></div>
           </div>
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2 md:mb-3">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black bg-gradient-to-r from-indigo-500 to-gray-900 dark:from-indigo-400 dark:to-white bg-clip-text text-transparent transition-all duration-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-              FEATURED PROJECTS
-            </h2>
-            <span className="text-xs text-indigo-600 dark:text-indigo-400 font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>AT</span>
-            <span className="text-4xl md:text-5xl font-black text-indigo-500 dark:text-indigo-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>04</span>
-          </div>
-          <div className="w-12 h-0.5 bg-indigo-500 dark:bg-indigo-400 mb-4"></div>
           <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
             A curated selection of my recent personal projects.
           </p>
