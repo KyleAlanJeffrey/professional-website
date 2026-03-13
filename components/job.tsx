@@ -157,7 +157,7 @@ function Job(props: {
       </div>
 
       <div className="hidden sm:flex lg:col-span-3 justify-start">
-        <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+        <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:scale-105">
           <div
             className="text-xl md:text-2xl font-black text-gray-600 dark:text-gray-400 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 tracking-[0.1em]"
             style={{ fontFamily: "monospace" }}

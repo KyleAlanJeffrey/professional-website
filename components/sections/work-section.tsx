@@ -49,7 +49,7 @@ export default function WorkSection({
             <Button
               asChild
               variant="outline"
-              className="group h-11 rounded-full border-black/25 bg-white/70 px-5 text-black backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-black hover:bg-white dark:border-white/25 dark:bg-white/5 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
+              className="group h-11 rounded-full border-black/25 bg-white/70 px-5 text-black md:backdrop-blur-smtransition-all duration-300 hover:-translate-y-0.5 hover:border-black hover:bg-white dark:border-white/25 dark:bg-white/5 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
             >
               <a href="/resume.pdf" download aria-label="Download resume PDF">
                 <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
@@ -79,7 +79,7 @@ export default function WorkSection({
             {[...Array(2)].map((_, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
+                className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 md:backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
               >
                 <div className="h-4 w-32 bg-gray-300 dark:bg-gray-700 mb-4"></div>
                 <div className="h-6 w-64 bg-gray-300 dark:bg-gray-700 mb-3"></div>

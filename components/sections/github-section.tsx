@@ -6,7 +6,7 @@ import SectionShell from "@/components/sections/section-shell";
 
 function StatCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
       {children}
     </div>
   );
@@ -56,7 +56,7 @@ export default function GithubSection() {
         </div>
 
         <div className="lg:col-span-7">
-          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-4 md:p-6 backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
+          <div className="w-full rounded-2xl bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 p-4 md:p-6 md:backdrop-blur shadow-[0_20px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_26px_52px_rgba(0,0,0,0.16)]">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-base font-black text-black dark:text-white transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
                 RECENT ACTIVITY
@@ -138,7 +138,7 @@ export default function GithubSection() {
 
       {/* Full-width heatmap row */}
       {commits.length > 0 && (
-        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:p-8 backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.1)]">
+        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:p-8 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.1)]">
           <ContributionHeatmap commits={commits} />
         </div>
       )}

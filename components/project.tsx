@@ -63,7 +63,7 @@ function getProjectColor(index: number): string {
 function Project(props: { githubRepo: GithubRepoType; index: number }) {
   return (
     <a href={props.githubRepo.homepage} className="space-y-12 p-2">
-      <div className="group cursor-pointer p-4 md:p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
+      <div className="group cursor-pointer p-4 md:p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_24px_48px_rgba(0,0,0,0.16)]">
         <div className="flex items-start justify-between mb-3">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 min-w-0">
             <h3

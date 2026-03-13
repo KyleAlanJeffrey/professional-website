@@ -3,6 +3,7 @@
 import SectionTitle from "@/components/section-title";
 import SectionShell from "@/components/sections/section-shell";
 import workProjectsData from "@/data/work_projects.json";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -38,92 +39,84 @@ const getYoutubeVideoId = (url: string) => {
   }
 };
 
-const getPublicationPreviewSrc = (url: string) => {
+const getStaticPreviewSrc = (project: WorkProject) => {
+  if (project.name === "Project Music Mode") return "/Work-Projects/MusicMode.webp";
+  return "";
+};
+
+const getDomain = (url: string) => {
   try {
-    const parsed = new URL(normalizePublicationUrl(url));
-    if (parsed.hostname.includes("youtube.com")) {
-      const videoId = parsed.searchParams.get("v");
-      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-    }
-    if (parsed.hostname === "youtu.be") {
-      const videoId = parsed.pathname.replace("/", "");
-      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-    }
-    return parsed.toString();
+    return new URL(normalizePublicationUrl(url)).hostname.replace("www.", "");
   } catch {
-    return normalizePublicationUrl(url);
+    return url;
   }
 };
+
+function PreviewImage({ project, sizes }: { project: WorkProject; sizes: string }) {
+  const url = project.url ? normalizePublicationUrl(project.url) : "";
+  const staticSrc = getStaticPreviewSrc(project);
+  const youtubeId = url ? getYoutubeVideoId(url) : null;
+
+  if (staticSrc) {
+    return (
+      <div className="h-full w-full relative">
+        <Image src={staticSrc} alt={`${project.name} preview`} fill className="object-cover" sizes={sizes} />
+      </div>
+    );
+  }
+
+  if (youtubeId) {
+    return (
+      <div className="h-full w-full relative">
+        <Image
+          src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
+          alt={`${project.name} preview`}
+          fill
+          className="object-cover"
+          sizes={sizes}
+          suppressHydrationWarning
+        />
+        {/* Play button overlay */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-black/60 flex items-center justify-center md:backdrop-blur-sm">
+            <div className="w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-l-[16px] border-l-white ml-1" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Link preview card for non-image/video URLs
+  if (url) {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        <ExternalLink className="w-8 h-8 text-gray-400 dark:text-gray-500" />
+        <span className="text-xs font-bold tracking-[0.15em] text-gray-500 dark:text-gray-400" style={{ fontFamily: "monospace" }}>
+          {getDomain(url).toUpperCase()}
+        </span>
+      </div>
+    );
+  }
+
+  return null;
+}
 
 function MobilePublicationPreview({
   project,
   projectUrl,
-  staticPreviewSrc,
-  youtubeId,
-  previewSrc,
-  previewLoadState,
-  onIframeLoad,
-  onIframeError,
 }: {
   project?: WorkProject;
   projectUrl: string;
-  staticPreviewSrc: string;
-  youtubeId: string | null;
-  previewSrc: string;
-  previewLoadState: "idle" | "loading" | "ready" | "failed";
-  onIframeLoad: () => void;
-  onIframeError: () => void;
 }) {
-  const usesIframe = !staticPreviewSrc && !youtubeId && !!previewSrc;
+  if (!project) return null;
   return (
     <>
-      <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
-        {staticPreviewSrc ? (
-          <div className="h-full w-full relative">
-            <Image
-              src={staticPreviewSrc}
-              alt={`${project?.name ?? "Project"} preview`}
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-          </div>
-        ) : youtubeId ? (
-          <div className="h-full w-full relative">
-            <Image
-              src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
-              alt={`${project?.name ?? "Project"} preview`}
-              fill
-              className="object-cover"
-              sizes="100vw"
-              suppressHydrationWarning
-            />
-          </div>
-        ) : previewSrc && previewLoadState !== "failed" ? (
-          <iframe
-            key={previewSrc}
-            src={previewSrc}
-            title={project?.name}
-            className="h-full w-full"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-            onLoad={onIframeLoad}
-            onError={onIframeError}
-          ></iframe>
-        ) : null}
-        {usesIframe && previewLoadState === "loading" ? (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-              LOADING PREVIEW...
-            </div>
-          </div>
-        ) : null}
-      </div>
+      <a href={projectUrl || undefined} target="_blank" rel="noreferrer" className="block aspect-video bg-black/5 dark:bg-white/5 relative">
+        <PreviewImage project={project} sizes="100vw" />
+      </a>
       <div className="px-4 py-3 flex items-center justify-between">
         <div className="flex flex-wrap gap-1.5">
-          {project?.topics?.slice(0, 3).map((topic) => (
+          {project.topics?.slice(0, 3).map((topic) => (
             <span
               key={`mobile-${topic}`}
               className="text-xs px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 text-gray-700 dark:text-gray-200"
@@ -150,28 +143,14 @@ function MobilePublicationPreview({
 function PublicationPreview({
   project,
   projectUrl,
-  staticPreviewSrc,
-  youtubeId,
-  previewSrc,
-  usesIframePreview,
-  previewLoadState,
-  onIframeLoad,
-  onIframeError,
   isTransitioning,
 }: {
   project?: WorkProject;
   projectUrl: string;
-  staticPreviewSrc: string;
-  youtubeId: string | null;
-  previewSrc: string;
-  usesIframePreview: boolean;
-  previewLoadState: "idle" | "loading" | "ready" | "failed";
-  onIframeLoad: () => void;
-  onIframeError: () => void;
   isTransitioning: boolean;
 }) {
   return (
-    <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur shadow-[0_24px_48px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col">
+    <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 md:backdrop-blur shadow-[0_24px_48px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col">
       <div
         className={`transition-all duration-200 ${
           isTransitioning
@@ -182,7 +161,7 @@ function PublicationPreview({
         <div className="px-6 pt-6 pb-4 border-b border-black/10 dark:border-white/10 flex items-center justify-between min-h-24">
           <div>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-              LIVE PREVIEW
+              PREVIEW
             </div>
             <div className="text-lg font-black text-black dark:text-white tracking-[0.08em] line-clamp-2" style={{ fontFamily: "monospace" }}>
               {project?.name ?? "Select a publication"}
@@ -199,50 +178,9 @@ function PublicationPreview({
             </a>
           ) : null}
         </div>
-        <div className="aspect-video bg-black/5 dark:bg-white/5 relative">
-          {staticPreviewSrc ? (
-            <div className="h-full w-full relative">
-              <Image
-                src={staticPreviewSrc}
-                alt={`${project?.name ?? "Project"} preview`}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 56rem, 100vw"
-              />
-            </div>
-          ) : youtubeId ? (
-            <div className="h-full w-full relative">
-              <Image
-                src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
-                alt={`${project?.name ?? "Project"} preview`}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 56rem, 100vw"
-                suppressHydrationWarning
-              />
-            </div>
-          ) : previewSrc && previewLoadState !== "failed" ? (
-            <iframe
-              key={previewSrc}
-              src={previewSrc}
-              title={project?.name}
-              className="h-full w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-presentation"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              onLoad={onIframeLoad}
-              onError={onIframeError}
-            ></iframe>
-          ) : null}
-          {usesIframePreview && previewLoadState === "loading" ? (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-                LOADING PREVIEW...
-              </div>
-            </div>
-          ) : null}
-        </div>
+        <a href={projectUrl || undefined} target="_blank" rel="noreferrer" className="block aspect-video bg-black/5 dark:bg-white/5 relative">
+          {project && <PreviewImage project={project} sizes="(min-width: 1024px) 56rem, 100vw" />}
+        </a>
         <div className="px-6 py-5 space-y-3 min-h-52">
           <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed min-h-16 line-clamp-3">
             {project?.description ??
@@ -258,10 +196,6 @@ function PublicationPreview({
               </span>
             ))}
           </div>
-          <div className="text-xs text-gray-500 dark:text-gray-400 font-bold tracking-[0.2em]">
-            Some publications may block embeds. Use OPEN LINK if
-            preview is blank.
-          </div>
         </div>
       </div>
     </div>
@@ -273,29 +207,11 @@ export default function PublicationsSection() {
   const [displayedPublicationIndex, setDisplayedPublicationIndex] = useState(0);
   const [isPublicationTransitioning, setIsPublicationTransitioning] =
     useState(false);
-  const [previewLoadState, setPreviewLoadState] = useState<
-    "idle" | "loading" | "ready" | "failed"
-  >("idle");
-
   const activeProject: WorkProject | undefined =
     workProjects[displayedPublicationIndex];
   const activeProjectUrl = activeProject?.url
     ? normalizePublicationUrl(activeProject.url)
     : "";
-  const activeProjectStaticPreviewSrc =
-    activeProject?.name === "Project Music Mode"
-      ? "/Work-Projects/MusicMode.webp"
-      : "";
-  const activeProjectYoutubeId = activeProjectUrl
-    ? getYoutubeVideoId(activeProjectUrl)
-    : null;
-  const activeProjectPreviewSrc = activeProjectUrl
-    ? getPublicationPreviewSrc(activeProjectUrl)
-    : "";
-  const usesIframePreview =
-    !activeProjectStaticPreviewSrc &&
-    !activeProjectYoutubeId &&
-    !!activeProjectPreviewSrc;
 
   useEffect(() => {
     if (activePublicationIndex === displayedPublicationIndex) return;
@@ -308,20 +224,6 @@ export default function PublicationsSection() {
 
     return () => window.clearTimeout(timeoutId);
   }, [activePublicationIndex, displayedPublicationIndex]);
-
-  useEffect(() => {
-    if (!usesIframePreview) {
-      setPreviewLoadState("idle");
-      return;
-    }
-
-    setPreviewLoadState("loading");
-    const timeoutId = window.setTimeout(() => {
-      setPreviewLoadState((state) => (state === "ready" ? state : "failed"));
-    }, 7000);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [usesIframePreview]);
 
   useEffect(() => {
     const onSelectPublication = (event: Event) => {
@@ -417,12 +319,6 @@ export default function PublicationsSection() {
                             <MobilePublicationPreview
                               project={project}
                               projectUrl={project.url ? normalizePublicationUrl(project.url) : ""}
-                              staticPreviewSrc={project.name === "Project Music Mode" ? "/Work-Projects/MusicMode.webp" : ""}
-                              youtubeId={project.url ? getYoutubeVideoId(project.url) : null}
-                              previewSrc={project.url ? getPublicationPreviewSrc(project.url) : ""}
-                              previewLoadState={previewLoadState}
-                              onIframeLoad={() => setPreviewLoadState("ready")}
-                              onIframeError={() => setPreviewLoadState("failed")}
                             />
                           </div>
                         </div>
@@ -437,13 +333,6 @@ export default function PublicationsSection() {
               <PublicationPreview
                 project={workProjects[displayedPublicationIndex]}
                 projectUrl={activeProjectUrl}
-                staticPreviewSrc={activeProjectStaticPreviewSrc}
-                youtubeId={activeProjectYoutubeId}
-                previewSrc={activeProjectPreviewSrc}
-                usesIframePreview={usesIframePreview}
-                previewLoadState={previewLoadState}
-                onIframeLoad={() => setPreviewLoadState("ready")}
-                onIframeError={() => setPreviewLoadState("failed")}
                 isTransitioning={isPublicationTransitioning}
               />
             </div>

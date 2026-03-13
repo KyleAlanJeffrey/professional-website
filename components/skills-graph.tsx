@@ -307,12 +307,21 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
     }
 
     let rafId: number;
+    let visible = true;
     function loop() {
-      update();
-      draw();
+      if (visible) {
+        update();
+        draw();
+      }
       rafId = requestAnimationFrame(loop);
     }
     rafId = requestAnimationFrame(loop);
+
+    // Pause animation when canvas is off-screen
+    const visObserver = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    }, { threshold: 0 });
+    visObserver.observe(container);
 
     const onMouseMove  = (e: MouseEvent) => {
       const r = canvas!.getBoundingClientRect();
@@ -359,6 +368,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       canvas.removeEventListener("mouseleave", onMouseLeave);
       canvas.removeEventListener("click",      onClick);
       ro.disconnect();
+      visObserver.disconnect();
     };
   }, [jobs, isFullscreen]);
 
@@ -453,7 +463,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
         className={`overflow-hidden ${placeMode !== "off" ? "cursor-crosshair" : ""} ${
           isFullscreen
             ? "flex-1"
-            : "w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur"
+            : "w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur"
         }`}
       >
         <canvas ref={canvasRef} style={{ display: "block" }} />

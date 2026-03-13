@@ -145,7 +145,7 @@ export default function PageContent(props: PageContentProps) {
       </div>
 
       <main className="relative px-4 md:px-8 z-10">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-white/10 dark:bg-black/20 backdrop-blur-[1px]"></div>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-white/10 dark:bg-black/20 md:backdrop-blur-[1px]"></div>
 
         <div className="hidden -rotate-90 lg:flex flex-row gap-3 items-center justify-center fixed left-0 h-full z-20 py-40 w-8">
           {([

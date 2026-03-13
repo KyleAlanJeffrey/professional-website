@@ -1,8 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import bio from "@/data/bio.json";
 import jobsData from "@/data/jobs.json";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type HomeSectionProps = {
   scrollToSection: (sectionId: string) => void;
@@ -20,6 +22,12 @@ export default function HomeSection({
   renderBioWithLinks,
 }: HomeSectionProps) {
   const jobs = jobsData.jobs ?? [];
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  const anim = (delay: number) =>
+    `transition-all duration-700 ease-out ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`;
+  const d = (ms: number) => ({ transitionDelay: mounted ? `${ms}ms` : "0ms" });
 
   return (
     <section id="home" className="max-w-7xl mx-auto pt-4 lg:pt-12 pb-14 lg:pb-28 relative">
@@ -27,16 +35,20 @@ export default function HomeSection({
       <div className="absolute top-12 right-6 w-40 h-40 border border-black/10 dark:border-white/10 rotate-12 hidden lg:block"></div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 min-h-[48vh] lg:min-h-[60vh]">
         <div className="lg:col-span-7 text-left">
-          <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-800 dark:text-gray-200 backdrop-blur mb-6">
+          <div
+            className={`inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-2 text-xs md:text-sm font-semibold tracking-[0.2em] text-gray-800 dark:text-gray-200 md:backdrop-blur mb-6 ${anim(0)}`}
+            style={d(0)}
+          >
             <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)]"></span>
             OPEN TO COLLABS
           </div>
 
           <h1
-            className="text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.78] sm:leading-[0.62] mb-6 transition-all duration-300"
+            className={`text-5xl md:text-7xl lg:text-8xl font-black text-black dark:text-white leading-[0.78] sm:leading-[0.62] mb-6 ${anim(100)}`}
             style={{
               letterSpacing: "0.06em",
               textShadow: "0 12px 40px rgba(0,0,0,0.12)",
+              ...d(100),
             }}
           >
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-100 to-white">
@@ -48,10 +60,10 @@ export default function HomeSection({
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mb-8">
+          <p className={`text-base md:text-lg text-gray-800 dark:text-gray-200 max-w-xl mb-8 ${anim(250)}`} style={d(250)}>
             Robotics engineer. Agriculture AI Software Engineer. Humanoid Robot Obsessed. Web Developer Occasionally.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 items-start justify-start">
+          <div className={`flex flex-col sm:flex-row gap-4 items-start justify-start ${anim(350)}`} style={d(350)}>
             <Button
               className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-semibold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
               onClick={() => scrollToSection("work")}
@@ -73,7 +85,7 @@ export default function HomeSection({
             </Button>
           </div>
 
-          <div className="mt-8 text-left">
+          <div className={`mt-8 text-left ${anim(450)}`} style={d(450)}>
             <div className="relative overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-white/85 dark:bg-white/5 p-5 shadow-[0_20px_40px_rgba(0,0,0,0.15)]">
               <div className="relative z-10">
                 <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -126,9 +138,9 @@ export default function HomeSection({
             </div>
           </div>
         </div>
-        <div className="lg:col-span-5 relative">
+        <div className={`lg:col-span-5 relative ${anim(200)}`} style={d(200)}>
           <div className="relative mx-auto w-full max-w-[20rem] md:max-w-[26rem] lg:max-w-[34rem] aspect-[3/2]">
-            <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
+            <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_30px_60px_rgba(0,0,0,0.15)]"></div>
             <div className="absolute top-6 -right-2 w-16 h-16 -rotate-6 rounded-2xl bg-gradient-to-br from-amber-400/65 to-orange-500/65 blur-sm"></div>
             <Image
               src="/me-hero.webp"
@@ -142,7 +154,7 @@ export default function HomeSection({
         </div>
       </div>
 
-      <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10">
+      <div className={`mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 relative z-10 ${anim(550)}`} style={d(550)}>
         <div className="lg:col-span-1 hidden lg:block self-start">
           <div
             className="text-sm text-gray-500 dark:text-gray-400 tracking-[0.3em] font-bold -rotate-90 origin-center transition-all duration-300 hover:text-gray-700 dark:hover:text-gray-300"

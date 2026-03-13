@@ -50,7 +50,7 @@ export default function ProjectsSection({
               {[...Array(2)].map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
+                  className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 md:backdrop-blur shadow-[0_18px_36px_rgba(0,0,0,0.12)] animate-pulse"
                 >
                   <div className="h-5 w-48 bg-gray-300 dark:bg-gray-700 mb-4"></div>
                   <div className="h-3 w-full bg-gray-300 dark:bg-gray-700 mb-2"></div>

@@ -65,19 +65,19 @@ export default function ContactSection() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
         <div className="lg:col-span-5">
           <div className="space-y-6">
-            <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+            <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
               <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><Mail className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>
               <div className="min-w-0"><h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>EMAIL</h3><p className="text-gray-800 dark:text-gray-200 break-all">kyle.alan.jeffrey@gmail.com</p><p className="text-sm text-gray-700 dark:text-gray-300 font-medium">I'll respond within 24 hours</p></div>
             </div>
-            <a href="https://github.com/KyleAlanJeffrey" className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+            <a href="https://github.com/KyleAlanJeffrey" className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
               <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><Github className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>
               <div className="min-w-0"><h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>GITHUB</h3><p className="text-gray-800 dark:text-gray-200">@KyleAlanJeffrey</p><p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Check out my latest projects</p></div>
             </a>
-            <a href="https://www.linkedin.com/in/kyle-jeffrey-1651b5189/" className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+            <a href="https://www.linkedin.com/in/kyle-jeffrey-1651b5189/" className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
               <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><Linkedin className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>
               <div className="min-w-0"><h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>LINKEDIN</h3><p className="text-gray-800 dark:text-gray-200">Kyle</p><p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Let's connect professionally</p></div>
             </a>
-            <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+            <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
               <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><MapPin className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>
               <div className="min-w-0"><h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>LOCATION</h3><p className="text-gray-800 dark:text-gray-200">San Francisco, CA</p><p className="text-sm text-gray-700 dark:text-gray-300 font-medium">Open to remote work</p></div>
             </div>
@@ -86,7 +86,7 @@ export default function ContactSection() {
 
         <div className="lg:col-span-7">
           <form
-            className="space-y-8 relative rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur p-6 md:p-8 shadow-[0_18px_40px_rgba(0,0,0,0.12)]"
+            className="space-y-8 relative rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur p-6 md:p-8 shadow-[0_18px_40px_rgba(0,0,0,0.12)]"
             onSubmit={handleContactSubmit}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

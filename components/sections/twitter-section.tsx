@@ -96,7 +96,7 @@ export default function TwitterSection({
               {tweetIds.map((_, i) => (
                 <div
                   key={i}
-                  className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
+                  className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></div>
