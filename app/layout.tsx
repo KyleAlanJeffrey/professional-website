@@ -1,14 +1,14 @@
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import './globals.css'
-import type { Metadata, Viewport } from 'next'
-import Script from 'next/script'
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://kylejeffrey.com'),
+  metadataBase: new URL("https://kylejeffrey.com"),
   title: {
     default: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
-    template: "%s | Kyle Jeffrey"
+    template: "%s | Kyle Jeffrey",
   },
   description:
     "Kyle Jeffrey is a robotics software engineer building autonomy, AI systems, and full-stack web products. Explore projects, publications, and engineering work.",
@@ -31,34 +31,30 @@ export const metadata: Metadata = {
     url: "https://kylejeffrey.com",
     siteName: "Kyle Jeffrey",
     title: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
-    description:
-      "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
+    description: "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
     images: [
       {
         url: "/me-hero.webp",
         width: 1200,
         height: 1200,
-        alt: "Kyle Jeffrey — code, design, and writing"
-      }
+        alt: "Kyle Jeffrey — code, design, and writing",
+      },
     ],
-    locale: "en_US"
+    locale: "en_US",
   },
 
   twitter: {
     card: "summary_large_image",
     title: "Kyle Jeffrey | Robotics Software Engineer Portfolio",
-    description:
-      "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
+    description: "Robotics, autonomy, and full-stack software projects by Kyle Jeffrey.",
     images: ["/me-hero.webp"],
-    // creator: "@yourhandle" // add if you have one
+    creator: "@KyleJef84225678",
   },
 
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" }
-    ],
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     apple: [],
-    other: []
+    other: [],
   },
 
   manifest: "/site.webmanifest",
@@ -69,8 +65,8 @@ export const metadata: Metadata = {
       "en-US": "/",
     },
     types: {
-      "application/rss+xml": "/rss.xml"
-    }
+      "application/rss+xml": "/rss.xml",
+    },
   },
 
   robots: {
@@ -79,7 +75,7 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-    }
+    },
   },
 
   referrer: "origin-when-cross-origin",
@@ -87,33 +83,33 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
     address: false,
-    email: false
+    email: false,
   },
 
   verification: {
     // Fill these once you set them up:
     // google: "xxxxx",
     // me: ["mailto:you@domain.com", "https://your-mastodon.example/@you"]
-  }
-}
+  },
+};
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b0b0b" }
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0b" },
   ],
-  colorScheme: "light dark"
-}
+  colorScheme: "light dark",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
-  const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -160,7 +156,7 @@ export default function RootLayout({
         },
       },
     ],
-  }
+  };
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -235,5 +231,5 @@ fbq('track', 'PageView');
         ) : null}
       </body>
     </html>
-  )
+  );
 }
