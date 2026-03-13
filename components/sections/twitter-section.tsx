@@ -73,15 +73,15 @@ export default function TwitterSection({
         </div>
       </div>
 
-      <div className="p-2 md:p-4">
+      <div className="p-1 md:p-2">
         <div data-theme={isDarkMode ? "dark" : "light"} className="flex justify-start">
           {shouldRenderTweets && tweetIds.length > 0 ? (
-            <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full">
+            <div className="flex flex-wrap justify-start items-start gap-3 w-full">
               {tweetIds.map((id, index) => (
                 <div
                   key={id}
                   id={`tweet-${index}`}
-                  className={`w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] flex justify-start rounded-2xl transition-all duration-300 ${
+                  className={`w-full sm:flex-1 sm:basis-[280px] sm:min-w-[260px] sm:max-w-[420px] flex justify-start rounded-2xl transition-all duration-300 ${
                     highlightTweetIndex === index
                       ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
                       : ""
@@ -92,11 +92,11 @@ export default function TwitterSection({
               ))}
             </div>
           ) : (
-            <div className="flex flex-wrap justify-start items-start gap-4 md:gap-5 w-full">
+            <div className="flex flex-wrap justify-start items-start gap-3 w-full">
               {tweetIds.map((_, i) => (
                 <div
                   key={i}
-                  className="w-full sm:flex-1 sm:basis-[320px] sm:min-w-[280px] sm:max-w-[560px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
+                  className="w-full sm:flex-1 sm:basis-[280px] sm:min-w-[260px] sm:max-w-[420px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 md:backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></div>

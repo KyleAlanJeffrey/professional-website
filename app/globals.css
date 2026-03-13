@@ -94,3 +94,11 @@
     overflow-x: hidden;
   }
 }
+
+/* Compact react-tweet embeds */
+[data-theme] [class*="tweet-"] {
+  --tweet-container-margin: 0;
+}
+[data-theme] [class*="tweet-"] article {
+  padding: 0.5rem 0.75rem;
+}

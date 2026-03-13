@@ -52,8 +52,8 @@ export default function HomeSection({
         <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-sky-400/10 to-indigo-500/10 blur-3xl hidden lg:block" />
 
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-center">
-          {/* Left: Text content */}
-          <div className="lg:pr-8">
+          {/* Name + subtitle (order-1: always on top) */}
+          <div className="lg:pr-8 order-1">
             <div
               className={`inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-1.5 text-[10px] md:text-xs font-bold tracking-[0.3em] text-gray-600 dark:text-gray-400 md:backdrop-blur mb-6 ${a}`}
               style={d(0)}
@@ -82,52 +82,54 @@ export default function HomeSection({
             </h1>
 
             <p
-              className={`text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium tracking-[0.05em] max-w-md mb-6 ${a}`}
+              className={`text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium tracking-[0.05em] max-w-md mb-6 lg:mb-6 ${a}`}
               style={{ fontFamily: "monospace", ...d(200) }}
             >
               Robotics Engineer. Agriculture AI. Humanoid Robots.
             </p>
 
-            {/* Credential pills */}
-            <div className={`flex flex-wrap gap-2 mb-8 ${a}`} style={d(280)}>
-              {HIGHLIGHTS.map((h) => (
-                <div
-                  key={h.label}
-                  className="flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
-                >
-                  <span className={`h-1.5 w-1.5 rounded-full ${h.color}`} />
-                  <span className="text-[10px] font-black tracking-[0.15em] text-black dark:text-white" style={{ fontFamily: "monospace" }}>
-                    {h.label}
-                  </span>
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
-                    {h.sub}
-                  </span>
-                </div>
-              ))}
-            </div>
+            {/* Pills + buttons — hidden on mobile, shown on desktop inline */}
+            <div className="hidden lg:block">
+              <div className={`flex flex-wrap gap-2 mb-8 ${a}`} style={d(280)}>
+                {HIGHLIGHTS.map((h) => (
+                  <div
+                    key={h.label}
+                    className="flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
+                  >
+                    <span className={`h-1.5 w-1.5 rounded-full ${h.color}`} />
+                    <span className="text-[10px] font-black tracking-[0.15em] text-black dark:text-white" style={{ fontFamily: "monospace" }}>
+                      {h.label}
+                    </span>
+                    <span className="text-[10px] text-gray-500 dark:text-gray-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
+                      {h.sub}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            <div className={`flex items-center gap-4 ${a}`} style={d(350)}>
-              <Button
-                className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-bold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
-                onClick={() => scrollToSection("work")}
-              >
-                VIEW WORK
-                <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
-                  →
-                </span>
-              </Button>
-              <Button
-                variant="outline"
-                className="group border-black/20 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 px-6 h-11 text-sm font-bold tracking-[0.2em] hover:-translate-y-0.5 transition-all duration-300"
-                onClick={() => scrollToSection("contact")}
-              >
-                CONTACT
-              </Button>
+              <div className={`flex items-center gap-4 ${a}`} style={d(350)}>
+                <Button
+                  className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-bold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
+                  onClick={() => scrollToSection("work")}
+                >
+                  VIEW WORK
+                  <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="group border-black/20 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 px-6 h-11 text-sm font-bold tracking-[0.2em] hover:-translate-y-0.5 transition-all duration-300"
+                  onClick={() => scrollToSection("contact")}
+                >
+                  CONTACT
+                </Button>
+              </div>
             </div>
           </div>
 
-          {/* Right: Photo + overlay stats */}
-          <div className={`relative ${a}`} style={d(200)}>
+          {/* Photo (order-2: after name on mobile, right column on desktop) */}
+          <div className={`relative order-2 ${a}`} style={d(200)}>
             <div className="relative mx-auto w-full max-w-[20rem] lg:max-w-[24rem] aspect-[3/4]">
               {/* Background frame */}
               <div className="absolute inset-0 rounded-3xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.12)]" />
@@ -166,6 +168,45 @@ export default function HomeSection({
                 <div className="text-sm font-black text-black dark:text-white tracking-[0.08em]" style={{ fontFamily: "monospace" }}>ROBOT FIGHTING</div>
                 <div className="text-[10px] text-gray-400 dark:text-gray-500 tracking-[0.1em] mt-0.5" style={{ fontFamily: "monospace" }}>COMBAT BOTS</div>
               </button>
+            </div>
+          </div>
+
+          {/* Pills + buttons (order-3: below image on mobile only) */}
+          <div className="lg:hidden order-3">
+            <div className={`flex flex-wrap gap-2 mb-6 ${a}`} style={d(280)}>
+              {HIGHLIGHTS.map((h) => (
+                <div
+                  key={`mobile-${h.label}`}
+                  className="flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 px-3 py-1.5"
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${h.color}`} />
+                  <span className="text-[10px] font-black tracking-[0.15em] text-black dark:text-white" style={{ fontFamily: "monospace" }}>
+                    {h.label}
+                  </span>
+                  <span className="text-[10px] text-gray-500 dark:text-gray-400 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>
+                    {h.sub}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className={`flex items-center gap-4 ${a}`} style={d(350)}>
+              <Button
+                className="group bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 px-6 h-11 text-sm font-bold tracking-[0.2em] shadow-[0_12px_30px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] transition-all duration-300"
+                onClick={() => scrollToSection("work")}
+              >
+                VIEW WORK
+                <span className="ml-2 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </Button>
+              <Button
+                variant="outline"
+                className="group border-black/20 dark:border-white/20 text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 px-6 h-11 text-sm font-bold tracking-[0.2em] hover:-translate-y-0.5 transition-all duration-300"
+                onClick={() => scrollToSection("contact")}
+              >
+                CONTACT
+              </Button>
             </div>
           </div>
         </div>
