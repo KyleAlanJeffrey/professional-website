@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Maximize2, Minimize2 } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const CATEGORY_COLORS: Record<string, string> = {
   Frontend: "#60a5fa",
@@ -33,12 +35,26 @@ const W_COH_DIFF  = 0.0006; // weak pull toward everything else
 const MARGIN      = 70;
 const BOUNDARY    = 0.16;
 
+// Attraction / avoidance point tuning
+const POINT_RADIUS   = 140;  // influence radius
+const ATTRACT_FORCE  = 0.015;
+const AVOID_FORCE    = 0.025;
+
 type Boid = {
   id: string;
   category: string;
   x: number; y: number;
   vx: number; vy: number;
 };
+
+type FieldPoint = {
+  label: string;
+  kind: "attract" | "avoid";
+  x: number; y: number;
+};
+
+const LIKES = ["farming", "robots", "music", "guitar", "hiking", "cooking"];
+const DISLIKES = ["olives", "java", "microsoft", "meetings", "bugs"];
 
 function clampSpeed(vx: number, vy: number): [number, number] {
   const mag = Math.hypot(vx, vy);
@@ -57,6 +73,30 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const onClickRef   = useRef(onSkillClick);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [placeMode, setPlaceMode] = useState<"off" | "attract" | "avoid">("off");
+  const placeModeRef = useRef(placeMode);
+  useEffect(() => { placeModeRef.current = placeMode; }, [placeMode]);
+  const fieldPointsRef = useRef<FieldPoint[]>([]);
+  const boidsRef = useRef<Boid[]>([]);
+
+  const toggleFullscreen = useCallback(() => setIsFullscreen((p) => !p), []);
+
+  // Lock body scroll when fullscreen
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [isFullscreen]);
+
+  // Escape key to exit fullscreen
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setIsFullscreen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isFullscreen]);
 
   useEffect(() => { onClickRef.current = onSkillClick; }, [onSkillClick]);
 
@@ -84,17 +124,33 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
     const skillSet = new Set<string>();
     jobs.forEach((j) => j.skills.forEach((s) => skillSet.add(s)));
 
-    const boids: Boid[] = Array.from(skillSet).map((id) => ({
-      id,
-      category: SKILL_CATEGORIES[id] ?? "Other",
-      x:  MARGIN + Math.random() * (w - MARGIN * 2),
-      y:  MARGIN + Math.random() * (h - MARGIN * 2),
-      vx: (Math.random() - 0.5) * 2,
-      vy: (Math.random() - 0.5) * 2,
-    }));
+    // Restore boids from ref if available, otherwise create fresh
+    let boids: Boid[];
+    if (boidsRef.current.length > 0) {
+      boids = boidsRef.current;
+      // Clamp positions to new dimensions
+      boids.forEach((b) => {
+        b.x = Math.min(Math.max(b.x, MARGIN), w - MARGIN);
+        b.y = Math.min(Math.max(b.y, MARGIN), h - MARGIN);
+      });
+    } else {
+      boids = Array.from(skillSet).map((id) => ({
+        id,
+        category: SKILL_CATEGORIES[id] ?? "Other",
+        x:  MARGIN + Math.random() * (w - MARGIN * 2),
+        y:  MARGIN + Math.random() * (h - MARGIN * 2),
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+      }));
+    }
+    boidsRef.current = boids;
+
+    // Restore field points from ref (user-placed, persisted across re-mounts)
+    let fieldPoints: FieldPoint[] = fieldPointsRef.current;
 
     let mouse = { x: -9999, y: -9999 };
     let hoveredId: string | null = null;
+    let placeLabelCounter = 0;
 
     function update() {
       boids.forEach((b) => {
@@ -136,6 +192,22 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
           dvy += (diffCY / diffN - b.y) * W_COH_DIFF;
         }
 
+        // Attraction / avoidance points
+        for (const fp of fieldPoints) {
+          const dx = fp.x - b.x, dy = fp.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < POINT_RADIUS && dist > 0) {
+            const strength = 1 - dist / POINT_RADIUS;
+            if (fp.kind === "attract") {
+              dvx += (dx / dist) * ATTRACT_FORCE * strength;
+              dvy += (dy / dist) * ATTRACT_FORCE * strength;
+            } else {
+              dvx -= (dx / dist) * AVOID_FORCE * strength;
+              dvy -= (dy / dist) * AVOID_FORCE * strength;
+            }
+          }
+        }
+
         // Soft boundary
         if (b.x < MARGIN)     dvx += BOUNDARY * ((MARGIN - b.x) / MARGIN);
         if (b.x > w - MARGIN) dvx -= BOUNDARY * ((b.x - (w - MARGIN)) / MARGIN);
@@ -152,6 +224,38 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
 
     function draw() {
       ctx.clearRect(0, 0, w, h);
+
+      // Draw field points
+      for (const fp of fieldPoints) {
+        const isAttract = fp.kind === "attract";
+        const color = isAttract ? "rgba(52, 211, 153, 0.12)" : "rgba(248, 113, 113, 0.10)";
+        const borderColor = isAttract ? "rgba(52, 211, 153, 0.25)" : "rgba(248, 113, 113, 0.20)";
+
+        // Influence radius
+        ctx.beginPath();
+        ctx.arc(fp.x, fp.y, POINT_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Center dot
+        ctx.beginPath();
+        ctx.arc(fp.x, fp.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = isAttract ? "#34d399" : "#f87171";
+        ctx.globalAlpha = 0.7;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        // Label
+        ctx.font = "bold 9px monospace";
+        ctx.fillStyle = isAttract ? "#34d399" : "#f87171";
+        ctx.globalAlpha = 0.6;
+        ctx.textAlign = "center";
+        ctx.fillText(fp.label.toUpperCase(), fp.x, fp.y + 16);
+        ctx.globalAlpha = 1;
+      }
 
       // Find hovered boid
       hoveredId = null;
@@ -215,7 +319,22 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
     };
     const onMouseLeave = () => { mouse = { x: -9999, y: -9999 }; };
-    const onClick      = () => { if (hoveredId) onClickRef.current?.(hoveredId); };
+    const onClick = (e: MouseEvent) => {
+      const mode = placeModeRef.current;
+      if (mode !== "off") {
+        const r = canvas!.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+        placeLabelCounter++;
+        const label = mode === "attract"
+          ? LIKES[placeLabelCounter % LIKES.length]
+          : DISLIKES[placeLabelCounter % DISLIKES.length];
+        fieldPoints.push({ label, kind: mode, x, y });
+        fieldPointsRef.current = fieldPoints;
+        return;
+      }
+      if (hoveredId) onClickRef.current?.(hoveredId);
+    };
 
     canvas.addEventListener("mousemove",  onMouseMove);
     canvas.addEventListener("mouseleave", onMouseLeave);
@@ -227,6 +346,10 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
         b.x = Math.min(Math.max(b.x, MARGIN), w - MARGIN);
         b.y = Math.min(Math.max(b.y, MARGIN), h - MARGIN);
       });
+      fieldPoints.forEach((fp) => {
+        fp.x = Math.min(Math.max(fp.x, MARGIN), w - MARGIN);
+        fp.y = Math.min(Math.max(fp.y, MARGIN), h - MARGIN);
+      });
     });
     ro.observe(container);
 
@@ -237,30 +360,111 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       canvas.removeEventListener("click",      onClick);
       ro.disconnect();
     };
-  }, [jobs]);
+  }, [jobs, isFullscreen]);
 
-  return (
-    <div className="w-full">
-      <div className="flex flex-wrap gap-3 mb-4">
-        {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
-          <div key={cat} className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-            <span className="text-xs font-bold tracking-[0.1em] text-gray-600 dark:text-gray-400" style={{ fontFamily: "monospace" }}>
-              {cat.toUpperCase()}
-            </span>
-          </div>
-        ))}
+  const legend = (
+    <div className="flex flex-wrap gap-3">
+      {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
+        <div key={cat} className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+          <span className="text-xs font-bold tracking-[0.1em] text-gray-600 dark:text-gray-400" style={{ fontFamily: "monospace" }}>
+            {cat.toUpperCase()}
+          </span>
+        </div>
+      ))}
+      <div className="flex items-center gap-1.5">
+        <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/70" />
+        <span className="text-xs font-bold tracking-[0.1em] text-gray-500 dark:text-gray-400" style={{ fontFamily: "monospace" }}>ATTRACTS</span>
       </div>
+      <div className="flex items-center gap-1.5">
+        <div className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+        <span className="text-xs font-bold tracking-[0.1em] text-gray-500 dark:text-gray-400" style={{ fontFamily: "monospace" }}>REPELS</span>
+      </div>
+    </div>
+  );
+
+  const placeControls = (
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => setPlaceMode((m) => m === "attract" ? "off" : "attract")}
+        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-[0.1em] border transition-colors ${
+          placeMode === "attract"
+            ? "bg-emerald-500 text-white border-emerald-600"
+            : "border-black/10 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10"
+        }`}
+        style={{ fontFamily: "monospace" }}
+      >
+        + ATTRACT
+      </button>
+      <button
+        onClick={() => setPlaceMode((m) => m === "avoid" ? "off" : "avoid")}
+        className={`px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-[0.1em] border transition-colors ${
+          placeMode === "avoid"
+            ? "bg-red-500 text-white border-red-600"
+            : "border-black/10 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10"
+        }`}
+        style={{ fontFamily: "monospace" }}
+      >
+        + REPEL
+      </button>
+      {placeMode !== "off" && (
+        <span className="text-[10px] text-gray-500 font-bold tracking-[0.1em] animate-pulse" style={{ fontFamily: "monospace" }}>
+          CLICK TO PLACE
+        </span>
+      )}
+    </div>
+  );
+
+  const content = (
+    <div className={isFullscreen ? "fixed inset-0 z-[9999] bg-white dark:bg-gray-950 flex flex-col" : "w-full"}>
+      {/* Header / legend bar */}
+      <div className={`flex items-center justify-between flex-wrap gap-2 ${isFullscreen ? "p-4 border-b border-black/10 dark:border-white/10" : "mb-4"}`}>
+        <div className="flex items-center gap-4 flex-wrap">
+          {isFullscreen && <span className="text-sm font-black tracking-[0.2em] text-black dark:text-white" style={{ fontFamily: "monospace" }}>SKILLS GRAPH</span>}
+          {legend}
+        </div>
+        <div className="flex items-center gap-2">
+          {placeControls}
+          <button
+            onClick={toggleFullscreen}
+            className="p-1.5 rounded-lg border border-black/10 dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors shrink-0"
+            aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen
+              ? <Minimize2 className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+              : <Maximize2 className="w-4 h-4 text-gray-500 dark:text-gray-400" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Canvas */}
       <div
         ref={containerRef}
         data-keep-highlight="true"
-        className="w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur overflow-hidden"
+        className={`overflow-hidden ${placeMode !== "off" ? "cursor-crosshair" : ""} ${
+          isFullscreen
+            ? "flex-1"
+            : "w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur"
+        }`}
       >
         <canvas ref={canvasRef} style={{ display: "block" }} />
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 font-medium tracking-[0.05em]" style={{ fontFamily: "monospace" }}>
-        Same-color boids flock together · Hover to see skill · Click to filter jobs
-      </p>
+
+      {/* Footer */}
+      <div className={isFullscreen ? "p-3 text-center" : "mt-2"}>
+        <span className="text-xs text-gray-500 dark:text-gray-500 font-medium tracking-[0.05em]" style={{ fontFamily: "monospace" }}>
+          {placeMode !== "off"
+            ? `Click to place ${placeMode === "attract" ? "attractor" : "repeller"}${isFullscreen ? " · Click button again to stop" : ""}`
+            : `Hover to see skill · Click to filter jobs${isFullscreen ? " · Press ESC to exit" : ""}`}
+        </span>
+      </div>
     </div>
   );
+
+  // Portal fullscreen to document.body to escape stacking context
+  if (isFullscreen) {
+    return createPortal(content, document.body);
+  }
+
+  return content;
 }
