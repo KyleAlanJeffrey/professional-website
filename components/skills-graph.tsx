@@ -36,9 +36,9 @@ const MARGIN      = 70;
 const BOUNDARY    = 0.16;
 
 // Attraction / avoidance point tuning
-const POINT_RADIUS   = 140;  // influence radius
-const ATTRACT_FORCE  = 0.015;
-const AVOID_FORCE    = 0.025;
+const POINT_RADIUS   = 200;  // influence radius
+const ATTRACT_FORCE  = 0.12;
+const AVOID_FORCE    = 0.18;
 
 type Boid = {
   id: string;
@@ -407,6 +407,15 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       >
         + REPEL
       </button>
+      {fieldPointsRef.current.length > 0 && (
+        <button
+          onClick={() => { fieldPointsRef.current.length = 0; }}
+          className="px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-[0.1em] border border-black/10 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+          style={{ fontFamily: "monospace" }}
+        >
+          CLEAR
+        </button>
+      )}
       {placeMode !== "off" && (
         <span className="text-[10px] text-gray-500 font-bold tracking-[0.1em] animate-pulse" style={{ fontFamily: "monospace" }}>
           CLICK TO PLACE
