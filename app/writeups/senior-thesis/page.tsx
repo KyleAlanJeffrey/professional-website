@@ -3,7 +3,6 @@
 import { useInView } from "@/hooks/use-in-view";
 import { ArrowLeft, Download, Github, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useCallback, useEffect } from "react";
 
 const MEDIA = "/writeups/senior-thesis/media";
@@ -223,7 +222,7 @@ const ALL_FIGURES: { src: string; alt: string; caption?: string; figNum?: string
   { src: `${MEDIA}/ch3-design/gear-kinematics/trajectory-deviation-analysis.png`, alt: "Gear trajectory analysis", caption: "Trajectory analysis of the geared bar mechanism showing deviation from desired path", figNum: "Fig 3.3" },
   { src: `${MEDIA}/ch3-design/leg-animations/geared-bar-parts.png`, alt: "Gear mechanism parts", caption: "Parts breakdown of the geared bar mechanism", figNum: "Fig 3.4" },
   { src: `${MEDIA}/ch3-design/leg-animations/sliding-cam-design.png`, alt: "Custom sliding cam", caption: "Custom sliding cam design — translates cam shape down by leg length", figNum: "Fig 3.5" },
-  { src: `${MEDIA}/ch3-design/leg-animations/slide_fixed-bearing-cam-parts.png`, alt: "Sliding cam parts", caption: "Parts breakdown of the custom sliding cam", figNum: "Fig 3.6" },
+  { src: `${MEDIA}/ch3-design/leg-animations/sliding-cam-parts.png`, alt: "Sliding cam parts", caption: "Parts breakdown of the custom sliding cam", figNum: "Fig 3.6" },
   { src: `${MEDIA}/ch3-design/leg-animations/sliding-cam-motion.png`, alt: "Sliding cam motion", caption: "Motion profile of the custom sliding cam design", figNum: "Fig 3.7" },
   { src: `${MEDIA}/ch3-design/leg-animations/fixed-bearing-cam-parts.png`, alt: "Fixed bearing cam parts", caption: "Wan & Song fixed bearing cam — rotating link with bearings at fixed distance", figNum: "Fig 3.8" },
   { src: `${MEDIA}/ch3-design/wan-song-original-design.png`, alt: "Original Wan & Song design", caption: "Original Wan & Song (2004) cam actuator design", figNum: "Fig 3.9" },
@@ -311,8 +310,6 @@ export default function SeniorThesisPage() {
     setLightboxIndex((i) => (i !== null ? (i - 1 + ALL_FIGURES.length) % ALL_FIGURES.length : null));
   }, []);
 
-  // Helper to get index in ALL_FIGURES by figNum
-  const figIndex = (figNum: string) => ALL_FIGURES.findIndex((f) => f.figNum === figNum);
 
   return (
     <main className="min-h-screen bg-white dark:bg-[#0b0b0b] relative overflow-hidden">
@@ -588,6 +585,32 @@ export default function SeniorThesisPage() {
                 </div>
               </div>
             </div>
+
+            {/* Biological reference footage */}
+            <FadeIn>
+              <GlassCard label="BIOLOGICAL REFERENCE FOOTAGE">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-1.mp4`, label: "Millipede metachronal wave in motion" },
+                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-2.mp4`, label: "Myriapoda gait and terrain traversal" },
+                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-3.mp4`, label: "Millipede locomotion — close-up" },
+                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-4.mp4`, label: "Centipede gait comparison" },
+                  ].map((video) => (
+                    <div key={video.label}>
+                      <video
+                        src={video.src}
+                        controls
+                        preload="metadata"
+                        className="w-full rounded-lg border border-black/10 dark:border-white/10"
+                      />
+                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
+                        {video.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </GlassCard>
+            </FadeIn>
           </section>
         </FadeIn>
 
@@ -703,6 +726,37 @@ export default function SeniorThesisPage() {
                 onClick={() => openLightbox(11)}
                 className="mb-8"
               />
+            </FadeIn>
+
+            {/* Supplementary PoC footage */}
+            <FadeIn>
+              <GlassCard label="SUPPLEMENTARY — SOURCE BUILDS & FINAL DESIGN">
+                <div className="prose-custom !mb-4">
+                  <p className="!text-sm">
+                    Existing omnipede robot implementations from the literature that informed Walker&apos;s design,
+                    plus the Wan &amp; Song cam mechanism selected as Walker&apos;s final leg actuator.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { src: `${MEDIA}/ch3-design/supplementary-poc-1.mp4`, label: "Supplementary — Garcia cam-based design" },
+                    { src: `${MEDIA}/ch3-design/supplementary-poc-2.mp4`, label: "Supplementary — Geared bar mechanism" },
+                    { src: `${MEDIA}/ch3-design/supplementary-poc-3.mp4`, label: "Supplementary — Wan & Song cam (final design)" },
+                  ].map((video) => (
+                    <div key={video.label}>
+                      <video
+                        src={video.src}
+                        controls
+                        preload="metadata"
+                        className="w-full rounded-lg border border-black/10 dark:border-white/10"
+                      />
+                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
+                        {video.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </GlassCard>
             </FadeIn>
 
             {/* Design comparison cards */}
@@ -984,15 +1038,23 @@ export default function SeniorThesisPage() {
               />
             </FadeIn>
 
-            {/* Simulation videos */}
+            {/* Simscape simulation recordings */}
             <FadeIn>
-              <GlassCard label="SIMULATION RECORDINGS">
+              <GlassCard label="SIMSCAPE SIMULATION RECORDINGS">
+                <div className="prose-custom !mb-4">
+                  <p className="!text-sm">
+                    From early proof-of-concept through final gait comparisons &mdash;
+                    each generation increased simulation fidelity.
+                  </p>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
-                    { src: `${MEDIA}/videos/demo-full-body-locomotion.mp4`, label: "Demo 1 — Full body locomotion" },
-                    { src: `${MEDIA}/videos/demo-multi-leg-coordination.mp4`, label: "Demo 2 — Multi-leg coordination" },
-                    { src: `${MEDIA}/videos/demo-gait-analysis.mp4`, label: "Demo 3 — Gait analysis view" },
-                    { src: `${MEDIA}/videos/demo-stability-test.mp4`, label: "Demo 4 — Stability test" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/gen1-simulation/gen1-millipede-model.mp4`, label: "Gen 1 — Early proof of concept" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/gen2-simulation/gen2-model-v3.mp4`, label: "Gen 2 — Custom cam attempt" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/sim4/sim4-leg-test-harness.mp4`, label: "Gen 3 — Single leg test harness" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/sim4/sim4-6legs-rigid-body.mp4`, label: "Gen 3 — 6-leg rigid body" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/leg-comparisons/6-legs/centipede-like/centi-6legs-60deg-iso.mp4`, label: "Centipede-like, 6 legs, 60° offset" },
+                    { src: `${MEDIA}/ch4-simulation/simscape/leg-comparisons/8-legs/centipede-like/centi-8legs-90deg-iso.mp4`, label: "Centipede-like, 8 legs, 90° offset" },
                   ].map((video) => (
                     <div key={video.label}>
                       <video
@@ -1190,6 +1252,31 @@ export default function SeniorThesisPage() {
               </GlassCard>
             </FadeIn>
 
+            {/* Hardware test footage */}
+            <FadeIn>
+              <GlassCard label="HARDWARE TEST FOOTAGE">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {[
+                    { src: `${MEDIA}/ch5-hardware/supplementary-3.mp4`, label: "Cam mechanism in operation" },
+                    { src: `${MEDIA}/ch5-hardware/supplementary-4.avi`, label: "Leg trajectory test (1)" },
+                    { src: `${MEDIA}/ch5-hardware/supplementary-5.avi`, label: "Leg trajectory test (2)" },
+                  ].map((video) => (
+                    <div key={video.label}>
+                      <video
+                        src={video.src}
+                        controls
+                        preload="metadata"
+                        className="w-full rounded-lg border border-black/10 dark:border-white/10"
+                      />
+                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
+                        {video.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </GlassCard>
+            </FadeIn>
+
             <div className="prose-custom mt-8 mb-8">
               <p>
                 Trajectory validation used <strong>After Effects motion tracking</strong> of slow-motion video,
@@ -1362,22 +1449,6 @@ export default function SeniorThesisPage() {
               </p>
             </div>
 
-            {/* Demo video */}
-            <FadeIn>
-              <div className="mt-8">
-                <GlassCard label="FINAL DEMO">
-                  <video
-                    src={`${MEDIA}/videos/demo-final.mp4`}
-                    controls
-                    preload="metadata"
-                    className="w-full rounded-lg border border-black/10 dark:border-white/10"
-                  />
-                  <p className="mt-3 text-sm text-gray-500 dark:text-gray-400 text-center">
-                    Final demonstration of the cam leg mechanism in operation
-                  </p>
-                </GlassCard>
-              </div>
-            </FadeIn>
           </section>
         </FadeIn>
 
