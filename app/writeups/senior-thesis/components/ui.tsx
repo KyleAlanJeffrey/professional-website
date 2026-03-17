@@ -1,5 +1,23 @@
 "use client";
 
+export function Cite({ n }: { n: number | number[] }) {
+  const nums = Array.isArray(n) ? n : [n];
+  return (
+    <>
+      {nums.map((num, i) => (
+        <span key={num}>
+          {i > 0 && ""}
+          <a
+            href={`#ref-${num}`}
+            className="text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-mono text-[0.85em] no-underline"
+          >
+            [{num}]
+          </a>
+        </span>
+      ))}
+    </>
+  );
+}
 
 export function FadeIn({
   children,

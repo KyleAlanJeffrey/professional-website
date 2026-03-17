@@ -1,7 +1,7 @@
 "use client";
 
 import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
+import { Cite, FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
 
 export default function Chapter1({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -51,16 +51,16 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
             </p>
             <ol className="list-decimal list-inside space-y-2 my-4">
               <li>
-                <strong>&ldquo;Millipede-Inspired Locomotion for Rumen Monitoring through Remotely Operated Vehicle&rdquo;</strong> by Garcia [7]
+                <strong>&ldquo;Millipede-Inspired Locomotion for Rumen Monitoring through Remotely Operated Vehicle&rdquo;</strong> by Garcia <Cite n={7} />
               </li>
               <li>
-                <strong>&ldquo;Centipede Robot for Uneven Terrain Exploration&rdquo;</strong> by Koh et al. [10]
+                <strong>&ldquo;Centipede Robot for Uneven Terrain Exploration&rdquo;</strong> by Koh et al. <Cite n={10} />
               </li>
               <li>
-                <strong>&ldquo;Decentralized control mechanism underlying interlimb coordination of millipedes&rdquo;</strong> by Kano et al. [9]
+                <strong>&ldquo;Decentralized control mechanism underlying interlimb coordination of millipedes&rdquo;</strong> by Kano et al. <Cite n={9} />
               </li>
               <li>
-                <strong>&ldquo;The Kinematic Design of the OmniPede&rdquo;</strong> by Long et al. [11]
+                <strong>&ldquo;The Kinematic Design of the OmniPede&rdquo;</strong> by Long et al. <Cite n={11} />
               </li>
             </ol>
             <p>

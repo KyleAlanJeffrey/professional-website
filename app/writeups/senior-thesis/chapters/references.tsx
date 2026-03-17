@@ -34,7 +34,7 @@ export default function References() {
         </h2>
         <div className="space-y-3">
           {REFS.map((ref, i) => (
-            <div key={i} className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
+            <div key={i} id={`ref-${i + 1}`} className="flex gap-3 text-sm text-gray-600 dark:text-gray-400 scroll-mt-20">
               <span className="text-xs font-mono font-bold text-indigo-500 dark:text-indigo-400 mt-0.5 shrink-0">
                 [{i + 1}]
               </span>
