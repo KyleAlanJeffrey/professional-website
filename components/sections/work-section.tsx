@@ -62,7 +62,9 @@ export default function WorkSection({
         </div>
       </div>
 
-<div className="space-y-6 md:space-y-10">
+<div className="relative space-y-6 md:space-y-10">
+        {/* Continuous spine behind the gaps between cards */}
+        <div className="hidden lg:block absolute left-[5px] top-0 bottom-0 w-px bg-sky-400/10 -z-10" />
         {jobs.length ? (
           jobs.map((job, index) => (
             <div key={index} id={`job-${index}`}>

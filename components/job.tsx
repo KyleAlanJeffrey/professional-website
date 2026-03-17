@@ -54,6 +54,7 @@ function Job(props: {
       props.job.skills.some(
         (skill) => skill.toLowerCase() === highlightSkill,
       ));
+  const isActive = props.job.duration.toLowerCase().includes("present");
 
   return (
     <div
@@ -63,21 +64,30 @@ function Job(props: {
           : ""
       }`}
     >
-      <div className="lg:col-span-2 text-left">
-        <div
-          className="text-xs md:text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold mb-1.5 md:mb-2 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
-          style={{ fontFamily: "monospace" }}
-        >
-          {props.job.duration.toUpperCase()}
+      <div className="lg:col-span-2 text-left relative">
+        {/* Spine line */}
+        <div className="hidden lg:block absolute left-[5px] top-6 bottom-0 w-px bg-gradient-to-b from-sky-400/50 to-sky-400/10" />
+        {/* Dot */}
+        <div className="hidden lg:block absolute left-0 top-1">
+          {isActive && <div className="absolute w-3 h-3 rounded-full bg-sky-400 animate-ping opacity-60" />}
+          <div className={`relative w-3 h-3 rounded-full border-2 border-sky-400 ${isActive ? "bg-sky-400" : "bg-white dark:bg-gray-950"}`} />
         </div>
-        <div className="w-16 h-1 bg-gray-400 dark:bg-gray-600 mx-0 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gray-400 dark:bg-gray-600 transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0"></div>
-        </div>
-        <div
-          className="text-xl md:text-2xl font-black text-black dark:text-white mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
-          style={{ fontFamily: "monospace" }}
-        >
-          0{props.index + 1}
+        <div className="lg:pl-5">
+          <div
+            className="text-xs md:text-sm text-gray-600 dark:text-gray-400 tracking-[0.2em] font-bold mb-1.5 md:mb-2 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200"
+            style={{ fontFamily: "monospace" }}
+          >
+            {props.job.duration.toUpperCase()}
+          </div>
+          <div className="w-16 h-1 bg-gray-400 dark:bg-gray-600 mx-0 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gray-400 dark:bg-gray-600 transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0"></div>
+          </div>
+          <div
+            className="text-xl md:text-2xl font-black text-black dark:text-white mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
+            style={{ fontFamily: "monospace" }}
+          >
+            0{props.index + 1}
+          </div>
         </div>
       </div>
 
