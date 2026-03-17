@@ -2,19 +2,23 @@
 
 import { ArrowLeft, Download, Github } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useState, useCallback } from "react";
 
 import { ALL_FIGURES } from "./components/figures";
 import { FadeIn } from "./components/ui";
-import { Lightbox } from "./components/lightbox";
+const Lightbox = dynamic(
+  () => import("./components/lightbox").then((m) => m.Lightbox),
+  { ssr: false }
+);
 
-import Abstract from "./chapters/abstract";
-import Chapter1 from "./chapters/ch1-introduction";
-import Chapter2 from "./chapters/ch2-kinematic-model";
-import Chapter3 from "./chapters/ch3-design";
-import Chapter4 from "./chapters/ch4-simulation";
-import Chapter5 from "./chapters/ch5-final-model";
-import References from "./chapters/references";
+const Abstract = dynamic(() => import("./chapters/abstract"));
+const Chapter1 = dynamic(() => import("./chapters/ch1-introduction"));
+const Chapter2 = dynamic(() => import("./chapters/ch2-kinematic-model"));
+const Chapter3 = dynamic(() => import("./chapters/ch3-design"));
+const Chapter4 = dynamic(() => import("./chapters/ch4-simulation"));
+const Chapter5 = dynamic(() => import("./chapters/ch5-final-model"));
+const References = dynamic(() => import("./chapters/references"));
 
 const TOC_ITEMS: { id: string; label: string; level: 0 | 1 | 2 }[] = [
   { id: "abstract", level: 0, label: "Abstract" },
