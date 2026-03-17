@@ -73,16 +73,13 @@ export default function GithubDataProvider({
         };
       });
       setGithubRepos(allRepos);
+      getLanguageStats(data).then((stats) => {
+        setLanguageStats(stats);
+      });
     });
 
     getAllCommits().then((data) => {
-      console.log(`Found ${data.length} commits`);
-      console.log(data);
       setCommits(data);
-    });
-
-    getLanguageStats().then((data) => {
-      setLanguageStats(data);
     });
   }, []);
 

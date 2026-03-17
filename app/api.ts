@@ -59,8 +59,10 @@ export async function getAllRepos(): Promise<GitHubRepoAPI[]> {
   }
 }
 
-export async function getLanguageStats() {
-  const repos = await getAllRepos();
+export async function getLanguageStats(repos?: GitHubRepoAPI[]) {
+  if (!repos) {
+    repos = await getAllRepos();
+  }
   if (!Array.isArray(repos)) {
     return [];
   }
