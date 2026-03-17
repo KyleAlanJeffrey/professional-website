@@ -276,11 +276,9 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
         </div>
 
         <ModelCard
-          label="CAD MODELS — SIMULATION BODIES"
+          label="CAD MODEL — SIMULATION BODY"
           models={[
-            { src: `${MEDIA}/ch4-simulation/models/body-segment.step`, name: "Body Segment", format: "step" },
             { src: `${MEDIA}/ch4-simulation/models/body-segment-with-rotor.step`, name: "Body Segment + Rotor", format: "step" },
-            { src: `${MEDIA}/ch4-simulation/models/obstruction.step`, name: "Obstruction", format: "step" },
           ]}
         />
       </section>

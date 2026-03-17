@@ -204,12 +204,12 @@ export default function SeniorThesisPage() {
                 TABLE OF CONTENTS
               </span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
+            <div className="sm:columns-2 gap-x-8">
               {TOC_ITEMS.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`block transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${
+                  className={`block break-inside-avoid transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${
                     item.level === 0
                       ? "py-2 font-bold font-mono text-gray-900 dark:text-white text-sm"
                       : "py-1 pl-5 text-gray-500 dark:text-gray-400 text-[13px] border-l-2 border-black/5 dark:border-white/5 hover:border-indigo-400 ml-1"

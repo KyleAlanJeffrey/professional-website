@@ -1,7 +1,7 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Center, Environment } from "@react-three/drei";
+import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls, Environment } from "@react-three/drei";
 import { useEffect, useState, useMemo } from "react";
 import * as THREE from "three";
 
@@ -106,6 +106,48 @@ function StepMeshGeometry({ mesh }: { mesh: StepMesh }) {
   );
 }
 
+function AutoFitScene({ meshes }: { meshes: StepMesh[] }) {
+  const { camera } = useThree();
+  const groupRef = useMemo(() => new THREE.Group(), []);
+
+  useEffect(() => {
+    if (meshes.length === 0) return;
+
+    // Compute bounding box of all meshes
+    const box = new THREE.Box3();
+    groupRef.children.forEach((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.geometry.computeBoundingBox();
+        const childBox = child.geometry.boundingBox;
+        if (childBox) box.expandByObject(child);
+      }
+    });
+
+    // Center the group
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    groupRef.position.sub(center);
+
+    // Position camera to see the whole model
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const distance = maxDim * 2;
+
+    camera.position.set(distance * 0.7, distance * 0.5, distance * 0.7);
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+  }, [meshes, camera, groupRef]);
+
+  return (
+    <primitive object={groupRef}>
+      {meshes.map((mesh, i) => (
+        <StepMeshGeometry key={i} mesh={mesh} />
+      ))}
+    </primitive>
+  );
+}
+
 export function StepViewer({
   url,
   name,
@@ -180,11 +222,7 @@ export function StepViewer({
               <directionalLight position={[5, 5, 5]} intensity={0.8} />
               <directionalLight position={[-3, -3, 2]} intensity={0.3} />
               <Environment preset="studio" />
-              <Center>
-                {meshes.map((mesh, i) => (
-                  <StepMeshGeometry key={i} mesh={mesh} />
-                ))}
-              </Center>
+              <AutoFitScene meshes={meshes} />
               <OrbitControls enableDamping dampingFactor={0.1} />
             </Canvas>
           )}
