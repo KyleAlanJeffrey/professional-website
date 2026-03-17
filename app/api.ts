@@ -116,8 +116,9 @@ export async function getAllCommits(): Promise<any[]> {
   await Promise.all(
     repos.map(async (repo) => {
       try {
+        const since = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
         const response = await fetch(
-          `https://api.github.com/repos/${username}/${repo.name}/commits`,
+          `https://api.github.com/repos/${username}/${repo.name}/commits?per_page=100&since=${since}`,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

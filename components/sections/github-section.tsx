@@ -54,6 +54,10 @@ export default function GithubSection() {
   const peakHour = getMostActiveHour(commits);
   const topRepo = getMostProlificRepo(commits);
   const peakDay = getMostActiveDay(commits);
+  const thisYear = new Date().getFullYear();
+  const commitsThisYear = commits.filter(
+    (c) => new Date(c.commit.author.date).getFullYear() === thisYear
+  ).length;
 
   return (
     <SectionShell
@@ -82,7 +86,7 @@ export default function GithubSection() {
 
           <div className="grid grid-cols-2 gap-4">
             <StatCard>
-              <div className="text-2xl font-black text-black dark:text-white mb-0.5 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{commits.length ? commits.length : "NA"}</div>
+              <div className="text-2xl font-black text-black dark:text-white mb-0.5 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{commitsThisYear || "NA"}</div>
               <div className="text-xs text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>COMMITS</div>
               <div className="text-[10px] text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>THIS YEAR</div>
             </StatCard>
@@ -186,11 +190,25 @@ export default function GithubSection() {
       </div>
 
       {/* Full-width heatmap row */}
-      {commits.length > 0 && (
-        <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:p-8 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.1)]">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 md:p-8 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.1)]">
+        {commits.length > 0 ? (
           <ContributionHeatmap commits={commits} />
-        </div>
-      )}
+        ) : (
+          <div className="animate-pulse">
+            <div className="h-3 w-32 bg-gray-300 dark:bg-gray-700 mx-auto mb-4 rounded" />
+            <div className="flex gap-[3px] overflow-hidden">
+              {[...Array(52)].map((_, wi) => (
+                <div key={wi} className="flex flex-col gap-[3px]">
+                  {[...Array(7)].map((_, di) => (
+                    <div key={di} className="w-[14px] h-[14px] rounded-sm bg-gray-200 dark:bg-white/10" />
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="h-3 w-48 bg-gray-200 dark:bg-gray-700 mx-auto mt-4 rounded" />
+          </div>
+        )}
+      </div>
     </SectionShell>
   );
 }

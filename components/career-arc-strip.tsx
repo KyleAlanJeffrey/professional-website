@@ -1,5 +1,7 @@
 "use client";
 
+import { Fragment } from "react";
+
 const milestones = [
   {
     key: "brain",
@@ -53,10 +55,10 @@ export default function CareerArcStrip() {
         <div className="absolute left-0 right-0 top-[5px] h-px bg-black/20 dark:bg-white/25 pointer-events-none" />
 
         {milestones.map((m) => (
-          <>
+          <Fragment key={m.key}>
             {/* Proportional spacer */}
             {m.spaceBefore > 0 && (
-              <div key={`sp-${m.key}`} style={{ flex: m.spaceBefore }} className="shrink-0" />
+              <div style={{ flex: m.spaceBefore }} className="shrink-0" />
             )}
 
             {/* Dot + label, stacked, centered on line */}
@@ -83,7 +85,7 @@ export default function CareerArcStrip() {
                 </div>
               </div>
             </div>
-          </>
+          </Fragment>
         ))}
 
         {/* Spacer from Stout to NOW */}
