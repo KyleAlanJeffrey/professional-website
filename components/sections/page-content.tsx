@@ -9,7 +9,7 @@ import ProjectsSection from "@/components/sections/projects-section";
 import PublicationsSection from "@/components/sections/publications-section";
 import TwitterSection from "@/components/sections/twitter-section";
 import WorkSection from "@/components/sections/work-section";
-import { Download, Moon, Sun } from "lucide-react";
+import { ArrowUpRight, Download, Moon, Sun } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 
 type PageContentProps = {
@@ -200,6 +200,16 @@ export default function PageContent(props: PageContentProps) {
             <a href="/resume.pdf" download aria-label="Download resume PDF" onClick={() => (window as any).gtag?.("event", "resume_download")}>
               <Download className="h-4 w-4" />
               Resume
+            </a>
+          </Button>
+          <Button
+            asChild
+            size="sm"
+            className="bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 shadow-[0_4px_12px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.5)] transition-all duration-300 hover:-translate-y-0.5"
+          >
+            <a href="/writeups">
+              Writeups
+              <ArrowUpRight className="h-4 w-4" />
             </a>
           </Button>
           <Button
