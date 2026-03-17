@@ -26,7 +26,9 @@ function useStepFile(url: string) {
         setError(null);
 
         const occtModule = await import("occt-import-js");
-        const occt = await (occtModule.default as unknown as () => Promise<{
+        const initFn = occtModule.default as unknown as (opts?: {
+          locateFile: (path: string) => string;
+        }) => Promise<{
           ReadStepFile: (data: Uint8Array, params: null) => {
             meshes: Array<{
               attributes: {
@@ -37,7 +39,13 @@ function useStepFile(url: string) {
               color?: [number, number, number];
             }>;
           };
-        }>)();
+        }>;
+        const occt = await initFn({
+          locateFile: (path: string) => {
+            if (path.endsWith(".wasm")) return "/occt-import-js.wasm";
+            return path;
+          },
+        });
 
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch: ${response.status}`);
