@@ -108,7 +108,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const gaId = "G-G52TGZCL9E";
   const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
   const schema = {
     "@context": "https://schema.org",
@@ -189,6 +189,11 @@ html {
       </head>
       <body>
         {children}
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "598d535d83d9428dbc1a9b4b3f6dc273"}'
+          strategy="afterInteractive"
+        />
         {gaId ? (
           <>
             <Script

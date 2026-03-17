@@ -197,7 +197,7 @@ export default function PageContent(props: PageContentProps) {
             size="sm"
             className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition-all duration-300"
           >
-            <a href="/resume.pdf" download aria-label="Download resume PDF" onClick={() => (window as any).zaraz?.track("resume_download")}>
+            <a href="/resume.pdf" download aria-label="Download resume PDF" onClick={() => (window as any).gtag?.("event", "resume_download")}>
               <Download className="h-4 w-4" />
               Resume
             </a>
