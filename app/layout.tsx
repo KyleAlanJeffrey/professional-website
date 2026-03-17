@@ -110,6 +110,7 @@ export default function RootLayout({
 }>) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const fbPixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
+  const cfBeaconToken = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -208,6 +209,14 @@ gtag('config', '${gaId}');
               }}
             />
           </>
+        ) : null}
+        {cfBeaconToken ? (
+          <Script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={`{"token": "${cfBeaconToken}"}`}
+            strategy="afterInteractive"
+          />
         ) : null}
         {fbPixelId ? (
           <Script

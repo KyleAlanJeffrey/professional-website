@@ -58,7 +58,7 @@ export default function WorkSection({
               variant="outline"
               className="group h-11 rounded-full border-black/25 bg-white/70 px-5 text-black md:backdrop-blur-smtransition-all duration-300 hover:-translate-y-0.5 hover:border-black hover:bg-white dark:border-white/25 dark:bg-white/5 dark:text-white dark:hover:border-white dark:hover:bg-white/10"
             >
-              <a href="/resume.pdf" download aria-label="Download resume PDF">
+              <a href="/resume.pdf" download aria-label="Download resume PDF" onClick={() => (window as any).zaraz?.track("resume_download")}>
                 <Download className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5" />
                 <span className="text-xs font-bold tracking-[0.2em]" style={{ fontFamily: "monospace" }}>
                   DOWNLOAD RESUME
