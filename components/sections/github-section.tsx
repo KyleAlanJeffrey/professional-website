@@ -4,17 +4,56 @@ import SectionTitle from "@/components/section-title";
 import { useGithubData } from "@/components/providers/github-data-provider";
 import SectionShell from "@/components/sections/section-shell";
 
-function StatCard({ children }: { children: React.ReactNode }) {
+function StatCard({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
   return (
-    <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
+    <div className={`rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 md:backdrop-blur shadow-[0_16px_32px_rgba(0,0,0,0.12)] transition-shadow duration-300 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]${wide ? " col-span-2" : ""}`}>
       {children}
     </div>
   );
 }
 
+function getMostActiveHour(commits: any[]): string {
+  if (!commits.length) return "NA";
+  const counts: Record<number, number> = {};
+  for (const c of commits) {
+    const h = new Date(c.commit.author.date).getHours();
+    counts[h] = (counts[h] ?? 0) + 1;
+  }
+  const peak = Number(Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0]);
+  const suffix = peak >= 12 ? "PM" : "AM";
+  const hour = peak % 12 === 0 ? 12 : peak % 12;
+  return `${hour}${suffix}`;
+}
+
+function getMostProlificRepo(commits: any[]): string {
+  if (!commits.length) return "NA";
+  const counts: Record<string, number> = {};
+  for (const c of commits) {
+    const repo = c.html_url?.split("/")[4] ?? "unknown";
+    counts[repo] = (counts[repo] ?? 0) + 1;
+  }
+  return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+}
+
+function getMostActiveDay(commits: any[]): string {
+  if (!commits.length) return "NA";
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  const counts: Record<number, number> = {};
+  for (const c of commits) {
+    const d = new Date(c.commit.author.date).getDay();
+    counts[d] = (counts[d] ?? 0) + 1;
+  }
+  const peak = Number(Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0]);
+  return days[peak];
+}
+
 export default function GithubSection() {
   const { commits, githubRepos, languageStats, languageColors } =
     useGithubData();
+
+  const peakHour = getMostActiveHour(commits);
+  const topRepo = getMostProlificRepo(commits);
+  const peakDay = getMostActiveDay(commits);
 
   return (
     <SectionShell
@@ -51,6 +90,16 @@ export default function GithubSection() {
               <div className="text-2xl font-black text-black dark:text-white mb-0.5 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{githubRepos.length ? githubRepos.length : "NA"}</div>
               <div className="text-xs text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>REPOSITORIES</div>
               <div className="text-[10px] text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>ACTIVE</div>
+            </StatCard>
+            <StatCard wide>
+              <div className="text-2xl font-black text-black dark:text-white mb-0.5 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{peakDay} {peakHour}</div>
+              <div className="text-xs text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>PEAK TIME</div>
+              <div className="text-[10px] text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>MOST ACTIVE</div>
+            </StatCard>
+            <StatCard wide>
+              <div className="text-2xl font-black text-black dark:text-white mb-0.5 tracking-[0.1em]" style={{ fontFamily: "monospace" }}>{topRepo}</div>
+              <div className="text-xs text-gray-700 dark:text-gray-300 tracking-[0.2em] font-bold" style={{ fontFamily: "monospace" }}>TOP REPO</div>
+              <div className="text-[10px] text-gray-500 dark:text-gray-500 font-bold tracking-[0.1em]" style={{ fontFamily: "monospace" }}>MOST COMMITS</div>
             </StatCard>
           </div>
         </div>
