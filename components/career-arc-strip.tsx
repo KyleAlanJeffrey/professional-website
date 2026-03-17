@@ -39,7 +39,7 @@ const milestones = [
 
 export default function CareerArcStrip() {
   return (
-    <div className="mb-10 md:mb-14">
+    <div className="hidden md:block mb-10 md:mb-14">
       <div
         className="text-xs text-gray-500 dark:text-gray-400 tracking-[0.3em] font-bold mb-6"
         style={{ fontFamily: "monospace" }}

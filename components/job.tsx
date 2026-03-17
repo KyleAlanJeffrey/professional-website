@@ -76,12 +76,12 @@ function Job(props: {
 
   const company = props.job.company.toLowerCase();
   const dotColor = company.includes("stout")
-    ? { border: "border-emerald-400", solid: "bg-emerald-400", spine: "from-emerald-400/50 to-emerald-400/10" }
+    ? { border: "border-emerald-400", solid: "bg-emerald-400", text: "text-emerald-500 dark:text-emerald-400", bar: "bg-emerald-400/60 group-hover:bg-emerald-400", accent: "border-emerald-400/30" }
     : company.includes("google x") || company.includes("everyday")
-    ? { border: "border-sky-400", solid: "bg-sky-400", spine: "from-sky-400/50 to-sky-400/10" }
+    ? { border: "border-sky-400", solid: "bg-sky-400", text: "text-sky-500 dark:text-sky-400", bar: "bg-sky-400/60 group-hover:bg-sky-400", accent: "border-sky-400/30" }
     : company.includes("brain") || company.includes("fs studio")
-    ? { border: "border-amber-400", solid: "bg-amber-400", spine: "from-amber-400/50 to-amber-400/10" }
-    : { border: "border-sky-400", solid: "bg-sky-400", spine: "from-sky-400/50 to-sky-400/10" };
+    ? { border: "border-amber-400", solid: "bg-amber-400", text: "text-amber-500 dark:text-amber-400", bar: "bg-amber-400/60 group-hover:bg-amber-400", accent: "border-amber-400/30" }
+    : { border: "border-sky-400", solid: "bg-sky-400", text: "text-sky-500 dark:text-sky-400", bar: "bg-sky-400/60 group-hover:bg-sky-400", accent: "border-sky-400/30" };
 
   return (
     <div
@@ -106,13 +106,13 @@ function Job(props: {
             {props.job.duration.toUpperCase()}
           </div>
           <div className="w-full max-w-[80px] h-1 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
-            <div className="absolute inset-y-0 left-0 bg-sky-400/60 transition-all duration-700 group-hover:bg-sky-400" style={{ width: `${barPct}%` }} />
+            <div className={`absolute inset-y-0 left-0 transition-all duration-700 ${dotColor.bar}`} style={{ width: `${barPct}%` }} />
           </div>
           <div className="text-[9px] text-gray-400 dark:text-gray-500 font-bold tracking-widest mt-0.5" style={{ fontFamily: "monospace" }}>
             {durationMonths}MO
           </div>
           <div
-            className="text-xl md:text-2xl font-black text-black dark:text-white mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
+            className={`text-xl md:text-2xl font-black mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em] ${dotColor.text}`}
             style={{ fontFamily: "monospace" }}
           >
             0{props.index + 1}
@@ -134,7 +134,7 @@ function Job(props: {
           DEVELOPER
         </h3>
         <div
-          className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-1.5 md:mb-2 font-bold tracking-[0.2em]"
+          className={`text-xs md:text-sm mb-1.5 md:mb-2 font-bold tracking-[0.2em] ${dotColor.text}`}
           style={{ fontFamily: "monospace" }}
         >
           AT
@@ -144,24 +144,24 @@ function Job(props: {
             href={props.job.website}
             target="_blank"
             rel="noreferrer"
-            className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 hover:text-blue-600 dark:hover:text-blue-400 font-bold tracking-[0.1em] underline underline-offset-4 decoration-gray-400/50 hover:decoration-blue-500 inline-block"
+            className={`text-base md:text-lg mb-2 md:mb-3 font-bold tracking-[0.1em] underline underline-offset-4 decoration-current/30 hover:decoration-current hover:underline-offset-2 opacity-80 hover:opacity-100 inline-block transition-all duration-300 ${dotColor.text}`}
             style={{ fontFamily: "monospace" }}
           >
             {props.job.company.toUpperCase()}
           </a>
         ) : (
           <h4
-            className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-2 md:mb-3 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-bold tracking-[0.1em]"
+            className={`text-base md:text-lg mb-2 md:mb-3 font-bold tracking-[0.1em] ${dotColor.text}`}
             style={{ fontFamily: "monospace" }}
           >
             {props.job.company.toUpperCase()}
           </h4>
         )}
-        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100 font-medium whitespace-pre-line break-words">
+        <p className={`text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-3 md:mb-4 font-medium whitespace-pre-line break-words pl-3 border-l-2 ${dotColor.accent}`}>
           {props.job.description}
         </p>
         <div
-          className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 md:mb-3 font-bold tracking-[0.2em]"
+          className={`text-xs md:text-sm mb-2 md:mb-3 font-bold tracking-[0.2em] ${dotColor.text}`}
           style={{ fontFamily: "monospace" }}
         >
           ACCOMPLISHMENTS
