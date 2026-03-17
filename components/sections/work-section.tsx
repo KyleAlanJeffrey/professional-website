@@ -1,10 +1,17 @@
 import Job from "@/components/job";
+import CareerArcStrip from "@/components/career-arc-strip";
 import SectionTitle from "@/components/section-title";
 import SkillsGraph from "@/components/skills-graph";
 import SectionShell from "@/components/sections/section-shell";
 import { Button } from "@/components/ui/button";
 import jobsData from "@/data/jobs.json";
 import { Download } from "lucide-react";
+import { Fragment } from "react";
+
+function getStartYear(duration: string): number {
+  const yr = duration.split("'")[1]?.split(" ")[0];
+  return yr ? 2000 + parseInt(yr) : 0;
+}
 
 type WorkSectionProps = {
   highlightSectionId: string | null;
@@ -62,21 +69,38 @@ export default function WorkSection({
         </div>
       </div>
 
-<div className="relative space-y-6 md:space-y-10">
-        {/* Continuous spine behind the gaps between cards */}
-        <div className="hidden lg:block absolute left-[5px] top-0 bottom-0 w-px bg-sky-400/10 -z-10" />
+<CareerArcStrip />
+
+      <div className="relative space-y-6 md:space-y-10">
+        {/* Continuous spine */}
+        <div className="hidden lg:block absolute left-[5px] top-0 bottom-0 w-px bg-gradient-to-b from-emerald-400/50 via-sky-400/40 to-amber-400/50 -z-10" />
         {jobs.length ? (
-          jobs.map((job, index) => (
-            <div key={index} id={`job-${index}`}>
-              <Job
-                job={job}
-                index={index}
-                highlightSkill={highlightSkill}
-                highlightJob={highlightJobIndex === index}
-              />
-            </div>
-          ))
-        ) : (
+          jobs.map((job, index) => {
+            const prevYear = index > 0 ? getStartYear(jobs[index - 1].duration) : null;
+            const thisYear = getStartYear(job.duration);
+            const showYearMarker = prevYear !== null && thisYear !== prevYear;
+            return (
+            <Fragment key={index}>
+              {showYearMarker && (
+                <div className="hidden lg:flex items-center gap-2 !my-1">
+                  <div className="text-[9px] text-sky-400/60 font-bold tracking-[0.2em] w-5 text-right" style={{ fontFamily: "monospace" }}>
+                    {thisYear}
+                  </div>
+                  <div className="flex-1 h-px bg-sky-400/15" />
+                </div>
+              )}
+              <div id={`job-${index}`}>
+                <Job
+                  job={job}
+                  index={index}
+                  highlightSkill={highlightSkill}
+                  highlightJob={highlightJobIndex === index}
+                />
+              </div>
+            </Fragment>
+            );
+          })
+          ) : (
           <div className="space-y-8">
             {[...Array(2)].map((_, i) => (
               <div

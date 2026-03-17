@@ -47,6 +47,22 @@ function Job(props: {
   highlightSkill?: string | null;
   highlightJob?: boolean;
 }) {
+  function parseDurationMonths(duration: string): number {
+    const monthMap: Record<string, number> = {
+      jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+      jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11,
+    };
+    const parts = duration.split(" - ");
+    const parseDate = (s: string): Date => {
+      if (s.trim().toLowerCase() === "present") return new Date(2026, 2);
+      const [mon, yr] = s.trim().split("'");
+      return new Date(2000 + parseInt(yr), monthMap[mon.trim().toLowerCase().slice(0, 3)]);
+    };
+    const start = parseDate(parts[0]);
+    const end = parseDate(parts[1] ?? "Present");
+    return (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  }
+
   const highlightSkill = props.highlightSkill?.toLowerCase() ?? null;
   const isHighlighted =
     !!props.highlightJob ||
@@ -55,6 +71,17 @@ function Job(props: {
         (skill) => skill.toLowerCase() === highlightSkill,
       ));
   const isActive = props.job.duration.toLowerCase().includes("present");
+  const durationMonths = parseDurationMonths(props.job.duration);
+  const barPct = Math.min((durationMonths / 40) * 100, 100);
+
+  const company = props.job.company.toLowerCase();
+  const dotColor = company.includes("stout")
+    ? { border: "border-emerald-400", solid: "bg-emerald-400", spine: "from-emerald-400/50 to-emerald-400/10" }
+    : company.includes("google x") || company.includes("everyday")
+    ? { border: "border-sky-400", solid: "bg-sky-400", spine: "from-sky-400/50 to-sky-400/10" }
+    : company.includes("brain") || company.includes("fs studio")
+    ? { border: "border-amber-400", solid: "bg-amber-400", spine: "from-amber-400/50 to-amber-400/10" }
+    : { border: "border-sky-400", solid: "bg-sky-400", spine: "from-sky-400/50 to-sky-400/10" };
 
   return (
     <div
@@ -66,11 +93,10 @@ function Job(props: {
     >
       <div className="lg:col-span-2 text-left relative">
         {/* Spine line */}
-        <div className="hidden lg:block absolute left-[5px] top-6 bottom-0 w-px bg-gradient-to-b from-sky-400/50 to-sky-400/10" />
         {/* Dot */}
         <div className="hidden lg:block absolute left-0 top-1">
-          {isActive && <div className="absolute w-3 h-3 rounded-full bg-sky-400 animate-ping opacity-60" />}
-          <div className={`relative w-3 h-3 rounded-full border-2 border-sky-400 ${isActive ? "bg-sky-400" : "bg-white dark:bg-gray-950"}`} />
+          {isActive && <div className={`absolute w-3 h-3 rounded-full ${dotColor.solid} animate-ping opacity-60`} />}
+          <div className={`relative w-3 h-3 rounded-full border-2 ${dotColor.border} ${isActive ? dotColor.solid : "bg-white dark:bg-gray-950"}`} />
         </div>
         <div className="lg:pl-5">
           <div
@@ -79,8 +105,11 @@ function Job(props: {
           >
             {props.job.duration.toUpperCase()}
           </div>
-          <div className="w-16 h-1 bg-gray-400 dark:bg-gray-600 mx-0 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gray-400 dark:bg-gray-600 transform -translate-x-full transition-transform duration-500 group-hover:translate-x-0"></div>
+          <div className="w-full max-w-[80px] h-1 bg-gray-200 dark:bg-gray-700 relative overflow-hidden">
+            <div className="absolute inset-y-0 left-0 bg-sky-400/60 transition-all duration-700 group-hover:bg-sky-400" style={{ width: `${barPct}%` }} />
+          </div>
+          <div className="text-[9px] text-gray-400 dark:text-gray-500 font-bold tracking-widest mt-0.5" style={{ fontFamily: "monospace" }}>
+            {durationMonths}MO
           </div>
           <div
             className="text-xl md:text-2xl font-black text-black dark:text-white mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em]"
