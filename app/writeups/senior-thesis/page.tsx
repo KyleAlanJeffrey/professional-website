@@ -194,6 +194,36 @@ export default function SeniorThesisPage() {
           </FadeIn>
         </header>
 
+        {/* Table of Contents */}
+        <FadeIn delay={700}>
+          <nav className="mb-16 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-6 md:p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
+            <div className="flex items-center gap-2 mb-5">
+              <div className="h-2 w-2 rounded-full bg-indigo-500 dark:bg-indigo-400" />
+              <span className="text-xs font-mono font-bold tracking-wider text-indigo-600 dark:text-indigo-400">
+                TABLE OF CONTENTS
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
+              {TOC_ITEMS.map((item) => {
+                const isChapter = item.label.match(/^\d\./);
+                return (
+                  <a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    className={`block py-1.5 text-sm transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${
+                      isChapter
+                        ? "font-bold font-mono text-gray-900 dark:text-white"
+                        : "pl-4 text-gray-500 dark:text-gray-400 border-l-2 border-black/5 dark:border-white/5 hover:border-indigo-400"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
+            </div>
+          </nav>
+        </FadeIn>
+
         {/* Chapters */}
         <Abstract />
         <Chapter1 openLightbox={openLightbox} />

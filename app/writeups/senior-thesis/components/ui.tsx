@@ -1,26 +1,16 @@
 "use client";
 
-import { useInView } from "@/hooks/use-in-view";
 
 export function FadeIn({
   children,
   className = "",
-  delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
-  const { ref, inView } = useInView({ threshold: 0.15 });
-
   return (
-    <div
-      ref={ref as React.RefObject<HTMLDivElement>}
-      className={`transition-all duration-700 ease-out ${
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      } ${className}`}
-      style={{ transitionDelay: inView ? `${delay}ms` : "0ms" }}
-    >
+    <div className={className}>
       {children}
     </div>
   );
@@ -122,6 +112,7 @@ export function VideoCard({
         src={src}
         controls
         preload="metadata"
+        suppressHydrationWarning
         className="w-full rounded-lg border border-black/10 dark:border-white/10"
       />
       <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
