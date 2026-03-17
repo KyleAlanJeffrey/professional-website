@@ -112,7 +112,7 @@ function Job(props: {
             {durationMonths}MO
           </div>
           <div
-            className={`text-xl md:text-2xl font-black mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em] ${dotColor.text}`}
+            className="text-xl md:text-2xl font-black mt-2 md:mt-3 transition-all duration-300 group-hover:scale-105 tracking-[0.1em] text-gray-400 dark:text-gray-500"
             style={{ fontFamily: "monospace" }}
           >
             0{props.index + 1}
@@ -134,7 +134,7 @@ function Job(props: {
           DEVELOPER
         </h3>
         <div
-          className={`text-xs md:text-sm mb-1.5 md:mb-2 font-bold tracking-[0.2em] ${dotColor.text}`}
+          className="text-xs md:text-sm mb-1.5 md:mb-2 font-bold tracking-[0.2em] text-gray-400 dark:text-gray-500"
           style={{ fontFamily: "monospace" }}
         >
           AT
@@ -161,7 +161,7 @@ function Job(props: {
           {props.job.description}
         </p>
         <div
-          className={`text-xs md:text-sm mb-2 md:mb-3 font-bold tracking-[0.2em] ${dotColor.text}`}
+          className="text-xs md:text-sm mb-2 md:mb-3 font-bold tracking-[0.2em] text-gray-400 dark:text-gray-500"
           style={{ fontFamily: "monospace" }}
         >
           ACCOMPLISHMENTS

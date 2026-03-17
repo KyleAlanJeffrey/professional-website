@@ -31,7 +31,7 @@ const SECTIONS = ["home", "work", "publications", "projects", "github", "twitter
 
 export default function PageContent(props: PageContentProps) {
   const [scrollY, setScrollY] = useState(0);
-  const [scrollPercent, setScrollPercent] = useState(0);
+
 
   const {
     activeSection,
@@ -53,9 +53,7 @@ export default function PageContent(props: PageContentProps) {
     const onScroll = () => {
       if (rafId) return;
       rafId = window.requestAnimationFrame(() => {
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         setScrollY(window.scrollY);
-        setScrollPercent(maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0);
         rafId = 0;
       });
     };
@@ -84,17 +82,6 @@ export default function PageContent(props: PageContentProps) {
   }, [scrollToSection, toggleDarkMode]);
 
   return (
-    <>
-    {/* Scroll progress bar */}
-    <div className="fixed top-0 left-0 right-0 z-[100] h-[2px] bg-transparent">
-      <div
-        className="h-full transition-[width] duration-75"
-        style={{
-          width: `${scrollPercent}%`,
-          background: "linear-gradient(to right, #000000, #38bdf8, #fbbf24, #34d399, #818cf8, #38bdf8, #8b5cf6)",
-        }}
-      />
-    </div>
     <div
       className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16 overflow-x-clip"
       style={{
@@ -265,6 +252,5 @@ export default function PageContent(props: PageContentProps) {
         <ContactSection />
       </main>
     </div>
-    </>
   );
 }
