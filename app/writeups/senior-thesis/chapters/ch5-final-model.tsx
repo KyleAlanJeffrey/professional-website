@@ -1,7 +1,7 @@
 "use client";
 
 import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
+import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard, ModelCard } from "../components/ui";
 
 export default function Chapter5({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -347,6 +347,20 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             </p>
           </div>
         </div>
+
+        <ModelCard
+          label="3D PRINT FILES — FINAL CAM MECHANISM"
+          models={[
+            { src: `${MEDIA}/ch5-hardware/models/cam-body.stl`, name: "Cam Body", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/cam-profile.stl`, name: "Cam Profile", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/cam-rotor.stl`, name: "Rotor Arm", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/cam-leg.stl`, name: "Leg", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/cam-peg.stl`, name: "Peg", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/leg.stl`, name: "Leg (alt)", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/peg.stl`, name: "Peg (alt)", format: "stl" },
+            { src: `${MEDIA}/ch5-hardware/models/rotor.stl`, name: "Rotor (alt)", format: "stl" },
+          ]}
+        />
       </section>
     </FadeIn>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
+import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard, ModelCard } from "../components/ui";
 
 export default function Chapter4({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -274,6 +274,15 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
             </p>
           </div>
         </div>
+
+        <ModelCard
+          label="CAD MODELS — SIMULATION BODIES"
+          models={[
+            { src: `${MEDIA}/ch4-simulation/models/body-segment.step`, name: "Body Segment", format: "step" },
+            { src: `${MEDIA}/ch4-simulation/models/body-segment-with-rotor.step`, name: "Body Segment + Rotor", format: "step" },
+            { src: `${MEDIA}/ch4-simulation/models/obstruction.step`, name: "Obstruction", format: "step" },
+          ]}
+        />
       </section>
     </FadeIn>
   );

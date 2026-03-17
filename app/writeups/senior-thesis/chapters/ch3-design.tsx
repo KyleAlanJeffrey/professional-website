@@ -1,7 +1,7 @@
 "use client";
 
 import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
+import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard, ModelCard } from "../components/ui";
 
 export default function Chapter3({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -370,6 +370,24 @@ export default function Chapter3({ openLightbox }: { openLightbox: (i: number) =
             </table>
           </div>
         </GlassCard>
+
+        <ModelCard
+          label="CAD MODELS — DESIGN FILES"
+          models={[
+            { src: `${MEDIA}/ch3-design/models/geared-bar-gear.stl`, name: "Geared Bar — Gear", format: "stl" },
+            { src: `${MEDIA}/ch3-design/models/geared-bar-worm.stl`, name: "Geared Bar — Worm", format: "stl" },
+            { src: `${MEDIA}/ch3-design/models/custom-sliding-cam.step`, name: "Custom Sliding Cam", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/custom-cam-design.step`, name: "Custom Cam Design", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/custom-cam-design.f3d`, name: "Custom Cam (Fusion 360)", format: "f3d" },
+            { src: `${MEDIA}/ch3-design/models/cam-interior-leg.step`, name: "Cam Interior Leg", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/custom-cam-v4.step`, name: "Custom Cam v4", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/wan-song-cam-v0.step`, name: "Wan & Song Cam v0", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/wan-song-cam-v2.step`, name: "Wan & Song Cam v2", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/wan-song-cam-v4.step`, name: "Wan & Song Cam v4", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/wan-song-cam-final.step`, name: "Wan & Song Cam Final", format: "step" },
+            { src: `${MEDIA}/ch3-design/models/full-assembly.step`, name: "Full Assembly", format: "step" },
+          ]}
+        />
       </section>
     </FadeIn>
   );
