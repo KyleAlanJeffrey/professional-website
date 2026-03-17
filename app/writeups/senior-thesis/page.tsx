@@ -16,22 +16,22 @@ import Chapter4 from "./chapters/ch4-simulation";
 import Chapter5 from "./chapters/ch5-final-model";
 import References from "./chapters/references";
 
-const TOC_ITEMS = [
-  { id: "abstract", label: "Abstract" },
-  { id: "ch1", label: "1. Introduction" },
-  { id: "ch1-problem", label: "1.1 Problem Statement" },
-  { id: "ch1-existing", label: "1.2 Existing Work" },
-  { id: "ch1-characteristics", label: "1.3 Characteristics" },
-  { id: "ch2", label: "2. Kinematic Model" },
-  { id: "ch3", label: "3. Design" },
-  { id: "ch3-geared-bar", label: "3.1 Geared Bar" },
-  { id: "ch3-cam", label: "3.2 Cam Designs" },
-  { id: "ch4", label: "4. Simulation" },
-  { id: "ch4-results", label: "4.3 Results" },
-  { id: "ch5", label: "5. Final Model" },
-  { id: "ch5-testing", label: "5.2 Testing" },
-  { id: "ch5-conclusion", label: "5.3 Conclusion" },
-  { id: "references", label: "References" },
+const TOC_ITEMS: { id: string; label: string; level: 0 | 1 | 2 }[] = [
+  { id: "abstract", level: 0, label: "Abstract" },
+  { id: "ch1", level: 0, label: "1. Introduction" },
+  { id: "ch1-problem", level: 1, label: "1.1 Problem Statement" },
+  { id: "ch1-existing", level: 1, label: "1.2 Existing Work" },
+  { id: "ch1-characteristics", level: 1, label: "1.3 Characteristics" },
+  { id: "ch2", level: 0, label: "2. Kinematic Model" },
+  { id: "ch3", level: 0, label: "3. Design" },
+  { id: "ch3-geared-bar", level: 1, label: "3.1 Geared Bar" },
+  { id: "ch3-cam", level: 1, label: "3.2 Cam Designs" },
+  { id: "ch4", level: 0, label: "4. Simulation" },
+  { id: "ch4-results", level: 1, label: "4.3 Results" },
+  { id: "ch5", level: 0, label: "5. Final Model" },
+  { id: "ch5-testing", level: 1, label: "5.2 Testing" },
+  { id: "ch5-conclusion", level: 1, label: "5.3 Conclusion" },
+  { id: "references", level: 0, label: "References" },
 ];
 
 export default function SeniorThesisPage() {
@@ -107,17 +107,18 @@ export default function SeniorThesisPage() {
             <span className="text-xs font-mono font-bold tracking-wider text-indigo-600 dark:text-indigo-400 mb-3 block">
               TABLE OF CONTENTS
             </span>
-            <nav className="space-y-1">
-              {TOC_ITEMS.map((item, i) => (
+            <nav className="space-y-0.5">
+              {TOC_ITEMS.map((item) => (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={() => setTocOpen(false)}
-                  className="flex items-center gap-3 px-2 py-1.5 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 transition-colors"
+                  className={`block rounded-lg transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-500/5 ${
+                    item.level === 0
+                      ? "px-2 py-1.5 text-sm font-bold text-gray-900 dark:text-white"
+                      : "px-2 py-1 pl-6 text-xs text-gray-500 dark:text-gray-400"
+                  }`}
                 >
-                  <span className="text-xs font-mono text-gray-400 dark:text-gray-500 w-4 text-right">
-                    {i + 1}
-                  </span>
                   {item.label}
                 </a>
               ))}
@@ -203,23 +204,20 @@ export default function SeniorThesisPage() {
                 TABLE OF CONTENTS
               </span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1">
-              {TOC_ITEMS.map((item) => {
-                const isChapter = item.label.match(/^\d\./);
-                return (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    className={`block py-1.5 text-sm transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${
-                      isChapter
-                        ? "font-bold font-mono text-gray-900 dark:text-white"
-                        : "pl-4 text-gray-500 dark:text-gray-400 border-l-2 border-black/5 dark:border-white/5 hover:border-indigo-400"
-                    }`}
-                  >
-                    {item.label}
-                  </a>
-                );
-              })}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
+              {TOC_ITEMS.map((item) => (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`block transition-colors hover:text-indigo-600 dark:hover:text-indigo-400 ${
+                    item.level === 0
+                      ? "py-2 font-bold font-mono text-gray-900 dark:text-white text-sm"
+                      : "py-1 pl-5 text-gray-500 dark:text-gray-400 text-[13px] border-l-2 border-black/5 dark:border-white/5 hover:border-indigo-400 ml-1"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
             </div>
           </nav>
         </FadeIn>
