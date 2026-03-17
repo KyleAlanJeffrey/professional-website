@@ -95,25 +95,6 @@
   }
 }
 
-/* Styled scrollbar for commit feed */
-.scrollbar-emerald {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(52, 211, 153, 0.4) transparent;
-}
-.scrollbar-emerald::-webkit-scrollbar {
-  width: 3px;
-}
-.scrollbar-emerald::-webkit-scrollbar-track {
-  background: transparent;
-}
-.scrollbar-emerald::-webkit-scrollbar-thumb {
-  background-color: rgba(52, 211, 153, 0.4);
-  border-radius: 9999px;
-}
-.scrollbar-emerald::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(52, 211, 153, 0.7);
-}
-
 /* Compact react-tweet embeds */
 [data-theme] [class*="tweet-"] {
   --tweet-container-margin: 0;

@@ -2,7 +2,7 @@
 
 import SectionTitle from "@/components/section-title";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { Check, Copy, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { useState } from "react";
 import SectionShell from "@/components/sections/section-shell";
 
@@ -13,6 +13,13 @@ export default function ContactSection() {
   const [contactMessage, setContactMessage] = useState("");
   const [contactError, setContactError] = useState<string | null>(null);
   const [contactSent, setContactSent] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText("kyle.alan.jeffrey@gmail.com");
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
 
   const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,9 +72,22 @@ export default function ContactSection() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
         <div className="lg:col-span-5">
           <div className="space-y-6">
-            <div className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
-              <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><Mail className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>
-              <div className="min-w-0"><h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>EMAIL</h3><p className="text-gray-800 dark:text-gray-200 break-all">kyle.alan.jeffrey@gmail.com</p><p className="text-sm text-gray-700 dark:text-gray-300 font-medium">I'll respond within 24 hours</p></div>
+            <div className="flex items-start space-x-4 p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)]">
+              <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center"><Mail className="h-5 w-5 text-gray-800 dark:text-gray-200" /></div>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-lg font-black tracking-[0.1em]" style={{ fontFamily: "monospace" }}>EMAIL</h3>
+                <div className="flex items-center gap-2">
+                  <p className="text-gray-800 dark:text-gray-200 break-all">kyle.alan.jeffrey@gmail.com</p>
+                  <button
+                    onClick={copyEmail}
+                    className="shrink-0 p-1 rounded-md text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-150"
+                    aria-label="Copy email address"
+                  >
+                    {emailCopied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+                <p className="text-sm text-gray-700 dark:text-gray-300 font-medium">I'll respond within 24 hours</p>
+              </div>
             </div>
             <a href="https://github.com/KyleAlanJeffrey" className="flex items-start space-x-4 group cursor-pointer p-4 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur shadow-[0_16px_34px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_44px_rgba(0,0,0,0.16)]">
               <div className="w-12 h-12 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/10 flex items-center justify-center transition-all duration-300 group-hover:scale-110"><Github className="h-5 w-5 text-gray-800 dark:text-gray-200 transition-all duration-300 group-hover:text-gray-900 dark:group-hover:text-gray-100" /></div>

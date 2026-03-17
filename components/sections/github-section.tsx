@@ -121,7 +121,7 @@ export default function GithubSection() {
 
             <div className="mb-6">
               {commits.length ? (
-                <div className="space-y-3 max-h-72 overflow-y-auto overflow-x-hidden pr-3 scrollbar-emerald">
+                <div className="space-y-3 max-h-72 overflow-y-auto overflow-x-hidden pr-3 scrollbar-hidden">
                   {commits.slice(0, 20).map((commit, index) => (
                     <Commit key={index} commit={commit} index={index} />
                   ))}
