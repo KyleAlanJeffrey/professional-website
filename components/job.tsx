@@ -120,7 +120,7 @@ function Job(props: {
         </div>
       </div>
 
-      <div className="lg:col-span-7 text-left">
+      <div className="lg:col-span-10 text-left">
         <h3
           className="text-xl sm:text-2xl md:text-3xl font-black text-black dark:text-white mb-1.5 md:mb-2 transition-all duration-300 group-hover:text-gray-700 dark:group-hover:text-gray-300 tracking-[0.1em]"
           style={{ fontFamily: "monospace" }}
@@ -195,19 +195,6 @@ function Job(props: {
         </div>
       </div>
 
-      <div className="hidden sm:flex lg:col-span-3 justify-start">
-        <div className="w-20 h-20 md:w-28 md:h-28 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur flex items-center justify-center transition-all duration-300 group-hover:scale-105">
-          <div
-            className="text-xl md:text-2xl font-black text-gray-600 dark:text-gray-400 transition-all duration-300 group-hover:text-gray-800 dark:group-hover:text-gray-200 tracking-[0.1em]"
-            style={{ fontFamily: "monospace" }}
-          >
-            {props.job.company.split(" ")[0][0].toUpperCase()}
-            {props.job.company.split(" ").length > 1
-              ? props.job.company.split(" ")[1][0].toUpperCase()
-              : ""}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
