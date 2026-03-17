@@ -275,13 +275,19 @@ const ALL_FIGURES: { src: string; alt: string; caption?: string; figNum?: string
 
 const TOC_ITEMS = [
   { id: "abstract", label: "Abstract" },
-  { id: "problem", label: "The Problem" },
-  { id: "why-millipedes", label: "Why Millipedes?" },
-  { id: "kinematic-model", label: "Kinematic Model" },
-  { id: "leg-design", label: "Leg Actuator Design" },
-  { id: "simulation", label: "Simulation" },
-  { id: "hardware", label: "Hardware & Testing" },
-  { id: "conclusion", label: "Conclusion" },
+  { id: "ch1", label: "1. Introduction" },
+  { id: "ch1-problem", label: "1.1 Problem Statement" },
+  { id: "ch1-existing", label: "1.2 Existing Work" },
+  { id: "ch1-characteristics", label: "1.3 Characteristics" },
+  { id: "ch2", label: "2. Kinematic Model" },
+  { id: "ch3", label: "3. Design" },
+  { id: "ch3-geared-bar", label: "3.1 Geared Bar" },
+  { id: "ch3-cam", label: "3.2 Cam Designs" },
+  { id: "ch4", label: "4. Simulation" },
+  { id: "ch4-results", label: "4.3 Results" },
+  { id: "ch5", label: "5. Final Model" },
+  { id: "ch5-testing", label: "5.2 Testing" },
+  { id: "ch5-conclusion", label: "5.3 Conclusion" },
   { id: "references", label: "References" },
 ];
 
@@ -446,7 +452,9 @@ export default function SeniorThesisPage() {
           </FadeIn>
         </header>
 
-        {/* --- Abstract --- */}
+        {/* ================================================================ */}
+        {/*  ABSTRACT                                                        */}
+        {/* ================================================================ */}
         <FadeIn>
           <section id="abstract" className="mb-16 scroll-mt-20">
             <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
@@ -474,164 +482,251 @@ export default function SeniorThesisPage() {
           </section>
         </FadeIn>
 
-        {/* --- Problem Statement --- */}
+        {/* ================================================================ */}
+        {/*  CHAPTER 1: INTRODUCTION                                         */}
+        {/* ================================================================ */}
         <FadeIn>
-          <section id="problem" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              The Problem
+          <section id="ch1" className="mb-16 scroll-mt-20">
+            <h2 className="text-3xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-2">
+              <span className="text-indigo-500 dark:text-indigo-400">1.</span> Introduction
             </h2>
-            <div className="prose-custom">
-              <p>
-                The need for robots capable of maneuvering uneven terrain grows yearly as simple
-                wheel design robots are often limited in their capability to do so. The field of bio-locomotive
-                design looks to nature for inspiration, considering animals as robust, dynamic movement
-                systems evolved precisely for their habitat.
-              </p>
-              <p>
-                Though previous papers have attempted to recreate omnipede platforms by emulating
-                millipede behavior, the resulting robot designs often use <strong>numerous motors for each
-                body segment</strong> and complicated control schemes, decreasing the ease of reproduction.
-                Walker builds a simplified omnipede robot that utilizes the advantageous characteristics
-                of the Myriapoda.
-              </p>
+            <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
+
+            {/* 1.1 Problem Statement */}
+            <div id="ch1-problem" className="scroll-mt-20 mb-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                1.1 Problem Statement
+              </h3>
+              <div className="prose-custom">
+                <p>
+                  The need for robots capable of maneuvering uneven terrain grows yearly as simple
+                  wheeled robots are often limited in their ability to traverse non-flat surfaces. The field of
+                  bio-locomotive design looks to nature for inspiration, treating animals as robust, dynamic
+                  movement systems evolved precisely for their habitat.
+                </p>
+                <p>
+                  Though previous papers have attempted to recreate omnipede platforms by emulating
+                  millipede behavior, the resulting designs often use <strong>numerous motors for each
+                  body segment</strong> and complicated control schemes, decreasing the ease of reproduction.
+                  Walker aims to build a simplified omnipede robot that utilizes the advantageous characteristics
+                  of the Myriapoda subphylum while keeping fabrication simple and affordable.
+                </p>
+              </div>
+            </div>
+
+            {/* 1.2 Existing Work */}
+            <div id="ch1-existing" className="scroll-mt-20 mb-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                1.2 Existing Work
+              </h3>
+              <div className="prose-custom">
+                <p>
+                  Several researchers have explored multi-legged robots inspired by myriapods. <strong>Garcia</strong> [7]
+                  provided an extensive analysis of millipede gait kinematics, validating the cycloid trajectory
+                  model through After Effects video tracking of live specimens. <strong>Koh et al.</strong> [10] developed
+                  a centipede robot for uneven terrain exploration using multiple servos per segment.
+                  <strong> Kano et al.</strong> [9] investigated decentralized control mechanisms underlying interlimb
+                  coordination. <strong>Long et al.</strong> [11] designed the OmniPede using geared bar mechanisms
+                  for leg actuation. Each of these designs, however, required multiple actuators per segment,
+                  increasing cost and complexity.
+                </p>
+                <p>
+                  Garcia&apos;s work was particularly influential for Walker. His After Effects-based analysis of
+                  live millipede footage demonstrated that leg tips trace a circular arc during the transfer phase,
+                  providing the kinematic foundation that Walker&apos;s design builds upon.
+                </p>
+              </div>
+            </div>
+
+            {/* 1.3 Characteristics of a Millipede */}
+            <div id="ch1-characteristics" className="scroll-mt-20 mb-8">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                1.3 Characteristics of a Millipede
+              </h3>
+
+              {/* 1.3.1 Leg Anatomy */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-6">
+                1.3.1 Leg Anatomy
+              </h4>
+              <div className="prose-custom">
+                <p>
+                  Manton&apos;s foundational analysis of arthropod locomotion showed that while millipede legs
+                  contain many segments, they are <strong>mostly rigid</strong> and can be simplified to a single
+                  rotating segment for modeling purposes. The leg motion occurs primarily in a 2D plane
+                  perpendicular to the body axis, which greatly simplifies the kinematic model.
+                </p>
+              </div>
+
+              <FigureGrid cols={3}>
+                <Figure
+                  src={ALL_FIGURES[1].src}
+                  alt={ALL_FIGURES[1].alt}
+                  caption={ALL_FIGURES[1].caption}
+                  figNum={ALL_FIGURES[1].figNum}
+                  onClick={() => openLightbox(1)}
+                />
+                <Figure
+                  src={ALL_FIGURES[2].src}
+                  alt={ALL_FIGURES[2].alt}
+                  caption={ALL_FIGURES[2].caption}
+                  figNum={ALL_FIGURES[2].figNum}
+                  onClick={() => openLightbox(2)}
+                />
+                <Figure
+                  src={ALL_FIGURES[4].src}
+                  alt={ALL_FIGURES[4].alt}
+                  caption={ALL_FIGURES[4].caption}
+                  figNum={ALL_FIGURES[4].figNum}
+                  onClick={() => openLightbox(4)}
+                />
+              </FigureGrid>
+
+              {/* 1.3.2 Gait Analysis */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+                1.3.2 Gait Analysis
+              </h4>
+              <div className="prose-custom">
+                <p>
+                  Millipede locomotion is governed by <strong>duty cycle modulation</strong>, ranging from 0.3 to 0.7.
+                  The duty cycle D represents the ratio of propulsive (ground contact) time to total stride
+                  period. Low duty cycles (~0.3) produce a &ldquo;high gear&rdquo; mode optimized for speed,
+                  while high duty cycles (~0.7) produce a &ldquo;low gear&rdquo; mode optimized for thrust
+                  and burrowing force. The legs move in a <strong>metachronal wave</strong> &mdash; a sequential
+                  ripple pattern where each leg lifts only when neighboring legs are on the ground to provide support.
+                </p>
+              </div>
+
+              <FigureGrid>
+                <Figure
+                  src={ALL_FIGURES[3].src}
+                  alt={ALL_FIGURES[3].alt}
+                  caption={ALL_FIGURES[3].caption}
+                  figNum={ALL_FIGURES[3].figNum}
+                  onClick={() => openLightbox(3)}
+                />
+                <Figure
+                  src={ALL_FIGURES[5].src}
+                  alt={ALL_FIGURES[5].alt}
+                  caption={ALL_FIGURES[5].caption}
+                  figNum={ALL_FIGURES[5].figNum}
+                  onClick={() => openLightbox(5)}
+                />
+              </FigureGrid>
+
+              {/* 1.3.3 Why Millipedes? */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+                1.3.3 Why Millipedes?
+              </h4>
+              <div className="prose-custom">
+                <p>
+                  Millipedes maintain a <strong>constant body length</strong> throughout their gait, making them
+                  relatively easy to mimic with rigid body materials. Their body suspends statically as it moves
+                  forward &mdash; unlike centipedes, which exhibit lateral oscillatory body movement. Both species
+                  use metachronal waves, but with a key difference: millipede left/right waves are <strong>in
+                  phase</strong>, while centipede waves are <strong>180&deg; out of phase</strong>, producing lateral undulation.
+                </p>
+              </div>
+
+              <FigureGrid>
+                <Figure
+                  src={ALL_FIGURES[0].src}
+                  alt={ALL_FIGURES[0].alt}
+                  caption={ALL_FIGURES[0].caption}
+                  figNum={ALL_FIGURES[0].figNum}
+                  onClick={() => openLightbox(0)}
+                />
+              </FigureGrid>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5">
+                  <span className="text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-400">
+                    MILLIPEDE GAIT
+                  </span>
+                  <div className="mt-2 prose-custom">
+                    <p className="!text-sm !mb-0">
+                      Left and right metachronal waves are <strong>in phase</strong>. Body remains rigid.
+                      Optimized for <strong>thrust and burrowing</strong>.
+                    </p>
+                  </div>
+                </div>
+                <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5">
+                  <span className="text-xs font-mono font-bold tracking-wider text-sky-600 dark:text-sky-400">
+                    CENTIPEDE GAIT
+                  </span>
+                  <div className="mt-2 prose-custom">
+                    <p className="!text-sm !mb-0">
+                      Left and right waves are <strong>180&deg; out of phase</strong> with lateral body undulation.
+                      Optimized for <strong>speed</strong>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Biological reference footage */}
+              <FadeIn>
+                <GlassCard label="BIOLOGICAL REFERENCE FOOTAGE">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                      { src: `${MEDIA}/ch1-introduction/biological-insect-gait-1.mp4`, label: "Millipede metachronal wave in motion" },
+                      { src: `${MEDIA}/ch1-introduction/biological-insect-gait-2.mp4`, label: "Myriapoda gait and terrain traversal" },
+                      { src: `${MEDIA}/ch1-introduction/biological-insect-gait-3.mp4`, label: "Millipede locomotion — close-up" },
+                      { src: `${MEDIA}/ch1-introduction/biological-insect-gait-4.mp4`, label: "Centipede gait comparison" },
+                    ].map((video) => (
+                      <div key={video.label}>
+                        <video
+                          src={video.src}
+                          controls
+                          preload="metadata"
+                          className="w-full rounded-lg border border-black/10 dark:border-white/10"
+                        />
+                        <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
+                          {video.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </GlassCard>
+              </FadeIn>
             </div>
           </section>
         </FadeIn>
 
-        {/* --- Why Millipedes --- */}
+        {/* ================================================================ */}
+        {/*  CHAPTER 2: KINEMATIC MODEL                                      */}
+        {/* ================================================================ */}
         <FadeIn>
-          <section id="why-millipedes" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Why Millipedes?
+          <section id="ch2" className="mb-16 scroll-mt-20">
+            <h2 className="text-3xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-2">
+              <span className="text-indigo-500 dark:text-indigo-400">2.</span> Kinematic Model
             </h2>
+            <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
+
             <div className="prose-custom mb-8">
-              <p>
-                Millipedes maintain a <strong>constant body length</strong> throughout their gait, making them
-                relatively easy to mimic with hard body materials. Their leg trajectory can be modeled
-                on a simple 2-axis plane, and the body suspends statically as it moves forward &mdash;
-                unlike centipedes which involve lateral oscillatory body movement.
-              </p>
-              <p>
-                The Myriapoda maintains consistent stability traversing uneven terrain primarily
-                because of its many legs. Both millipedes and centipedes incorporate a <strong>metachronal wave</strong> &mdash;
-                a sequential movement pattern where legs lift only when neighboring legs contact the ground
-                to provide support. Millipedes can shift between a &ldquo;low gear&rdquo; mode with high thrust
-                (duty cycle &asymp; 0.7) and a &ldquo;high gear&rdquo; mode with high speed (duty cycle &asymp; 0.3).
-              </p>
-            </div>
-
-            <FigureGrid>
-              <Figure
-                src={ALL_FIGURES[0].src}
-                alt={ALL_FIGURES[0].alt}
-                caption={ALL_FIGURES[0].caption}
-                figNum={ALL_FIGURES[0].figNum}
-                onClick={() => openLightbox(0)}
-              />
-              <Figure
-                src={ALL_FIGURES[3].src}
-                alt={ALL_FIGURES[3].alt}
-                caption={ALL_FIGURES[3].caption}
-                figNum={ALL_FIGURES[3].figNum}
-                onClick={() => openLightbox(3)}
-              />
-            </FigureGrid>
-
-            <FigureGrid cols={3}>
-              <Figure
-                src={ALL_FIGURES[1].src}
-                alt={ALL_FIGURES[1].alt}
-                caption={ALL_FIGURES[1].caption}
-                figNum={ALL_FIGURES[1].figNum}
-                onClick={() => openLightbox(1)}
-              />
-              <Figure
-                src={ALL_FIGURES[4].src}
-                alt={ALL_FIGURES[4].alt}
-                caption={ALL_FIGURES[4].caption}
-                figNum={ALL_FIGURES[4].figNum}
-                onClick={() => openLightbox(4)}
-              />
-              <Figure
-                src={ALL_FIGURES[5].src}
-                alt={ALL_FIGURES[5].alt}
-                caption={ALL_FIGURES[5].caption}
-                figNum={ALL_FIGURES[5].figNum}
-                onClick={() => openLightbox(5)}
-              />
-            </FigureGrid>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-              <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5">
-                <span className="text-xs font-mono font-bold tracking-wider text-amber-600 dark:text-amber-400">
-                  MILLIPEDE GAIT
-                </span>
-                <div className="mt-2 prose-custom">
-                  <p className="!text-sm !mb-0">
-                    Left and right metachronal waves are <strong>in phase</strong>. Body remains rigid.
-                    Optimized for <strong>thrust and burrowing</strong>.
-                  </p>
-                </div>
-              </div>
-              <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5">
-                <span className="text-xs font-mono font-bold tracking-wider text-sky-600 dark:text-sky-400">
-                  CENTIPEDE GAIT
-                </span>
-                <div className="mt-2 prose-custom">
-                  <p className="!text-sm !mb-0">
-                    Left and right waves are <strong>180&deg; out of phase</strong> with lateral body undulation.
-                    Optimized for <strong>speed</strong>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Biological reference footage */}
-            <FadeIn>
-              <GlassCard label="BIOLOGICAL REFERENCE FOOTAGE">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {[
-                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-1.mp4`, label: "Millipede metachronal wave in motion" },
-                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-2.mp4`, label: "Myriapoda gait and terrain traversal" },
-                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-3.mp4`, label: "Millipede locomotion — close-up" },
-                    { src: `${MEDIA}/ch1-introduction/biological-insect-gait-4.mp4`, label: "Centipede gait comparison" },
-                  ].map((video) => (
-                    <div key={video.label}>
-                      <video
-                        src={video.src}
-                        controls
-                        preload="metadata"
-                        className="w-full rounded-lg border border-black/10 dark:border-white/10"
-                      />
-                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
-                        {video.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-            </FadeIn>
-          </section>
-        </FadeIn>
-
-        {/* --- Kinematic Model --- */}
-        <FadeIn>
-          <section id="kinematic-model" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Kinematic Model
-            </h2>
-            <div className="prose-custom mb-8">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                2.1 Literature Review
+              </h3>
               <p>
                 The kinematic model is based on three simplifying assumptions from Sathirapongsasuti et al.:
                 the number of leg segments is one, every leg shares a common motion pattern, and the tip
-                of each leg traces out a <strong>circle of reference</strong>. When walking on the floor, this circle
-                is trimmed to a segment, creating a cycloid trajectory.
+                of each leg traces a <strong>circle of reference</strong>. When walking on a surface, this circle
+                is trimmed to a segment, creating a cycloid trajectory split into two distinct phases.
+              </p>
+            </div>
+
+            <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+              2.1.1 Kinematics of Leg Motion
+            </h4>
+            <div className="prose-custom mb-8">
+              <p>
+                In the <strong>transfer phase</strong>, the leg lifts off the ground and swings forward along
+                a circular arc. In the <strong>propulsive phase</strong>, the leg contacts the ground and pushes
+                the body forward along a straight line. The position equations describe x(t) and y(t) for
+                each phase, parameterized by the duty cycle D = t<sub>transfer</sub> / t<sub>propulsive</sub>.
               </p>
               <p>
-                The trajectory divides into two phases: in the <strong>transfer phase</strong>, the leg lifts and
-                moves forward along the arc of a circle; in the <strong>propulsive phase</strong>, the leg contacts
-                the ground and pushes the body forward along a straight line. Garcia proved this model
-                is representative of real millipede motion through After Effects video analysis.
+                Garcia validated this model by tracking live millipede footage in After Effects, overlaying
+                the theoretical cycloid trajectory onto the tracked leg positions. The fit confirmed the
+                circle-of-reference model is representative of real millipede motion.
               </p>
             </div>
 
@@ -698,21 +793,40 @@ export default function SeniorThesisPage() {
                 ))}
               </div>
             </GlassCard>
+
+            <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+              2.1.2 Qualitative Understanding of Metachronal Gait
+            </h4>
+            <div className="prose-custom">
+              <p>
+                The metachronal wave can be modulated for different purposes. Higher duty cycles increase
+                the number of legs on the ground at any time, generating more thrust &mdash; Garcia noted this
+                is the mode used during burrowing. Lower duty cycles reduce ground contact time per leg,
+                increasing stride frequency and speed. This modulation is achieved purely by varying the
+                duty cycle parameter, making it straightforward to implement in a robotic system with
+                a single control variable per leg pair.
+              </p>
+            </div>
           </section>
         </FadeIn>
 
-        {/* --- Leg Design --- */}
+        {/* ================================================================ */}
+        {/*  CHAPTER 3: DESIGN                                               */}
+        {/* ================================================================ */}
         <FadeIn>
-          <section id="leg-design" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Leg Actuator Design
+          <section id="ch3" className="mb-16 scroll-mt-20">
+            <h2 className="text-3xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-2">
+              <span className="text-indigo-500 dark:text-indigo-400">3.</span> Design
             </h2>
+            <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
+
             <div className="prose-custom mb-8">
               <p>
-                Determining a leg actuation device was a primary challenge. The design goals were:
-                a single actuated leg with <strong>one degree of freedom</strong>, minimized individual parts
-                (less than three), and a foot path creating the half-circle trajectory defined by the
-                kinematic model. Three designs were evaluated:
+                The primary design challenge was creating a leg actuator with three goals: <strong>one degree
+                of freedom</strong>, fewer than three individual parts, and a foot path producing the half-circle
+                trajectory defined by the kinematic model. Designs were evaluated with a scoring rubric:
+                5 points if fewer than 3 parts (minus 1 per extra), 5 points if trajectory matches (0 otherwise),
+                minus any fault deductions.
               </p>
             </div>
 
@@ -759,216 +873,380 @@ export default function SeniorThesisPage() {
               </GlassCard>
             </FadeIn>
 
-            {/* Design comparison cards */}
-            <div className="space-y-4 mb-8">
-              {[
-                {
-                  name: "Geared Bar Mechanism",
-                  source: "Long et al.",
-                  parts: 3,
-                  trajectory: false,
-                  faults: -2,
-                  score: "3/10",
-                  desc: "Simple two-gear, single-motor design similar to a 4-bar mechanism. However, the trajectory didn't match the desired half-circle path, and 3D printing gears with sufficient teeth resolution proved difficult.",
-                  figures: [12, 13, 14],
-                },
-                {
-                  name: "Custom Sliding Cam",
-                  source: "Original design",
-                  parts: 4,
-                  trajectory: true,
-                  faults: -3,
-                  score: "6/10",
-                  desc: "My own intuitive design that translates the cam shape down by the leg length. Achieved the desired trajectory but suffered from excessive friction points and too many parts.",
-                  figures: [15, 16, 17],
-                },
-                {
-                  name: "Fixed Bearing Cam",
-                  source: "Wan & Song",
-                  parts: 3,
-                  trajectory: true,
-                  faults: -1,
-                  score: "9/10",
-                  desc: "A rotating link with bearings at fixed distance and a sliding joint with leg attachment. The cam profile is derived from kinematic equations to produce the half-circle trajectory. Robust, simple, and printable.",
-                  figures: [18, 19],
-                },
-              ].map((design) => (
-                <div
-                  key={design.name}
-                  className={`rounded-xl border p-5 transition-all ${
-                    design.score === "9/10"
-                      ? "border-indigo-300/60 dark:border-indigo-400/30 bg-indigo-50/30 dark:bg-indigo-500/5"
-                      : "border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5"
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <div>
-                      <span className="text-sm font-black font-mono text-gray-900 dark:text-white">
-                        {design.name}
-                      </span>
-                      <span className="text-xs text-gray-400 dark:text-gray-500 ml-2">
-                        {design.source}
-                      </span>
-                    </div>
-                    <span className={`text-sm font-black font-mono ${
-                      design.score === "9/10"
-                        ? "text-indigo-600 dark:text-indigo-400"
-                        : "text-gray-400 dark:text-gray-500"
-                    }`}>
-                      {design.score}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {design.desc}
-                  </p>
-                  <div className="flex gap-4 mt-3 mb-4">
-                    <span className="text-xs font-mono text-gray-500 dark:text-gray-400">
-                      Parts: {design.parts}
-                    </span>
-                    <span className={`text-xs font-mono ${design.trajectory ? "text-emerald-500" : "text-red-400"}`}>
-                      Trajectory: {design.trajectory ? "Yes" : "No"}
-                    </span>
-                    <span className="text-xs font-mono text-gray-500 dark:text-gray-400">
-                      Faults: {design.faults}
-                    </span>
-                  </div>
-                  {/* Design figures */}
-                  <div className={`grid grid-cols-${design.figures.length} gap-2`}>
-                    {design.figures.map((fi) => (
-                      <div
-                        key={fi}
-                        className="relative overflow-hidden rounded-lg border border-black/5 dark:border-white/5 cursor-zoom-in hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-colors"
-                        onClick={() => openLightbox(fi)}
-                      >
-                        <img
-                          src={ALL_FIGURES[fi].src}
-                          alt={ALL_FIGURES[fi].alt}
-                          className="w-full h-auto"
-                          loading="lazy"
-                        />
+            {/* 3.1.1 Geared Bar Mechanism */}
+            <div id="ch3-geared-bar" className="scroll-mt-20 mt-12 mb-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                3.1.1 Geared Bar Mechanism
+              </h3>
+              <div className="prose-custom mb-4">
+                <p>
+                  Based on Long et al.&apos;s OmniPede, this design uses a <strong>two-gear, single-motor</strong> arrangement
+                  similar to a 4-bar linkage. While simple in concept (only 2 gears), trajectory analysis revealed
+                  significant deviation from the desired half-circle path. Furthermore, 3D printing gears with
+                  sufficient teeth resolution proved too difficult at the available print precision.
+                </p>
+              </div>
+
+              {/* Score table */}
+              <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 overflow-hidden mb-6">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-black/10 dark:border-white/10 bg-gray-50/50 dark:bg-white/5">
+                      <th className="text-left px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Criterion</th>
+                      <th className="text-center px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-black/5 dark:border-white/5">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Parts (3 parts, target &lt;3)</td>
+                      <td className="px-4 py-2 text-center font-mono text-gray-600 dark:text-gray-400">4/5</td>
+                    </tr>
+                    <tr className="border-b border-black/5 dark:border-white/5">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Trajectory match</td>
+                      <td className="px-4 py-2 text-center font-mono text-red-400">0/5</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Faults (gear printing difficulty)</td>
+                      <td className="px-4 py-2 text-center font-mono text-red-400">-1</td>
+                    </tr>
+                    <tr className="border-t border-black/10 dark:border-white/10 bg-gray-50/50 dark:bg-white/5">
+                      <td className="px-4 py-2 font-bold text-gray-900 dark:text-white">Total</td>
+                      <td className="px-4 py-2 text-center font-mono font-bold text-gray-900 dark:text-white">3/10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <FigureGrid cols={3}>
+                <Figure
+                  src={ALL_FIGURES[12].src}
+                  alt={ALL_FIGURES[12].alt}
+                  caption={ALL_FIGURES[12].caption}
+                  figNum={ALL_FIGURES[12].figNum}
+                  onClick={() => openLightbox(12)}
+                />
+                <Figure
+                  src={ALL_FIGURES[13].src}
+                  alt={ALL_FIGURES[13].alt}
+                  caption={ALL_FIGURES[13].caption}
+                  figNum={ALL_FIGURES[13].figNum}
+                  onClick={() => openLightbox(13)}
+                />
+                <Figure
+                  src={ALL_FIGURES[14].src}
+                  alt={ALL_FIGURES[14].alt}
+                  caption={ALL_FIGURES[14].caption}
+                  figNum={ALL_FIGURES[14].figNum}
+                  onClick={() => openLightbox(14)}
+                />
+              </FigureGrid>
+            </div>
+
+            {/* 3.1.2 Cam Designs */}
+            <div id="ch3-cam" className="scroll-mt-20 mb-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                3.1.2 Cam Designs
+              </h3>
+
+              {/* 3.1.2.1 Custom Sliding Cam */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+                3.1.2.1 Custom Sliding Cam
+              </h4>
+              <div className="prose-custom mb-4">
+                <p>
+                  An original design that translates the cam shape downward by the leg length, directly encoding
+                  the desired trajectory into the cam profile. While this achieved the correct half-circle foot path,
+                  the mechanism suffered from <strong>excessive friction points</strong> and required too many individual parts
+                  (4 parts vs. the target of fewer than 3).
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 overflow-hidden mb-6">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-black/10 dark:border-white/10 bg-gray-50/50 dark:bg-white/5">
+                      <th className="text-left px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Criterion</th>
+                      <th className="text-center px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-black/5 dark:border-white/5">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Parts (4 parts, target &lt;3)</td>
+                      <td className="px-4 py-2 text-center font-mono text-gray-600 dark:text-gray-400">3/5</td>
+                    </tr>
+                    <tr className="border-b border-black/5 dark:border-white/5">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Trajectory match</td>
+                      <td className="px-4 py-2 text-center font-mono text-emerald-500">5/5</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Faults (friction, complexity)</td>
+                      <td className="px-4 py-2 text-center font-mono text-red-400">-2</td>
+                    </tr>
+                    <tr className="border-t border-black/10 dark:border-white/10 bg-gray-50/50 dark:bg-white/5">
+                      <td className="px-4 py-2 font-bold text-gray-900 dark:text-white">Total</td>
+                      <td className="px-4 py-2 text-center font-mono font-bold text-gray-900 dark:text-white">6/10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <FigureGrid cols={3}>
+                <Figure
+                  src={ALL_FIGURES[15].src}
+                  alt={ALL_FIGURES[15].alt}
+                  caption={ALL_FIGURES[15].caption}
+                  figNum={ALL_FIGURES[15].figNum}
+                  onClick={() => openLightbox(15)}
+                />
+                <Figure
+                  src={ALL_FIGURES[16].src}
+                  alt={ALL_FIGURES[16].alt}
+                  caption={ALL_FIGURES[16].caption}
+                  figNum={ALL_FIGURES[16].figNum}
+                  onClick={() => openLightbox(16)}
+                />
+                <Figure
+                  src={ALL_FIGURES[17].src}
+                  alt={ALL_FIGURES[17].alt}
+                  caption={ALL_FIGURES[17].caption}
+                  figNum={ALL_FIGURES[17].figNum}
+                  onClick={() => openLightbox(17)}
+                />
+              </FigureGrid>
+
+              {/* 3.1.2.2 Fixed Bearing Cam (Wan & Song) */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+                3.1.2.2 Fixed Bearing Cam (Wan &amp; Song) &mdash; Winner
+              </h4>
+              <div className="prose-custom mb-4">
+                <p>
+                  This design from Wan &amp; Song (2004) uses a <strong>rotating link with bearings</strong> at a fixed
+                  distance and a sliding joint with leg attachment. The cam profile is derived analytically from the
+                  function S&#8321; = f(&theta;) = (L + d)/2 &minus; H/sin(&theta;), where L is leg length, d is
+                  bearing distance, and H is axle height. An angular span of <strong>60&deg;</strong> maximizes the axle
+                  height and bearing width, with H = 0.43L and d = 0.4L. The final profile uses <strong>Makima
+                  polynomial spline</strong> interpolation for smooth transitions between the propulsive and transfer phases.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-indigo-300/60 dark:border-indigo-400/30 bg-indigo-50/30 dark:bg-indigo-500/5 overflow-hidden mb-6">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-indigo-200/60 dark:border-indigo-400/20 bg-indigo-50/50 dark:bg-indigo-500/10">
+                      <th className="text-left px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Criterion</th>
+                      <th className="text-center px-4 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b border-indigo-100/60 dark:border-indigo-400/10">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Parts (3 parts, target &lt;3)</td>
+                      <td className="px-4 py-2 text-center font-mono text-gray-600 dark:text-gray-400">4/5</td>
+                    </tr>
+                    <tr className="border-b border-indigo-100/60 dark:border-indigo-400/10">
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Trajectory match</td>
+                      <td className="px-4 py-2 text-center font-mono text-emerald-500">5/5</td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2 text-gray-600 dark:text-gray-400">Faults (minor print tolerance)</td>
+                      <td className="px-4 py-2 text-center font-mono text-red-400">0</td>
+                    </tr>
+                    <tr className="border-t border-indigo-200/60 dark:border-indigo-400/20 bg-indigo-50/50 dark:bg-indigo-500/10">
+                      <td className="px-4 py-2 font-bold text-gray-900 dark:text-white">Total</td>
+                      <td className="px-4 py-2 text-center font-mono font-bold text-indigo-600 dark:text-indigo-400">9/10</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <FigureGrid>
+                <Figure
+                  src={ALL_FIGURES[18].src}
+                  alt={ALL_FIGURES[18].alt}
+                  caption={ALL_FIGURES[18].caption}
+                  figNum={ALL_FIGURES[18].figNum}
+                  onClick={() => openLightbox(18)}
+                />
+                <Figure
+                  src={ALL_FIGURES[19].src}
+                  alt={ALL_FIGURES[19].alt}
+                  caption={ALL_FIGURES[19].caption}
+                  figNum={ALL_FIGURES[19].figNum}
+                  onClick={() => openLightbox(19)}
+                />
+              </FigureGrid>
+
+              {/* Mechanism GIFs */}
+              <FadeIn>
+                <GlassCard label="MECHANISM ANIMATIONS">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {[
+                      { src: `${MEDIA}/ch3-design/leg-animations/custom-cam-animation.gif`, label: "Custom Cam" },
+                      { src: `${MEDIA}/ch3-design/leg-animations/wan-song-cam-side.gif`, label: "Wan & Song (Side)" },
+                      { src: `${MEDIA}/ch3-design/leg-animations/wan-song-cam-iso.gif`, label: "Wan & Song (Iso)" },
+                    ].map((gif) => (
+                      <div key={gif.label} className="text-center">
+                        <div className="rounded-lg overflow-hidden border border-black/10 dark:border-white/10">
+                          <img src={gif.src} alt={gif.label} className="w-full h-auto" loading="lazy" />
+                        </div>
+                        <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block">
+                          {gif.label}
+                        </span>
                       </div>
                     ))}
                   </div>
+                </GlassCard>
+              </FadeIn>
+
+              {/* Cam profile iteration */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+                Cam Profile Development
+              </h4>
+              <div className="prose-custom mb-4">
+                <p>
+                  The cam profile went through multiple iterations: initial derivation from kinematic equations,
+                  refined angular span optimization, and finally Makima spline smoothing. The resulting profile
+                  produces a trajectory validated against the ideal half-circle path.
+                </p>
+              </div>
+
+              <FadeIn>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <Figure
+                    src={ALL_FIGURES[20].src}
+                    alt={ALL_FIGURES[20].alt}
+                    caption={ALL_FIGURES[20].caption}
+                    figNum={ALL_FIGURES[20].figNum}
+                    onClick={() => openLightbox(20)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[23].src}
+                    alt={ALL_FIGURES[23].alt}
+                    caption={ALL_FIGURES[23].caption}
+                    figNum={ALL_FIGURES[23].figNum}
+                    onClick={() => openLightbox(23)}
+                  />
                 </div>
-              ))}
+              </FadeIn>
+
+              <FadeIn>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                  <Figure
+                    src={ALL_FIGURES[25].src}
+                    alt={ALL_FIGURES[25].alt}
+                    caption={ALL_FIGURES[25].caption}
+                    figNum={ALL_FIGURES[25].figNum}
+                    onClick={() => openLightbox(25)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[27].src}
+                    alt={ALL_FIGURES[27].alt}
+                    caption={ALL_FIGURES[27].caption}
+                    figNum={ALL_FIGURES[27].figNum}
+                    onClick={() => openLightbox(27)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[30].src}
+                    alt={ALL_FIGURES[30].alt}
+                    caption={ALL_FIGURES[30].caption}
+                    figNum={ALL_FIGURES[30].figNum}
+                    onClick={() => openLightbox(30)}
+                  />
+                </div>
+              </FadeIn>
+
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[28].src}
+                    alt={ALL_FIGURES[28].alt}
+                    caption={ALL_FIGURES[28].caption}
+                    figNum={ALL_FIGURES[28].figNum}
+                    onClick={() => openLightbox(28)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[29].src}
+                    alt={ALL_FIGURES[29].alt}
+                    caption={ALL_FIGURES[29].caption}
+                    figNum={ALL_FIGURES[29].figNum}
+                    onClick={() => openLightbox(29)}
+                  />
+                </FigureGrid>
+              </FadeIn>
             </div>
 
-            {/* Mechanism GIFs */}
-            <FadeIn>
-              <GlassCard label="MECHANISM ANIMATIONS">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    { src: `${MEDIA}/ch3-design/leg-animations/custom-cam-animation.gif`, label: "Custom Cam" },
-                    { src: `${MEDIA}/ch3-design/leg-animations/wan-song-cam-side.gif`, label: "Wan & Song (Side)" },
-                    { src: `${MEDIA}/ch3-design/leg-animations/wan-song-cam-iso.gif`, label: "Wan & Song (Iso)" },
-                  ].map((gif) => (
-                    <div key={gif.label} className="text-center">
-                      <div className="rounded-lg overflow-hidden border border-black/10 dark:border-white/10">
-                        <img src={gif.src} alt={gif.label} className="w-full h-auto" loading="lazy" />
-                      </div>
-                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block">
-                        {gif.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-            </FadeIn>
-
-            {/* Cam design details */}
-            <div className="prose-custom mt-8 mb-8">
+            {/* 3.2 Conclusion */}
+            <div className="prose-custom">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                3.2 Conclusion
+              </h3>
               <p>
-                The cam shape is defined by the function S&#8321; = f(&theta;) = (L + d)/2 &minus; H/sin(&theta;),
-                where L is leg length, d is bearing distance, and H is axle height. An angular span of
-                60&deg; maximizes the axle height and bearing width, with H = 0.43L and d = 0.4L.
-                The final cam profile uses Makima polynomial spline interpolation to create smooth transitions.
+                The design evolution progressed from a simple geared bar mechanism (3/10) through an original
+                sliding cam (6/10) to the final Wan &amp; Song fixed bearing cam (9/10). The winning design
+                achieves the desired half-circle trajectory with minimal parts, using an analytically derived cam
+                profile that can be reliably 3D printed.
               </p>
             </div>
-
-            <FadeIn>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                <Figure
-                  src={ALL_FIGURES[20].src}
-                  alt={ALL_FIGURES[20].alt}
-                  caption={ALL_FIGURES[20].caption}
-                  figNum={ALL_FIGURES[20].figNum}
-                  onClick={() => openLightbox(20)}
-                />
-                <Figure
-                  src={ALL_FIGURES[23].src}
-                  alt={ALL_FIGURES[23].alt}
-                  caption={ALL_FIGURES[23].caption}
-                  figNum={ALL_FIGURES[23].figNum}
-                  onClick={() => openLightbox(23)}
-                />
-              </div>
-            </FadeIn>
-
-            <FadeIn>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                <Figure
-                  src={ALL_FIGURES[25].src}
-                  alt={ALL_FIGURES[25].alt}
-                  caption={ALL_FIGURES[25].caption}
-                  figNum={ALL_FIGURES[25].figNum}
-                  onClick={() => openLightbox(25)}
-                />
-                <Figure
-                  src={ALL_FIGURES[27].src}
-                  alt={ALL_FIGURES[27].alt}
-                  caption={ALL_FIGURES[27].caption}
-                  figNum={ALL_FIGURES[27].figNum}
-                  onClick={() => openLightbox(27)}
-                />
-                <Figure
-                  src={ALL_FIGURES[30].src}
-                  alt={ALL_FIGURES[30].alt}
-                  caption={ALL_FIGURES[30].caption}
-                  figNum={ALL_FIGURES[30].figNum}
-                  onClick={() => openLightbox(30)}
-                />
-              </div>
-            </FadeIn>
-
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[28].src}
-                  alt={ALL_FIGURES[28].alt}
-                  caption={ALL_FIGURES[28].caption}
-                  figNum={ALL_FIGURES[28].figNum}
-                  onClick={() => openLightbox(28)}
-                />
-                <Figure
-                  src={ALL_FIGURES[29].src}
-                  alt={ALL_FIGURES[29].alt}
-                  caption={ALL_FIGURES[29].caption}
-                  figNum={ALL_FIGURES[29].figNum}
-                  onClick={() => openLightbox(29)}
-                />
-              </FigureGrid>
-            </FadeIn>
           </section>
         </FadeIn>
 
-        {/* --- Simulation --- */}
+        {/* ================================================================ */}
+        {/*  CHAPTER 4: SIMULATION                                           */}
+        {/* ================================================================ */}
         <FadeIn>
-          <section id="simulation" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Simulation
+          <section id="ch4" className="mb-16 scroll-mt-20">
+            <h2 className="text-3xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-2">
+              <span className="text-indigo-500 dark:text-indigo-400">4.</span> Simulation
             </h2>
-            <div className="prose-custom mb-8">
+            <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
+
+            {/* 4.1 Kinematic Equation Analysis */}
+            <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+              4.1 Kinematic Equation Analysis
+            </h3>
+            <div className="prose-custom mb-6">
               <p>
-                A MATLAB Simscape Multibody simulation modeled the cam design through three generations
-                of increasing fidelity. The simulation focused on <strong>maximizing stability</strong> &mdash; defined as
-                maintaining ground contact &mdash; rather than mimicking a specific biological gait.
-              </p>
-              <p>
-                Initial kinematic analysis narrowed viable gait patterns by calculating ground contact time
-                across different combinations of leg count, phase difference, and gait type. This was followed
-                by full 3D dynamics simulations measuring center of gravity stability over 10-second runs.
+                Before running full dynamics simulations, a kinematic analysis was performed to narrow viable
+                gait configurations. The goal was to <strong>maximize ground contact time</strong> &mdash; the fraction
+                of the gait cycle where at least one leg per side touches the ground. Centipede-like motion
+                (180&deg; phase offset between left and right legs) was found to significantly reduce
+                no-contact time compared to millipede-like motion.
               </p>
             </div>
+
+            {/* Table 4.1 — Ground Contact Time */}
+            <FadeIn>
+              <GlassCard label="TABLE 4.1 — GROUND CONTACT TIME ANALYSIS" caption="Time (in seconds) with no ground contact over a 10-second simulation. Lower is better. Centipede configurations with 3+ leg pairs achieve zero no-contact time.">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-black/10 dark:border-white/10">
+                        <th className="text-left px-3 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Leg Pairs</th>
+                        <th className="text-center px-3 py-2 font-mono font-bold text-gray-600 dark:text-gray-300">Phase Diff</th>
+                        <th className="text-center px-3 py-2 font-mono font-bold text-amber-600 dark:text-amber-400">Millipede</th>
+                        <th className="text-center px-3 py-2 font-mono font-bold text-sky-600 dark:text-sky-400">Centipede</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        { legs: "2", phase: "60\u00B0", mill: "3.33s", centi: "0.00s" },
+                        { legs: "2", phase: "90\u00B0", mill: "5.00s", centi: "1.67s" },
+                        { legs: "3", phase: "60\u00B0", mill: "1.67s", centi: "0.00s" },
+                        { legs: "3", phase: "90\u00B0", mill: "3.33s", centi: "0.00s" },
+                        { legs: "4", phase: "60\u00B0", mill: "0.00s", centi: "0.00s" },
+                        { legs: "4", phase: "90\u00B0", mill: "1.67s", centi: "0.00s" },
+                      ].map((row, i) => (
+                        <tr key={i} className="border-b border-black/5 dark:border-white/5">
+                          <td className="px-3 py-2 font-mono text-gray-600 dark:text-gray-400">{row.legs}</td>
+                          <td className="px-3 py-2 text-center font-mono text-gray-600 dark:text-gray-400">{row.phase}</td>
+                          <td className="px-3 py-2 text-center font-mono text-gray-600 dark:text-gray-400">{row.mill}</td>
+                          <td className={`px-3 py-2 text-center font-mono ${row.centi === "0.00s" ? "text-emerald-500 font-bold" : "text-gray-600 dark:text-gray-400"}`}>{row.centi}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </GlassCard>
+            </FadeIn>
 
             <FadeIn>
               <FigureGrid>
@@ -989,6 +1267,24 @@ export default function SeniorThesisPage() {
               </FigureGrid>
             </FadeIn>
 
+            {/* 4.2 Simscape Multibody Simulations */}
+            <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4 mt-8">
+              4.2 Simscape Multibody Simulations
+            </h3>
+
+            <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+              4.2.1 Iterations
+            </h4>
+            <div className="prose-custom mb-6">
+              <p>
+                The simulation went through <strong>three generations</strong> of increasing fidelity.
+                Gen 1 was a rough proof of concept validating basic forward motion. Gen 2 attempted to use
+                the custom sliding cam but proved too complex to simulate reliably. Gen 3 adopted the
+                Wan &amp; Song cam design, enabling full dynamics analysis across multiple leg counts and
+                gait configurations.
+              </p>
+            </div>
+
             <FadeIn>
               <Figure
                 src={ALL_FIGURES[33].src}
@@ -1000,7 +1296,18 @@ export default function SeniorThesisPage() {
               />
             </FadeIn>
 
-            {/* Simscape environment figures */}
+            <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+              4.2.2 Final Environment
+            </h4>
+            <div className="prose-custom mb-6">
+              <p>
+                The final Simscape environment consists of two reusable components: a <strong>body segment
+                component</strong> (rigid body with mass properties) and a <strong>leg segment component</strong> (cam-driven
+                joint with revolute and slider constraints). These components are parameterized and
+                chained together to form configurations with varying leg counts and phase offsets.
+              </p>
+            </div>
+
             <FadeIn>
               <FigureGrid cols={3}>
                 <Figure
@@ -1072,105 +1379,129 @@ export default function SeniorThesisPage() {
               </GlassCard>
             </FadeIn>
 
-            {/* Results */}
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[38].src}
-                  alt={ALL_FIGURES[38].alt}
-                  caption={ALL_FIGURES[38].caption}
-                  figNum={ALL_FIGURES[38].figNum}
-                  onClick={() => openLightbox(38)}
-                />
-                <Figure
-                  src={ALL_FIGURES[39].src}
-                  alt={ALL_FIGURES[39].alt}
-                  caption={ALL_FIGURES[39].caption}
-                  figNum={ALL_FIGURES[39].figNum}
-                  onClick={() => openLightbox(39)}
-                />
-              </FigureGrid>
-            </FadeIn>
-
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[40].src}
-                  alt={ALL_FIGURES[40].alt}
-                  caption={ALL_FIGURES[40].caption}
-                  figNum={ALL_FIGURES[40].figNum}
-                  onClick={() => openLightbox(40)}
-                />
-                <Figure
-                  src={ALL_FIGURES[41].src}
-                  alt={ALL_FIGURES[41].alt}
-                  caption={ALL_FIGURES[41].caption}
-                  figNum={ALL_FIGURES[41].figNum}
-                  onClick={() => openLightbox(41)}
-                />
-              </FigureGrid>
-            </FadeIn>
-
-            <GlassCard
-              label="STABILITY FINDINGS"
-              caption="Center of gravity measurements from 10-second simulations across four gait configurations with 60&deg; phase difference."
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { config: "Centipede, 8 legs", stability: "Most stable", highlight: true },
-                  { config: "Centipede, 6 legs", stability: "Good horizontal", highlight: false },
-                  { config: "Millipede, 8 legs", stability: "Good vertical", highlight: false },
-                  { config: "Millipede, 6 legs", stability: "High variability", highlight: false },
-                ].map((result) => (
-                  <div
-                    key={result.config}
-                    className={`p-4 rounded-lg ${
-                      result.highlight
-                        ? "bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-400/20"
-                        : "bg-gray-50 dark:bg-white/5"
-                    }`}
-                  >
-                    <span className="block text-sm font-bold font-mono text-gray-900 dark:text-white">
-                      {result.config}
-                    </span>
-                    <span className={`block text-xs mt-1 ${
-                      result.highlight
-                        ? "text-indigo-600 dark:text-indigo-400 font-bold"
-                        : "text-gray-500 dark:text-gray-400"
-                    }`}>
-                      {result.stability}
-                    </span>
-                  </div>
-                ))}
+            {/* 4.3 Results */}
+            <div id="ch4-results" className="scroll-mt-20 mt-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                4.3 Results
+              </h3>
+              <div className="prose-custom mb-6">
+                <p>
+                  Center of gravity (CoG) measurements across 10-second simulations revealed that the
+                  <strong> centipede 8-leg configuration</strong> was the most stable overall. Centipede gaits exhibited
+                  extreme <strong>vertical instability</strong> (large CoG oscillations in Y) but excellent <strong>horizontal
+                  stability</strong> (smooth, consistent forward progress). Millipede configurations moved slower
+                  with greater velocity variability.
+                </p>
               </div>
-            </GlassCard>
 
-            <div className="prose-custom mt-8">
-              <p>
-                Key finding: <strong>centipede locomotion with neighboring legs 60&deg; out of phase</strong> provides
-                the most stable system, with zero ground-contact-loss time for configurations with 3+ leg pairs.
-                This creates greater stability with fewer legs, lowering the cost of the robot.
-              </p>
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[38].src}
+                    alt={ALL_FIGURES[38].alt}
+                    caption={ALL_FIGURES[38].caption}
+                    figNum={ALL_FIGURES[38].figNum}
+                    onClick={() => openLightbox(38)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[39].src}
+                    alt={ALL_FIGURES[39].alt}
+                    caption={ALL_FIGURES[39].caption}
+                    figNum={ALL_FIGURES[39].figNum}
+                    onClick={() => openLightbox(39)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[40].src}
+                    alt={ALL_FIGURES[40].alt}
+                    caption={ALL_FIGURES[40].caption}
+                    figNum={ALL_FIGURES[40].figNum}
+                    onClick={() => openLightbox(40)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[41].src}
+                    alt={ALL_FIGURES[41].alt}
+                    caption={ALL_FIGURES[41].caption}
+                    figNum={ALL_FIGURES[41].figNum}
+                    onClick={() => openLightbox(41)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              <GlassCard
+                label="STABILITY FINDINGS"
+                caption="Center of gravity measurements from 10-second simulations across four gait configurations with 60&deg; phase difference."
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[
+                    { config: "Centipede, 8 legs", stability: "Most stable overall", highlight: true },
+                    { config: "Centipede, 6 legs", stability: "Excellent horizontal stability", highlight: false },
+                    { config: "Millipede, 8 legs", stability: "Good vertical stability", highlight: false },
+                    { config: "Millipede, 6 legs", stability: "High velocity variability", highlight: false },
+                  ].map((result) => (
+                    <div
+                      key={result.config}
+                      className={`p-4 rounded-lg ${
+                        result.highlight
+                          ? "bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-400/20"
+                          : "bg-gray-50 dark:bg-white/5"
+                      }`}
+                    >
+                      <span className="block text-sm font-bold font-mono text-gray-900 dark:text-white">
+                        {result.config}
+                      </span>
+                      <span className={`block text-xs mt-1 ${
+                        result.highlight
+                          ? "text-indigo-600 dark:text-indigo-400 font-bold"
+                          : "text-gray-500 dark:text-gray-400"
+                      }`}>
+                        {result.stability}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </GlassCard>
+
+              <div className="prose-custom mt-8">
+                <p>
+                  Key finding: <strong>centipede locomotion with neighboring legs 60&deg; out of phase</strong> provides
+                  the most stable system, with zero ground-contact-loss time for configurations with 3+ leg pairs.
+                  This creates greater stability with fewer legs, lowering the cost of the final robot.
+                </p>
+              </div>
             </div>
           </section>
         </FadeIn>
 
-        {/* --- Hardware Results --- */}
+        {/* ================================================================ */}
+        {/*  CHAPTER 5: FINAL MODEL & CONCLUSIONS                            */}
+        {/* ================================================================ */}
         <FadeIn>
-          <section id="hardware" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Hardware &amp; Testing
+          <section id="ch5" className="mb-16 scroll-mt-20">
+            <h2 className="text-3xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-2">
+              <span className="text-indigo-500 dark:text-indigo-400">5.</span> Final Model &amp; Conclusions
             </h2>
-            <div className="prose-custom mb-8">
+            <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
+
+            {/* 5.1 Print Faults and Fixes */}
+            <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+              5.1 Print Faults &amp; Fixes
+            </h3>
+            <div className="prose-custom mb-6">
               <p>
-                The cam leg mechanism was 3D printed using a Raised 3D Pro2 printer at 0.5mm precision,
-                then attached to an Antrader Dual Shaft 3-6V Motor. Two print iterations were needed &mdash;
-                the first revealed an unstable shaft connection, missing mounting brackets, and sharp
-                contour edges causing print jerk. All were fixed in the second iteration.
+                The cam mechanism was 3D printed using a <strong>Raised 3D Pro2</strong> printer at 0.5mm precision
+                with ideaMaker as the slicer. The first print iteration revealed three faults:
+                an <strong>unstable shaft connection</strong> (too narrow at the base), <strong>no mounting brackets</strong> for
+                motor attachment, and <strong>sharp contour edges</strong> causing print head jerk. The second iteration
+                addressed all three by widening the shaft base, adding bracket geometry, rounding sharp edges,
+                and reducing infill to lower print time.
               </p>
             </div>
 
-            {/* 3D printing */}
             <FadeIn>
               <FigureGrid>
                 <Figure
@@ -1190,7 +1521,6 @@ export default function SeniorThesisPage() {
               </FigureGrid>
             </FadeIn>
 
-            {/* Print iteration fixes */}
             <FadeIn>
               <FigureGrid>
                 <Figure
@@ -1206,26 +1536,6 @@ export default function SeniorThesisPage() {
                   caption={ALL_FIGURES[45].caption}
                   figNum={ALL_FIGURES[45].figNum}
                   onClick={() => openLightbox(45)}
-                />
-              </FigureGrid>
-            </FadeIn>
-
-            {/* Test environment */}
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[46].src}
-                  alt={ALL_FIGURES[46].alt}
-                  caption={ALL_FIGURES[46].caption}
-                  figNum={ALL_FIGURES[46].figNum}
-                  onClick={() => openLightbox(46)}
-                />
-                <Figure
-                  src={ALL_FIGURES[47].src}
-                  alt={ALL_FIGURES[47].alt}
-                  caption={ALL_FIGURES[47].caption}
-                  figNum={ALL_FIGURES[47].figNum}
-                  onClick={() => openLightbox(47)}
                 />
               </FigureGrid>
             </FadeIn>
@@ -1252,211 +1562,281 @@ export default function SeniorThesisPage() {
               </GlassCard>
             </FadeIn>
 
-            {/* Hardware test footage */}
-            <FadeIn>
-              <GlassCard label="HARDWARE TEST FOOTAGE">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[
-                    { src: `${MEDIA}/ch5-hardware/supplementary-3.mp4`, label: "Cam mechanism in operation" },
-                    { src: `${MEDIA}/ch5-hardware/supplementary-4.avi`, label: "Leg trajectory test (1)" },
-                    { src: `${MEDIA}/ch5-hardware/supplementary-5.avi`, label: "Leg trajectory test (2)" },
-                  ].map((video) => (
-                    <div key={video.label}>
-                      <video
-                        src={video.src}
-                        controls
-                        preload="metadata"
-                        className="w-full rounded-lg border border-black/10 dark:border-white/10"
-                      />
-                      <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
-                        {video.label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </GlassCard>
-            </FadeIn>
+            {/* 5.2 Testing */}
+            <div id="ch5-testing" className="scroll-mt-20 mt-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                5.2 Testing
+              </h3>
 
-            <div className="prose-custom mt-8 mb-8">
-              <p>
-                Trajectory validation used <strong>After Effects motion tracking</strong> of slow-motion video,
-                comparing tracked foot position against the ideal cam trajectory. The leg achieved the
-                designed 60&deg; propulsive ground contact span.
-              </p>
-            </div>
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+                5.2.1 Home-Brew vs. Ideal
+              </h4>
+              <div className="prose-custom mb-6">
+                <p>
+                  Due to COVID-19 pandemic restrictions, no lab equipment was available. All testing
+                  was performed at home using consumer hardware and <strong>Adobe After Effects</strong> as the
+                  primary measurement tool &mdash; a technique borrowed from Garcia&apos;s biological analysis work.
+                </p>
+              </div>
 
-            {/* Trajectory validation */}
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[48].src}
-                  alt={ALL_FIGURES[48].alt}
-                  caption={ALL_FIGURES[48].caption}
-                  figNum={ALL_FIGURES[48].figNum}
-                  onClick={() => openLightbox(48)}
-                />
-                <Figure
-                  src={ALL_FIGURES[49].src}
-                  alt={ALL_FIGURES[49].alt}
-                  caption={ALL_FIGURES[49].caption}
-                  figNum={ALL_FIGURES[49].figNum}
-                  onClick={() => openLightbox(49)}
-                />
-              </FigureGrid>
-            </FadeIn>
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+                5.2.2 Testing Trajectory
+              </h4>
+              <div className="prose-custom mb-6">
+                <p>
+                  An Arduino-based test harness drove the cam mechanism with a DC motor. A potentiometer
+                  measured angular position, and a voltage divider circuit controlled motor speed for
+                  consistent test conditions.
+                </p>
+              </div>
 
-            <FadeIn>
-              <FigureGrid cols={3}>
-                <Figure
-                  src={ALL_FIGURES[50].src}
-                  alt={ALL_FIGURES[50].alt}
-                  caption={ALL_FIGURES[50].caption}
-                  figNum={ALL_FIGURES[50].figNum}
-                  onClick={() => openLightbox(50)}
-                />
-                <Figure
-                  src={ALL_FIGURES[51].src}
-                  alt={ALL_FIGURES[51].alt}
-                  caption={ALL_FIGURES[51].caption}
-                  figNum={ALL_FIGURES[51].figNum}
-                  onClick={() => openLightbox(51)}
-                />
-                <Figure
-                  src={ALL_FIGURES[52].src}
-                  alt={ALL_FIGURES[52].alt}
-                  caption={ALL_FIGURES[52].caption}
-                  figNum={ALL_FIGURES[52].figNum}
-                  onClick={() => openLightbox(52)}
-                />
-              </FigureGrid>
-            </FadeIn>
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[46].src}
+                    alt={ALL_FIGURES[46].alt}
+                    caption={ALL_FIGURES[46].caption}
+                    figNum={ALL_FIGURES[46].figNum}
+                    onClick={() => openLightbox(46)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[47].src}
+                    alt={ALL_FIGURES[47].alt}
+                    caption={ALL_FIGURES[47].caption}
+                    figNum={ALL_FIGURES[47].figNum}
+                    onClick={() => openLightbox(47)}
+                  />
+                </FigureGrid>
+              </FadeIn>
 
-            {/* Metrics */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-              {[
-                { label: "Max Trajectory Error", value: "4.6mm", delta: "" },
-                { label: "Ground Contact Span", value: "60\u00B0", delta: "" },
-                { label: "Angular Velocity", value: "~395", unit: "\u00B0/s" },
-              ].map((metric) => (
-                <div
-                  key={metric.label}
-                  className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
-                >
-                  <span className="text-xs font-mono font-bold tracking-wider text-gray-500 dark:text-gray-400">
-                    {metric.label}
-                  </span>
-                  <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-3xl font-black font-mono text-gray-900 dark:text-white">
-                      {metric.value}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+                5.2.3 After Effects Analysis
+              </h4>
+              <div className="prose-custom mb-6">
+                <p>
+                  Slow-motion video of the cam mechanism was tracked in After Effects to extract
+                  the foot tip trajectory. The tracked data confirmed the designed <strong>60&deg; propulsive
+                  ground contact span</strong>. Normalized position data was overlaid on the ideal trajectory,
+                  yielding a <strong>maximum error of 4.6mm</strong> &mdash; well within acceptable tolerances for the
+                  target application.
+                </p>
+              </div>
+
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[48].src}
+                    alt={ALL_FIGURES[48].alt}
+                    caption={ALL_FIGURES[48].caption}
+                    figNum={ALL_FIGURES[48].figNum}
+                    onClick={() => openLightbox(48)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[49].src}
+                    alt={ALL_FIGURES[49].alt}
+                    caption={ALL_FIGURES[49].caption}
+                    figNum={ALL_FIGURES[49].figNum}
+                    onClick={() => openLightbox(49)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              <FadeIn>
+                <FigureGrid cols={3}>
+                  <Figure
+                    src={ALL_FIGURES[50].src}
+                    alt={ALL_FIGURES[50].alt}
+                    caption={ALL_FIGURES[50].caption}
+                    figNum={ALL_FIGURES[50].figNum}
+                    onClick={() => openLightbox(50)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[51].src}
+                    alt={ALL_FIGURES[51].alt}
+                    caption={ALL_FIGURES[51].caption}
+                    figNum={ALL_FIGURES[51].figNum}
+                    onClick={() => openLightbox(51)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[52].src}
+                    alt={ALL_FIGURES[52].alt}
+                    caption={ALL_FIGURES[52].caption}
+                    figNum={ALL_FIGURES[52].figNum}
+                    onClick={() => openLightbox(52)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              {/* Metrics */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                {[
+                  { label: "Max Trajectory Error", value: "4.6mm", unit: "" },
+                  { label: "Ground Contact Span", value: "60\u00B0", unit: "" },
+                  { label: "Angular Velocity", value: "~395", unit: "\u00B0/s" },
+                ].map((metric) => (
+                  <div
+                    key={metric.label}
+                    className="rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+                  >
+                    <span className="text-xs font-mono font-bold tracking-wider text-gray-500 dark:text-gray-400">
+                      {metric.label}
                     </span>
-                    {metric.unit && (
-                      <span className="text-sm font-mono text-gray-400 dark:text-gray-500">
-                        {metric.unit}
+                    <div className="mt-2 flex items-baseline gap-1">
+                      <span className="text-3xl font-black font-mono text-gray-900 dark:text-white">
+                        {metric.value}
                       </span>
-                    )}
+                      {metric.unit && (
+                        <span className="text-sm font-mono text-gray-400 dark:text-gray-500">
+                          {metric.unit}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              {/* 5.2.4 Failed Tests */}
+              <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+                5.2.4 Failed Tests
+              </h4>
+              <div className="prose-custom mb-6">
+                <p>
+                  Two additional measurement approaches were attempted and both failed.
+                  The <strong>potentiometer</strong> produced extremely noisy angular position data; even after applying
+                  80Hz and 15Hz low-pass filters, the signal remained too noisy for precise trajectory
+                  reconstruction. A rough angular velocity estimate of ~395&deg;/s was the only usable data point.
+                  The <strong>IMU (MPU9250)</strong> suffered from integration drift, making linear position data
+                  completely unusable for trajectory validation.
+                </p>
+              </div>
+
+              <FadeIn>
+                <FigureGrid cols={3}>
+                  <Figure
+                    src={ALL_FIGURES[53].src}
+                    alt={ALL_FIGURES[53].alt}
+                    caption={ALL_FIGURES[53].caption}
+                    figNum={ALL_FIGURES[53].figNum}
+                    onClick={() => openLightbox(53)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[54].src}
+                    alt={ALL_FIGURES[54].alt}
+                    caption={ALL_FIGURES[54].caption}
+                    figNum={ALL_FIGURES[54].figNum}
+                    onClick={() => openLightbox(54)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[55].src}
+                    alt={ALL_FIGURES[55].alt}
+                    caption={ALL_FIGURES[55].caption}
+                    figNum={ALL_FIGURES[55].figNum}
+                    onClick={() => openLightbox(55)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              <FadeIn>
+                <FigureGrid>
+                  <Figure
+                    src={ALL_FIGURES[56].src}
+                    alt={ALL_FIGURES[56].alt}
+                    caption={ALL_FIGURES[56].caption}
+                    figNum={ALL_FIGURES[56].figNum}
+                    onClick={() => openLightbox(56)}
+                  />
+                  <Figure
+                    src={ALL_FIGURES[57].src}
+                    alt={ALL_FIGURES[57].alt}
+                    caption={ALL_FIGURES[57].caption}
+                    figNum={ALL_FIGURES[57].figNum}
+                    onClick={() => openLightbox(57)}
+                  />
+                </FigureGrid>
+              </FadeIn>
+
+              {/* 5.2.5 Conclusion on Testing */}
+              <div className="prose-custom mt-6 mb-6">
+                <p>
+                  Despite the sensor failures, the After Effects trajectory analysis provided sufficient
+                  validation. The simulation was confirmed, and the device functions within a negligible
+                  margin of its intended design.
+                </p>
+              </div>
+
+              <FadeIn>
+                <Figure
+                  src={ALL_FIGURES[58].src}
+                  alt={ALL_FIGURES[58].alt}
+                  caption={ALL_FIGURES[58].caption}
+                  figNum={ALL_FIGURES[58].figNum}
+                  onClick={() => openLightbox(58)}
+                  className="mb-8"
+                />
+              </FadeIn>
+
+              {/* Hardware test footage */}
+              <FadeIn>
+                <GlassCard label="HARDWARE TEST FOOTAGE">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {[
+                      { src: `${MEDIA}/ch5-hardware/supplementary-3.mp4`, label: "Cam mechanism in operation" },
+                      { src: `${MEDIA}/ch5-hardware/supplementary-4.avi`, label: "Leg trajectory test (1)" },
+                      { src: `${MEDIA}/ch5-hardware/supplementary-5.avi`, label: "Leg trajectory test (2)" },
+                    ].map((video) => (
+                      <div key={video.label}>
+                        <video
+                          src={video.src}
+                          controls
+                          preload="metadata"
+                          className="w-full rounded-lg border border-black/10 dark:border-white/10"
+                        />
+                        <span className="text-xs font-mono text-gray-500 dark:text-gray-400 mt-2 block text-center">
+                          {video.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </GlassCard>
+              </FadeIn>
             </div>
 
-            {/* Failed tests - potentiometer and IMU */}
-            <div className="prose-custom mb-8">
-              <p>
-                Additional attempts to measure angular position with a potentiometer and linear position
-                with an IMU both failed due to noise and integration drift &mdash; a consequence of
-                the home laboratory constraints imposed by COVID-19.
-              </p>
-            </div>
-
-            <FadeIn>
-              <FigureGrid cols={3}>
-                <Figure
-                  src={ALL_FIGURES[53].src}
-                  alt={ALL_FIGURES[53].alt}
-                  caption={ALL_FIGURES[53].caption}
-                  figNum={ALL_FIGURES[53].figNum}
-                  onClick={() => openLightbox(53)}
-                />
-                <Figure
-                  src={ALL_FIGURES[54].src}
-                  alt={ALL_FIGURES[54].alt}
-                  caption={ALL_FIGURES[54].caption}
-                  figNum={ALL_FIGURES[54].figNum}
-                  onClick={() => openLightbox(54)}
-                />
-                <Figure
-                  src={ALL_FIGURES[55].src}
-                  alt={ALL_FIGURES[55].alt}
-                  caption={ALL_FIGURES[55].caption}
-                  figNum={ALL_FIGURES[55].figNum}
-                  onClick={() => openLightbox(55)}
-                />
-              </FigureGrid>
-            </FadeIn>
-
-            <FadeIn>
-              <FigureGrid>
-                <Figure
-                  src={ALL_FIGURES[56].src}
-                  alt={ALL_FIGURES[56].alt}
-                  caption={ALL_FIGURES[56].caption}
-                  figNum={ALL_FIGURES[56].figNum}
-                  onClick={() => openLightbox(56)}
-                />
-                <Figure
-                  src={ALL_FIGURES[57].src}
-                  alt={ALL_FIGURES[57].alt}
-                  caption={ALL_FIGURES[57].caption}
-                  figNum={ALL_FIGURES[57].figNum}
-                  onClick={() => openLightbox(57)}
-                />
-              </FigureGrid>
-            </FadeIn>
-
-            <div className="prose-custom mt-8">
-              <p>
-                Despite the sensor failures, the After Effects
-                trajectory analysis confirmed the device functions within a negligible margin of its
-                intended design.
-              </p>
+            {/* 5.3 Conclusion & Future Work */}
+            <div id="ch5-conclusion" className="scroll-mt-20 mt-12">
+              <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
+                5.3 Conclusion &amp; Future Work
+              </h3>
+              <div className="prose-custom">
+                <p>
+                  This thesis contributes a <strong>literature review of omnipede gait kinematics</strong>, a
+                  verified <strong>Simscape Multibody simulation environment</strong> for omnipede robots, and a
+                  robust, affordable prototype of the Wan &amp; Song cam leg actuator using modern 3D printing.
+                </p>
+                <p>
+                  The simulation proved that centipede-like locomotion with 60&deg; phase offset provides
+                  optimal stability, while the 3D-printed cam mechanism achieved the designed half-circle
+                  foot trajectory with only 4.6mm maximum error. The entire project was completed at home
+                  during the COVID-19 pandemic, demonstrating that meaningful robotics research can be
+                  conducted with accessible tools.
+                </p>
+                <p>
+                  Future work includes: full-body Walker assembly with multiple cam-driven segments,
+                  expanded terrain simulation with obstacle geometries, force analysis with
+                  experimentally-verified friction parameters, and exploring this cam actuator as a general
+                  replacement for bulky multi-motor locomotion systems beyond millipede-inspired designs.
+                </p>
+              </div>
             </div>
           </section>
         </FadeIn>
 
-        {/* --- Conclusion --- */}
-        <FadeIn>
-          <section id="conclusion" className="mb-16 scroll-mt-20">
-            <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Conclusion
-            </h2>
-            <div className="prose-custom">
-              <p>
-                This thesis contributes a <strong>literature review of omnipede gait kinematics</strong>, a
-                verified <strong>Simscape Multibody simulation environment</strong> for omnipede robots, and a
-                robust, affordable prototype of the Wan &amp; Song cam leg actuator using modern 3D printing.
-              </p>
-              <p>
-                The simulation proved that centipede-like locomotion with 60&deg; phase offset provides
-                optimal stability, while the 3D-printed cam mechanism achieved the designed half-circle
-                foot trajectory with only 4.6mm maximum error. The entire project was completed at home
-                during the pandemic, demonstrating that meaningful robotics research can be conducted
-                with accessible tools.
-              </p>
-              <p>
-                Future work includes full-body Walker assembly, expanded terrain simulation, force analysis
-                with experimentally-verified friction parameters, and exploring this cam actuator as a
-                replacement for bulky multi-motor locomotion systems beyond just millipede-inspired designs.
-              </p>
-            </div>
-
-          </section>
-        </FadeIn>
-
-        {/* --- References --- */}
+        {/* ================================================================ */}
+        {/*  REFERENCES                                                      */}
+        {/* ================================================================ */}
         <FadeIn>
           <section id="references" className="mb-16 scroll-mt-20">
             <h2 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-6">
-              Key References
+              References
             </h2>
             <div className="space-y-3">
               {[
@@ -1466,6 +1846,10 @@ export default function SeniorThesisPage() {
                 "Kano, T. et al. (2017). Decentralized control mechanism underlying interlimb coordination of millipedes. Bioinspiration & Biomimetics.",
                 "Long, G. et al. (2002). The kinematic design of the OmniPede. IEEE ICRA.",
                 "Sathirapongsasuti, J. et al. (2004). Walking with a millipede. Intel ISF.",
+                "Garcia, A., Priya, S., & Marek, P. (2015). Understanding the locomotion and dynamic controls for millipedes. ASME SMASIS.",
+                "Crow, A. (2005). Cam controlled walking robot.",
+                "Koh, D. et al. (2010). Centipede robot for uneven terrain exploration. IEEE RAS & EMBS.",
+                "Anderson, B. et al. (1995). Axial kinematics and muscle activity during terrestrial locomotion of the centipede.",
               ].map((ref, i) => (
                 <div key={i} className="flex gap-3 text-sm text-gray-600 dark:text-gray-400">
                   <span className="text-xs font-mono font-bold text-indigo-500 dark:text-indigo-400 mt-0.5 shrink-0">
