@@ -82,11 +82,15 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
 
   const toggleFullscreen = useCallback(() => setIsFullscreen((p) => !p), []);
 
-  // Lock body scroll when fullscreen
+  // Lock scroll when fullscreen
   useEffect(() => {
     if (isFullscreen) {
       document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = ""; };
+      document.documentElement.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
+      };
     }
   }, [isFullscreen]);
 
