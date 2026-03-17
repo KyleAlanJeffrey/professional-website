@@ -67,7 +67,7 @@ export default function TwitterSection({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start mb-10 md:mb-12">
         <div className="lg:col-span-6 text-left">
           <SectionTitle category="SOCIAL" title="TWITTER FEED" number="06" color="sky" />
-          <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium max-w-xl mx-0">
+          <p className="text-base text-gray-800 dark:text-gray-200 leading-relaxed mt-6 font-semibold pl-3 border-l-2 border-sky-400 max-w-xl">
             Latest thoughts, experiments, and links from my Twitter feed.
           </p>
         </div>

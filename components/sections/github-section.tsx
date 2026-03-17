@@ -76,7 +76,7 @@ export default function GithubSection() {
         <div className="lg:col-span-5 text-left">
           <SectionTitle category="DEVELOPMENT" title="GITHUB ACTIVITY" number="05" color="emerald" />
 
-          <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed mb-5 transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+          <p className="text-base text-gray-800 dark:text-gray-200 leading-relaxed mt-6 mb-5 font-semibold pl-3 border-l-2 border-emerald-400">
             Here's a snapshot of my recent coding activity and contributions.
           </p>
 

@@ -273,7 +273,7 @@ export default function PublicationsSection() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-5 space-y-4">
-              <p className="text-gray-800 dark:text-gray-200 leading-relaxed transition-all duration-300 hover:text-gray-900 dark:hover:text-gray-100 font-medium">
+              <p className="text-base text-gray-800 dark:text-gray-200 leading-relaxed mt-6 font-semibold pl-3 border-l-2 border-amber-400">
                 Editorial-style snapshots of work projects and publications,
                 with context and a live preview whenever possible.
               </p>
