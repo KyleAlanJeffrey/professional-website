@@ -12,6 +12,16 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
         </h2>
         <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
 
+        {/* Chapter intro */}
+        <div className="prose-custom mb-6">
+          <p>
+            This chapter strays from simply mimicking millipede motion and focuses on maximizing the
+            stability of the robot design based upon the developed cam actuator. My analysis recognizes
+            the thrust benefits of millipede motion but focuses on stability rather than speed or
+            thrust potential.
+          </p>
+        </div>
+
         {/* 4.1 Kinematic Equation Analysis */}
         <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
           4.1 Kinematic Equation Analysis
@@ -23,6 +33,13 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
             of the gait cycle where at least one leg per side touches the ground. Centipede-like motion
             (180&deg; phase offset between left and right legs) was found to significantly reduce
             no-contact time compared to millipede-like motion.
+          </p>
+          <p>
+            The cam actuator is two-sided, meaning each leg device draws out two cycloids 180&deg; out
+            of phase with each other.
+          </p>
+          <p>
+            The Simscape environment takes upwards of fifteen minutes per simulation to compile and run.
           </p>
         </div>
 
@@ -41,12 +58,26 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
                 </thead>
                 <tbody>
                   {[
-                    { legs: "2", phase: "60\u00B0", mill: "3.33s", centi: "0.00s" },
-                    { legs: "2", phase: "90\u00B0", mill: "5.00s", centi: "1.67s" },
-                    { legs: "3", phase: "60\u00B0", mill: "1.67s", centi: "0.00s" },
-                    { legs: "3", phase: "90\u00B0", mill: "3.33s", centi: "0.00s" },
+                    { legs: "2", phase: "0\u00B0", mill: "3.14s", centi: "1.56s" },
+                    { legs: "2", phase: "30\u00B0", mill: "2.10s", centi: "0.00s" },
+                    { legs: "2", phase: "60\u00B0", mill: "1.05s", centi: "0.00s" },
+                    { legs: "2", phase: "90\u00B0", mill: "1.56s", centi: "1.56s" },
+                    { legs: "3", phase: "0\u00B0", mill: "3.14s", centi: "1.56s" },
+                    { legs: "3", phase: "30\u00B0", mill: "1.05s", centi: "0.00s" },
+                    { legs: "3", phase: "60\u00B0", mill: "0.00s", centi: "0.00s" },
+                    { legs: "3", phase: "90\u00B0", mill: "1.56s", centi: "1.56s" },
+                    { legs: "4", phase: "0\u00B0", mill: "3.14s", centi: "1.56s" },
+                    { legs: "4", phase: "30\u00B0", mill: "0.52s", centi: "0.00s" },
                     { legs: "4", phase: "60\u00B0", mill: "0.00s", centi: "0.00s" },
-                    { legs: "4", phase: "90\u00B0", mill: "1.67s", centi: "0.00s" },
+                    { legs: "4", phase: "90\u00B0", mill: "1.56s", centi: "1.56s" },
+                    { legs: "5", phase: "0\u00B0", mill: "3.14s", centi: "1.56s" },
+                    { legs: "5", phase: "30\u00B0", mill: "0.00s", centi: "0.00s" },
+                    { legs: "5", phase: "60\u00B0", mill: "0.00s", centi: "0.00s" },
+                    { legs: "5", phase: "90\u00B0", mill: "1.56s", centi: "1.56s" },
+                    { legs: "6", phase: "0\u00B0", mill: "3.14s", centi: "1.56s" },
+                    { legs: "6", phase: "30\u00B0", mill: "0.00s", centi: "0.00s" },
+                    { legs: "6", phase: "60\u00B0", mill: "0.00s", centi: "0.00s" },
+                    { legs: "6", phase: "90\u00B0", mill: "1.56s", centi: "1.56s" },
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-black/5 dark:border-white/5">
                       <td className="px-3 py-2 font-mono text-gray-600 dark:text-gray-400">{row.legs}</td>
@@ -84,6 +115,14 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
             Wan &amp; Song cam design, enabling full dynamics analysis across multiple leg counts and
             gait configurations.
           </p>
+          <p>
+            The development process with Simscape involved uploading the Fusion 360 bodies to Onshape.com
+            and creating joint assemblies uploaded to Matlab.
+          </p>
+          <p>
+            The second generation removed the rotating component and simulated motion without that
+            contact point, resulting in an inaccurate simulation.
+          </p>
         </div>
 
         <FadeIn>
@@ -99,6 +138,18 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
             component</strong> (rigid body with mass properties) and a <strong>leg segment component</strong> (cam-driven
             joint with revolute and slider constraints). These components are parameterized and
             chained together to form configurations with varying leg counts and phase offsets.
+          </p>
+          <p>
+            The rotation of the leg is controlled by angular position values. The gait switcher adds
+            a simple user interface for changing left and right leg ninety degrees out-of-phase.
+          </p>
+          <p>
+            A revolute joint and slider control the rotating arm constrained by a cam shape. A foot
+            is attached to either side of the leg with four contact points for measuring ground contact.
+          </p>
+          <p>
+            Though features like exact body shape and center of gravity are not included, they are
+            trivial to add in future work.
           </p>
         </div>
 
@@ -206,6 +257,20 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
               Key finding: <strong>centipede locomotion with neighboring legs 60&deg; out of phase</strong> provides
               the most stable system, with zero ground-contact-loss time for configurations with 3+ leg pairs.
               This creates greater stability with fewer legs, lowering the cost of the final robot.
+            </p>
+          </div>
+
+          {/* 4.3.1 Conclusion on Simulation */}
+          <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+            4.3.1 Conclusion on Simulation
+          </h4>
+          <div className="prose-custom mb-6">
+            <p>
+              The analysis between the kinematics and the Matlab simulation corroborate the conclusion
+              that centipede locomotion with neighboring legs 60&deg; out of phase provides the most
+              stable system. The simulation environment is capable of measuring torque on each leg
+              actuation joint, the speed of the robot, and providing a test harness for different
+              body shapes.
             </p>
           </div>
         </div>

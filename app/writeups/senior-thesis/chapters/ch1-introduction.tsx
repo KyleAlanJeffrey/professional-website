@@ -31,6 +31,11 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               Walker aims to build a simplified omnipede robot that utilizes the advantageous characteristics
               of the Myriapoda subphylum while keeping fabrication simple and affordable.
             </p>
+            <p>
+              These many-legged insects cross diverse habitats and present a simple, easy to emulate,
+              and highly modular body structure. My research expands upon present analytical literature
+              on the locomotive mechanisms of millipedes and centipedes as robotic inspiration.
+            </p>
           </div>
         </div>
 
@@ -41,19 +46,38 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
           </h3>
           <div className="prose-custom">
             <p>
-              Several researchers have explored multi-legged robots inspired by myriapods. <strong>Garcia</strong> [7]
-              provided an extensive analysis of millipede gait kinematics, validating the cycloid trajectory
-              model through After Effects video tracking of live specimens. <strong>Koh et al.</strong> [10] developed
+              Several researchers have explored multi-legged robots inspired by myriapods. Key sources
+              that informed this work include:
+            </p>
+            <ol className="list-decimal list-inside space-y-2 my-4">
+              <li>
+                <strong>&ldquo;Millipede-Inspired Locomotion for Rumen Monitoring through Remotely Operated Vehicle&rdquo;</strong> by Garcia [7]
+              </li>
+              <li>
+                <strong>&ldquo;Centipede Robot for Uneven Terrain Exploration&rdquo;</strong> by Koh et al. [10]
+              </li>
+              <li>
+                <strong>&ldquo;Decentralized control mechanism underlying interlimb coordination of millipedes&rdquo;</strong> by Kano et al. [9]
+              </li>
+              <li>
+                <strong>&ldquo;The Kinematic Design of the OmniPede&rdquo;</strong> by Long et al. [11]
+              </li>
+            </ol>
+            <p>
+              Garcia provided an extensive analysis of millipede gait kinematics, validating the cycloid trajectory
+              model through After Effects video tracking of live specimens. Koh et al. developed
               a centipede robot for uneven terrain exploration using multiple servos per segment.
-              <strong> Kano et al.</strong> [9] investigated decentralized control mechanisms underlying interlimb
-              coordination. <strong>Long et al.</strong> [11] designed the OmniPede using geared bar mechanisms
+              Kano et al. investigated decentralized control mechanisms underlying interlimb
+              coordination. Long et al. designed the OmniPede using geared bar mechanisms
               for leg actuation. Each of these designs, however, required multiple actuators per segment,
               increasing cost and complexity.
             </p>
             <p>
-              Garcia&apos;s work was particularly influential for Walker. His After Effects-based analysis of
-              live millipede footage demonstrated that leg tips trace a circular arc during the transfer phase,
-              providing the kinematic foundation that Walker&apos;s design builds upon.
+              Garcia&apos;s personal correspondence was an excellent source of guidance, and his 2015
+              dissertation was the primary source for millipede locomotion investigation. His After
+              Effects-based analysis of live millipede footage demonstrated that leg tips trace a circular
+              arc during the transfer phase, providing the kinematic foundation that Walker&apos;s design
+              builds upon.
             </p>
           </div>
         </div>
@@ -63,6 +87,18 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
           <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
             1.3 Characteristics of a Millipede
           </h3>
+          <div className="prose-custom">
+            <p>
+              Throughout the paper, the Myriapoda is referred to when referencing the insect species.
+              The term omnipede is a placeholder for all abstracted robots that imitate the Myriapoda.
+            </p>
+            <p>
+              Myriapoda translates to &ldquo;many-legged ones&rdquo; and encompasses both millipedes
+              (Diplopoda) and centipedes (Chilopoda). Foundational surveys by Manton, Hopkin et al.,
+              Wilson, and Minelli provide the biological basis for understanding myriapod locomotion
+              and anatomy.
+            </p>
+          </div>
 
           {/* 1.3.1 Leg Anatomy */}
           <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-6">
@@ -74,6 +110,12 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               contain many segments, they are <strong>mostly rigid</strong> and can be simplified to a single
               rotating segment for modeling purposes. The leg motion occurs primarily in a 2D plane
               perpendicular to the body axis, which greatly simplifies the kinematic model.
+            </p>
+            <p>
+              With many segments across a single leg, the trajectory of each leg occurs across all
+              three positional axes. In other words, a single motor-controlled actuator cannot precisely
+              emulate the trajectory. Notwithstanding, the trajectory can be mostly represented with
+              simple kinematic equations.
             </p>
           </div>
 
@@ -96,6 +138,12 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               and burrowing force. The legs move in a <strong>metachronal wave</strong> &mdash; a sequential
               ripple pattern where each leg lifts only when neighboring legs are on the ground to provide support.
             </p>
+            <p>
+              Manton recognized gait shift in backstroke/forward-stroke analysis. Garcia found that the
+              duty cycle is the same across all legs and that the millipede does little to change angular
+              velocity. The 6:4 ratio represents the time legs spend in forward stroke to backstroke.
+              The phase difference between neighboring legs is also affected by duty cycle shift.
+            </p>
           </div>
 
           <FigureGrid>
@@ -114,6 +162,12 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               forward &mdash; unlike centipedes, which exhibit lateral oscillatory body movement. Both species
               use metachronal waves, but with a key difference: millipede left/right waves are <strong>in
               phase</strong>, while centipede waves are <strong>180&deg; out of phase</strong>, producing lateral undulation.
+            </p>
+            <p>
+              The entirety of its gait modulation is due to the characteristics of the metachronal wave
+              propagating through its legs. Considering that the millipede maintains a rigid body structure
+              throughout its gait and can maneuver across varied environments, it presents a system with
+              great potential for robotic emulation.
             </p>
           </div>
 

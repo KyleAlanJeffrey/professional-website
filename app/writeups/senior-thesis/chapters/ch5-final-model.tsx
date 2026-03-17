@@ -12,6 +12,13 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
         </h2>
         <div className="h-1 w-16 bg-indigo-500 dark:bg-indigo-400 rounded mb-8" />
 
+        {/* Chapter intro */}
+        <div className="prose-custom mb-6">
+          <p>
+            Two design iterations were printed and attached to an Antrader Dual Shaft 3-6V Motor for testing.
+          </p>
+        </div>
+
         {/* 5.1 Print Faults and Fixes */}
         <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
           5.1 Print Faults &amp; Fixes
@@ -24,6 +31,10 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             motor attachment, and <strong>sharp contour edges</strong> causing print head jerk. The second iteration
             addressed all three by widening the shaft base, adding bracket geometry, rounding sharp edges,
             and reducing infill to lower print time.
+          </p>
+          <p>
+            To reduce print time, the interiors of the shapes contained several cardboard-like edges,
+            in place of a complete infill, which negligibly affected stability.
           </p>
         </div>
 
@@ -40,6 +51,21 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             <Figure src={ALL_FIGURES[45].src} alt={ALL_FIGURES[45].alt} caption={ALL_FIGURES[45].caption} figNum={ALL_FIGURES[45].figNum} onClick={() => openLightbox(45)} />
           </FigureGrid>
         </FadeIn>
+
+        {/* 5.1.1 Conclusion on Print */}
+        <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+          5.1.1 Conclusion on Print
+        </h4>
+        <div className="prose-custom mb-6">
+          <p>
+            Other manufacturing processes could avoid the issues that printing created. Crow manufactured
+            a similar device using metal, which might be more promising for build stability. Another approach
+            would use multiple materials &mdash; 3D plastic for the cam, metal for the rotary arm and legs.
+            Widening the base of the rotary arm shaft created a more stable connection. Rounding the contours
+            improved print quality consistency. The only remaining design consideration is frictional contact
+            between the leg ends and ground &mdash; cursory testing showed improvement with glued rubber pieces.
+          </p>
+        </div>
 
         {/* Physical build photos */}
         <FadeIn>
@@ -73,6 +99,11 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               was performed at home using consumer hardware and <strong>Adobe After Effects</strong> as the
               primary measurement tool &mdash; a technique borrowed from Garcia&apos;s biological analysis work.
             </p>
+            <p>
+              Ideally, the relative angular position would be sensed with a quadrature encoder attached
+              to the back arm of the motor. Kano&apos;s test environment mounted a motor above a conveyor
+              belt capable of measuring thrust potential.
+            </p>
           </div>
 
           <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
@@ -83,6 +114,16 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               An Arduino-based test harness drove the cam mechanism with a DC motor. A potentiometer
               measured angular position, and a voltage divider circuit controlled motor speed for
               consistent test conditions.
+            </p>
+            <p>
+              The test system is comprised of an Arduino Uno, a 10-spin potentiometer for angular
+              position detection, and a potentiometer in a voltage divider circuit to control the
+              speed of the DC motor.
+            </p>
+            <p>
+              The trajectory was measured using After Effects motion tracking of slow-motion video.
+              This motion data does not include any time data, as an iPhone 8s with custom slow-mo
+              software captured the video. This issue hinders capturing angular velocity.
             </p>
           </div>
 
@@ -103,6 +144,26 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               ground contact span</strong>. Normalized position data was overlaid on the ideal trajectory,
               yielding a <strong>maximum error of 4.6mm</strong> &mdash; well within acceptable tolerances for the
               target application.
+            </p>
+            <p>
+              After Effects motion-tracked a green dot on a piece of paper attached to the foot
+              of the cam for one rotation.
+            </p>
+            <p>
+              Analysis ignored velocity as tracking data returns position based on frame data,
+              not time data, because of the custom iPhone slow-motion capture.
+            </p>
+            <p>
+              Angle is determined with trigonometry: &theta; = arcsin(y_pos/x_pos).
+            </p>
+            <p>
+              The home laboratory provides pixel data; the trajectory is normalized to the known
+              leg length of 120mm.
+            </p>
+            <p>
+              The maximum error of 4.6mm occurs between 70 to 120 degrees at the bottom of the
+              foot trajectory. Minor improvements would include a better mounting surface and larger
+              pegs &mdash; the pegs used were shorter than the cam width and tended to skew.
             </p>
           </div>
 
@@ -153,14 +214,46 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
           <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
             5.2.4 Failed Tests
           </h4>
+
+          <h5 className="text-lg font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+            5.2.4.1 Potentiometer
+          </h5>
           <div className="prose-custom mb-6">
             <p>
-              Two additional measurement approaches were attempted and both failed.
               The <strong>potentiometer</strong> produced extremely noisy angular position data; even after applying
               80Hz and 15Hz low-pass filters, the signal remained too noisy for precise trajectory
-              reconstruction. A rough angular velocity estimate of ~395&deg;/s was the only usable data point.
+              reconstruction.
+            </p>
+            <p>
+              An attempt was made to reduce high frequency noise with an RC low pass filter as well
+              as a running average.
+            </p>
+            <p>
+              The 15Hz cutoff filter shows near linearity at turns below approximately 500 degrees.
+              From a line of best fit, the approximate angular velocity is -395.325&deg;/second.
+            </p>
+          </div>
+
+          <h5 className="text-lg font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
+            5.2.4.2 IMU
+          </h5>
+          <div className="prose-custom mb-6">
+            <p>
               The <strong>IMU (MPU9250)</strong> suffered from integration drift, making linear position data
               completely unusable for trajectory validation.
+            </p>
+            <p>
+              An IMU was attached to a piece of long construction paper held below the mounted,
+              rotating leg. When in contact, the leg pushed the paper like a conveyor belt.
+            </p>
+            <p>
+              Using the accelerometer on the MPU9250 with the highest polling rate, integrated
+              accelerometer data found the paper&apos;s position on a single axis
+              (X_pos = &int;&int;&xdot;). However, integration of inaccurate data creates huge errors.
+            </p>
+            <p>
+              The sensor was held on a level surface and slowly dragged forward and backward.
+              Accurate data should return position to zero at origin, but inaccuracy prevents this.
             </p>
           </div>
 
@@ -179,11 +272,22 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             </FigureGrid>
           </FadeIn>
 
-          <div className="prose-custom mt-6 mb-6">
+          {/* 5.2.5 Simulation vs Actual */}
+          <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3 mt-8">
+            5.2.5 Simulation vs. Actual
+          </h4>
+          <div className="prose-custom mb-6">
             <p>
               Despite the sensor failures, the After Effects trajectory analysis provided sufficient
               validation. The simulation was confirmed, and the device functions within a negligible
               margin of its intended design.
+            </p>
+            <p>
+              Fig 5.14 shows a cursory observation of angular position vs time. The frame rate of
+              the camera might be variable, so this data should not be considered with complete
+              confidence. The simulation data is linear while the actual device drifts from linearity.
+              Testing captured these data sets while the mechanism was suspended in the air, restricting
+              any ground contact.
             </p>
           </div>
 
@@ -219,11 +323,21 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               robust, affordable prototype of the Wan &amp; Song cam leg actuator using modern 3D printing.
             </p>
             <p>
+              In the observation of millipede vs. centipede locomotion through a literature review,
+              studies like Manton, Garcia et al., and Kano et al. investigated the thrust potential
+              of the former and the speed of the latter.
+            </p>
+            <p>
               The simulation proved that centipede-like locomotion with 60&deg; phase offset provides
               optimal stability, while the 3D-printed cam mechanism achieved the designed half-circle
               foot trajectory with only 4.6mm maximum error. The entire project was completed at home
               during the COVID-19 pandemic, demonstrating that meaningful robotics research can be
               conducted with accessible tools.
+            </p>
+            <p>
+              Crow&apos;s design lacked the double-sided leg of the source paper, as well as any simulation.
+              In the future, this actuator could replace bulky multi-motored locomotive systems not
+              limited to just millipede motion.
             </p>
             <p>
               Future work includes: full-body Walker assembly with multiple cam-driven segments,
