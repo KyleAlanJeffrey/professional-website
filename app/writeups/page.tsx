@@ -18,11 +18,11 @@ type Writeup = {
 const WRITEUPS: Writeup[] = [
   {
     slug: "senior-thesis",
-    title: "Senior Thesis",
+    title: "Walker: A Simple Millipede Bot",
     description:
-      "A brief abstract or hook describing what this thesis is about and why it matters.",
-    tags: ["Robotics", "Computer Vision", "Machine Learning"],
-    date: "2024",
+      "Bio-inspired robotics thesis exploring millipede and centipede locomotion to develop a cost-effective, 3D-printed cam leg mechanism for terrain traversal. Includes kinematic modeling, Simscape simulation, and hardware validation.",
+    tags: ["Bio-Inspired Robotics", "Cam Mechanisms", "Gait Kinematics", "MATLAB"],
+    date: "2021",
     color: "text-indigo-500 dark:text-indigo-400",
     gradient: "from-indigo-500 to-violet-500",
   },
