@@ -72,6 +72,14 @@ function Project(props: { githubRepo: GithubRepoType; index: number }) {
             >
               {props.githubRepo.name}
             </h3>
+            {props.githubRepo.homepage && !props.githubRepo.homepage.includes("github.com") && (
+              <span
+                className="shrink-0 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-400/15 text-emerald-700 dark:text-emerald-400 text-[10px] font-black border border-emerald-300/60 dark:border-emerald-400/30 tracking-[0.15em] animate-pulse [animation-duration:3s]"
+                style={{ fontFamily: "monospace" }}
+              >
+                LIVE
+              </span>
+            )}
             {props.githubRepo.pypiPackage && (
               <span
                 className="inline-flex gap-1.5 items-center shrink-0"

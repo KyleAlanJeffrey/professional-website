@@ -32,7 +32,7 @@ export default function ProjectsSection({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-12 md:mb-20">
         <div className="lg:col-span-5 text-left">
-          <SectionTitle category="PORTFOLIO" title="FEATURED PROJECTS" number="04" color="indigo" />
+          <SectionTitle category="PORTFOLIO" title="FEATURED PROJECTS" number="04" color="indigo" sectionId="projects" />
           <p className="text-base text-gray-800 dark:text-gray-200 leading-relaxed mt-6 font-semibold pl-3 border-l-2 border-indigo-400">
             A curated selection of my recent personal projects.
           </p>

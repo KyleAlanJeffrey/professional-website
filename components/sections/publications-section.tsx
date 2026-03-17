@@ -267,7 +267,7 @@ export default function PublicationsSection() {
         <div className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 md:gap-8 mb-8 md:mb-12">
             <div>
-              <SectionTitle category="EDITIONS" title="WORK PUBLICATIONS" number="03" color="amber" />
+              <SectionTitle category="EDITIONS" title="WORK PUBLICATIONS" number="03" color="amber" sectionId="publications" />
             </div>
           </div>
 

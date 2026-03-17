@@ -65,7 +65,7 @@ export default function ContactSection() {
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-10 md:mb-16">
         <div className="lg:col-span-6 text-left">
-          <SectionTitle category="GET IN TOUCH" title="LET'S WORK TOGETHER" number="07" color="violet" />
+          <SectionTitle category="GET IN TOUCH" title="LET'S WORK TOGETHER" number="07" color="violet" sectionId="contact" />
         </div>
       </div>
 

@@ -1,12 +1,15 @@
 "use client";
 
 import { useInView } from "@/hooks/use-in-view";
+import { Check, Link } from "lucide-react";
+import { useState } from "react";
 
 type SectionTitleProps = {
   category: string;
   title: string;
   number: string;
   color: "sky" | "emerald" | "indigo" | "amber" | "violet";
+  sectionId?: string;
 };
 
 const colorMap = {
@@ -16,6 +19,7 @@ const colorMap = {
     gradient: "from-sky-500 to-gray-900 dark:from-sky-400 dark:to-white",
     gradientHover: "group-hover/title:from-gray-900 group-hover/title:to-sky-500 dark:group-hover/title:from-white dark:group-hover/title:to-sky-400",
     number: "text-sky-500 dark:text-sky-400",
+    copyHover: "hover:text-sky-500 dark:hover:text-sky-400",
   },
   emerald: {
     text: "text-emerald-600 dark:text-emerald-400",
@@ -23,6 +27,7 @@ const colorMap = {
     gradient: "from-emerald-500 to-gray-900 dark:from-emerald-400 dark:to-white",
     gradientHover: "group-hover/title:from-gray-900 group-hover/title:to-emerald-500 dark:group-hover/title:from-white dark:group-hover/title:to-emerald-400",
     number: "text-emerald-500 dark:text-emerald-400",
+    copyHover: "hover:text-emerald-500 dark:hover:text-emerald-400",
   },
   indigo: {
     text: "text-indigo-600 dark:text-indigo-400",
@@ -30,6 +35,7 @@ const colorMap = {
     gradient: "from-indigo-500 to-gray-900 dark:from-indigo-400 dark:to-white",
     gradientHover: "group-hover/title:from-gray-900 group-hover/title:to-indigo-500 dark:group-hover/title:from-white dark:group-hover/title:to-indigo-400",
     number: "text-indigo-500 dark:text-indigo-400",
+    copyHover: "hover:text-indigo-500 dark:hover:text-indigo-400",
   },
   amber: {
     text: "text-amber-600 dark:text-amber-400",
@@ -37,6 +43,7 @@ const colorMap = {
     gradient: "from-amber-500 to-gray-900 dark:from-amber-400 dark:to-white",
     gradientHover: "group-hover/title:from-gray-900 group-hover/title:to-amber-500 dark:group-hover/title:from-white dark:group-hover/title:to-amber-400",
     number: "text-amber-500 dark:text-amber-400",
+    copyHover: "hover:text-amber-500 dark:hover:text-amber-400",
   },
   violet: {
     text: "text-violet-600 dark:text-violet-400",
@@ -44,14 +51,23 @@ const colorMap = {
     gradient: "from-violet-500 to-gray-900 dark:from-violet-400 dark:to-white",
     gradientHover: "group-hover/title:from-gray-900 group-hover/title:to-violet-500 dark:group-hover/title:from-white dark:group-hover/title:to-violet-400",
     number: "text-violet-500 dark:text-violet-400",
+    copyHover: "hover:text-violet-500 dark:hover:text-violet-400",
   },
 };
 
-export default function SectionTitle({ category, title, number, color }: SectionTitleProps) {
+export default function SectionTitle({ category, title, number, color, sectionId }: SectionTitleProps) {
   const { ref, inView } = useInView({ threshold: 0.3 });
+  const [copied, setCopied] = useState(false);
   const c = colorMap[color];
 
   const base = "transition-all ease-out";
+
+  const handleCopy = () => {
+    const url = `${window.location.origin}${window.location.pathname}#${sectionId}`;
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>} className="group/title cursor-default">
@@ -71,6 +87,18 @@ export default function SectionTitle({ category, title, number, color }: Section
           }`}
           style={{ transitionDelay: inView ? "150ms" : "0ms" }}
         ></div>
+        {sectionId && (
+          <button
+            onClick={handleCopy}
+            aria-label="Copy section link"
+            className={`opacity-60 group-hover/title:opacity-100 transition-all duration-300 p-1.5 rounded-lg ${c.text} hover:bg-black/5 dark:hover:bg-white/10`}
+          >
+            {copied
+              ? <Check className="w-4 h-4 text-emerald-500" />
+              : <Link className="w-4 h-4" />
+            }
+          </button>
+        )}
       </div>
 
       {/* Title + AT + number */}

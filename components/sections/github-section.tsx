@@ -78,7 +78,7 @@ export default function GithubSection() {
       {/* Top two-column section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start mb-8">
         <div className="lg:col-span-5 text-left">
-          <SectionTitle category="DEVELOPMENT" title="GITHUB ACTIVITY" number="05" color="emerald" />
+          <SectionTitle category="DEVELOPMENT" title="GITHUB ACTIVITY" number="05" color="emerald" sectionId="github" />
 
           <p className="text-base text-gray-800 dark:text-gray-200 leading-relaxed mt-6 mb-5 font-semibold pl-3 border-l-2 border-emerald-400">
             Here's a snapshot of my recent coding activity and contributions.

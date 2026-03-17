@@ -48,7 +48,7 @@ export default function WorkSection({
     >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start mb-6 md:mb-10">
         <div className="lg:col-span-6 text-left">
-          <SectionTitle category="CAREER" title="WORK EXPERIENCE" number="02" color="sky" />
+          <SectionTitle category="CAREER" title="WORK EXPERIENCE" number="02" color="sky" sectionId="work" />
         </div>
 
         <div className="lg:col-span-6 text-left">

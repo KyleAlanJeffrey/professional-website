@@ -25,6 +25,14 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView();
+    }
+  }, []);
+
+  useEffect(() => {
     const sectionIds = [
       "home",
       "work",
@@ -61,9 +69,13 @@ export default function HomePage() {
         nextActive = sections[sections.length - 1].id;
       }
 
-      setActiveSection((current) =>
-        current === nextActive ? current : nextActive,
-      );
+      setActiveSection((current) => {
+        if (current !== nextActive) {
+          const hash = nextActive === "home" ? window.location.pathname : `#${nextActive}`;
+          setTimeout(() => history.replaceState(null, "", hash), 0);
+        }
+        return current === nextActive ? current : nextActive;
+      });
       ticking = false;
     };
 
