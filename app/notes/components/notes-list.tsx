@@ -1,7 +1,7 @@
 "use client";
 
 import type { NoteMeta } from "@/lib/notes";
-import { ChevronRight, File, Folder, PanelLeftClose, PanelLeft, Search } from "lucide-react";
+import { Check, ChevronRight, Copy, File, Folder, PanelLeftClose, PanelLeft, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState, useCallback } from "react";
 
@@ -138,6 +138,7 @@ export default function NotesList({
   const [activeSlug, setActiveSlug] = useState<string | null>(slugFromUrl);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [search, setSearch] = useState("");
+  const [copied, setCopied] = useState(false);
 
   // Filter notes by search query
   const filteredNotes = useMemo(() => {
@@ -229,10 +230,29 @@ export default function NotesList({
               {activeNote.title}
             </span>
           )}
+          <div className="ml-auto">
+            {activeNote && (
+              <button
+                onClick={() => {
+                  const el = document.getElementById("note-content");
+                  if (el) {
+                    navigator.clipboard.writeText(el.innerText);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 2000);
+                  }
+                }}
+                className="flex items-center gap-1.5 px-2 py-1 rounded-md text-[10px] font-mono font-bold tracking-wider text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-black/[0.03] dark:hover:bg-white/[0.04] transition-colors"
+                aria-label="Copy note content"
+              >
+                {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                {copied ? "COPIED" : "COPY"}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Article */}
-        <div className="flex-1 overflow-y-auto rounded-lg border border-black/10 dark:border-white/[0.08] bg-white/70 dark:bg-white/[0.03] px-6 md:px-10 py-8">
+        <div className="flex-1 overflow-y-auto rounded-lg border border-black/10 dark:border-white/[0.08] bg-white/70 dark:bg-white/[0.03] px-6 md:px-10 py-8 select-text">
           {activeNote ? (
             <div className="max-w-3xl">
               <h1
@@ -241,7 +261,7 @@ export default function NotesList({
               >
                 {activeNote.title}
               </h1>
-              <article className="note-content" dangerouslySetInnerHTML={{ __html: activeHtml }} />
+              <article id="note-content" className="note-content select-text cursor-text" dangerouslySetInnerHTML={{ __html: activeHtml }} />
             </div>
           ) : (
             <div className="flex items-center justify-center h-full text-gray-400 dark:text-gray-500 font-mono text-sm">
