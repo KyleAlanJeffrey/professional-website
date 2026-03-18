@@ -1,16 +1,17 @@
 "use client";
 
 import GithubDataProvider from "@/components/providers/github-data-provider";
-import { Button } from "@/components/ui/button";
-import ContactSection from "@/components/sections/contact-section";
-import GithubSection from "@/components/sections/github-section";
 import HomeSection from "@/components/sections/home-section";
-import ProjectsSection from "@/components/sections/projects-section";
-import PublicationsSection from "@/components/sections/publications-section";
-import TwitterSection from "@/components/sections/twitter-section";
-import WorkSection from "@/components/sections/work-section";
 import { ArrowUpRight, Download, FileText, Moon, Sun } from "lucide-react";
+import dynamic from "next/dynamic";
 import { ReactNode, useEffect, useState } from "react";
+
+const WorkSection = dynamic(() => import("@/components/sections/work-section"));
+const PublicationsSection = dynamic(() => import("@/components/sections/publications-section"));
+const ProjectsSection = dynamic(() => import("@/components/sections/projects-section"));
+const GithubSection = dynamic(() => import("@/components/sections/github-section"));
+const TwitterSection = dynamic(() => import("@/components/sections/twitter-section"));
+const ContactSection = dynamic(() => import("@/components/sections/contact-section"));
 
 type PageContentProps = {
   activeSection: string;
