@@ -137,13 +137,13 @@ export default function HomeSection({
               <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-br from-amber-400/40 to-orange-500/40 blur-2xl" />
               <div className="absolute -bottom-4 -left-4 w-20 h-20 rounded-full bg-gradient-to-br from-sky-400/30 to-indigo-500/30 blur-2xl" />
               {/* Image */}
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/me-hero.webp"
                 alt="Kyle Jeffrey"
-                className="absolute inset-3 rounded-2xl object-cover"
-                fill
-                sizes="(min-width: 1024px) 50vw, (min-width: 768px) 22rem, 90vw"
-                priority
+                className="absolute inset-3 rounded-2xl object-cover w-[calc(100%-1.5rem)] h-[calc(100%-1.5rem)]"
+                fetchPriority="high"
+                decoding="async"
               />
               {/* Floating quick-nav cards */}
               <button

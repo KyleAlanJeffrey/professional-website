@@ -4,7 +4,7 @@ import GithubDataProvider from "@/components/providers/github-data-provider";
 import HomeSection from "@/components/sections/home-section";
 import { ArrowUpRight, Download, FileText, Moon, Sun } from "lucide-react";
 import dynamic from "next/dynamic";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 
 const WorkSection = dynamic(() => import("@/components/sections/work-section"));
 const PublicationsSection = dynamic(() => import("@/components/sections/publications-section"));
@@ -31,9 +31,6 @@ type PageContentProps = {
 const SECTIONS = ["home", "work", "publications", "projects", "github", "twitter", "contact"] as const;
 
 export default function PageContent(props: PageContentProps) {
-  const [scrollY, setScrollY] = useState(0);
-
-
   const {
     activeSection,
     isDarkMode,
@@ -48,24 +45,6 @@ export default function PageContent(props: PageContentProps) {
     highlightSectionId,
     highlightTweetIndex,
   } = props;
-
-  useEffect(() => {
-    let rafId = 0;
-    const onScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(() => {
-        setScrollY(window.scrollY);
-        rafId = 0;
-      });
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
 
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -95,7 +74,7 @@ export default function PageContent(props: PageContentProps) {
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -inset-y-96 inset-x-0 z-0"
-        style={{ transform: `translate3d(0, ${scrollY * -0.08}px, 0)` }}
+        style={{ transform: "translate3d(0, 0, 0)" }}
       >
         <div className="absolute top-[2%] -left-20 h-[38rem] w-[38rem] rounded-full bg-gradient-to-br from-amber-300/16 via-orange-300/10 to-transparent blur-3xl"></div>
         <div className="absolute top-[24%] -right-24 h-[34rem] w-[34rem] rounded-full bg-gradient-to-br from-sky-300/14 via-cyan-300/8 to-transparent blur-3xl"></div>
