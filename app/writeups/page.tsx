@@ -26,6 +26,16 @@ const WRITEUPS: Writeup[] = [
     color: "text-indigo-500 dark:text-indigo-400",
     gradient: "from-indigo-500 to-violet-500",
   },
+  {
+    slug: "ahrs",
+    title: "Attitude Estimation Using Complementary Feedback Filter",
+    description:
+      "Investigating cheap sensor fusion (gyroscope, accelerometer, magnetometer) to build an Attitude Heading Reference System. Covers DCM rotation matrices, forward integration drift, Rodrigues rotation, and closed-loop complementary filtering.",
+    tags: ["Sensor Fusion", "AHRS", "DCM", "IMU", "Complementary Filter"],
+    date: "2021",
+    color: "text-sky-500 dark:text-sky-400",
+    gradient: "from-sky-500 to-emerald-500",
+  },
 ];
 
 function WriteupCard({ writeup, index }: { writeup: Writeup; index: number }) {
