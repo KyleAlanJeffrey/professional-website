@@ -3,7 +3,7 @@
 import type { NoteMeta } from "@/lib/notes";
 import { Check, ChevronRight, Copy, File, Folder, PanelLeftClose, PanelLeft, Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 
 type TreeNode = {
   name: string;
@@ -133,9 +133,7 @@ export default function NotesList({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const slugFromUrl = searchParams.get("note");
-
-  const [activeSlug, setActiveSlug] = useState<string | null>(slugFromUrl);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [search, setSearch] = useState("");
   const [copied, setCopied] = useState(false);
@@ -162,10 +160,11 @@ export default function NotesList({
 
   // Sync with URL when browser back/forward is used
   const currentUrlSlug = searchParams.get("note");
-  if (currentUrlSlug && currentUrlSlug !== activeSlug) {
-    // This runs during render to sync state with URL without an effect loop
-    setActiveSlug(currentUrlSlug);
-  }
+  useEffect(() => {
+    if (currentUrlSlug && currentUrlSlug !== activeSlug) {
+      setActiveSlug(currentUrlSlug);
+    }
+  }, [currentUrlSlug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const activeNote = notes.find((n) => n.slug === activeSlug);
   const activeHtml = activeSlug ? noteContents[activeSlug] ?? "" : "";
