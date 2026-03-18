@@ -197,23 +197,27 @@ export default function PageContent(props: PageContentProps) {
             </a>
             <div className="flex items-center gap-1">
               {[
-                { href: "/resume.pdf", label: "Resume", download: true, icon: <Download className="h-3.5 w-3.5" />, onClick: () => (window as any).gtag?.("event", "resume_download"), dot: "bg-sky-500" },
-                { href: "/writeups", label: "Writeups", download: false, icon: null, onClick: undefined, dot: "bg-indigo-500" },
-                { href: "/notes", label: "Notes", download: false, icon: null, onClick: undefined, dot: "bg-emerald-500" },
+                { href: "/writeups", label: "Writeups", dot: "bg-indigo-500" },
+                { href: "/notes", label: "Notes", dot: "bg-emerald-500" },
               ].map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  {...(item.download ? { download: true } : {})}
-                  onClick={item.onClick}
-                  className="group flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-bold tracking-[0.1em] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
+                  className="group flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono font-bold tracking-[0.05em] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
                 >
                   <span className={`w-1.5 h-1.5 rounded-full ${item.dot} opacity-60 group-hover:opacity-100 transition-opacity`} />
-                  {item.icon}
-                  <span className="hidden sm:inline">{item.label}</span>
+                  {item.label}
                 </a>
               ))}
               <div className="w-px h-4 bg-black/[0.08] dark:bg-white/[0.08] mx-1" />
+              <a
+                href="/resume.pdf"
+                download
+                onClick={() => (window as any).gtag?.("event", "resume_download")}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
+              >
+                <Download className="h-4 w-4" />
+              </a>
               <button
                 onClick={toggleDarkMode}
                 className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 dark:text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
