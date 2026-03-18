@@ -126,7 +126,7 @@ export default function WorkSection({
           <div className="text-sm text-gray-700 dark:text-gray-300 tracking-[0.3em] font-bold mb-4" style={{ fontFamily: "monospace" }}>
             SKILLS GRAPH
           </div>
-          <SkillsGraph jobs={jobs} onSkillClick={onSkillClick} />
+          <SkillsGraph jobs={jobs} onSkillClick={onSkillClick} autoStart={false} />
         </div>
       )}
     </SectionShell>

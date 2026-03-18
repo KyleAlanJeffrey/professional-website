@@ -1,6 +1,6 @@
 "use client";
 
-import { Maximize2, Minimize2 } from "lucide-react";
+import { Maximize2, Minimize2, Play } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -67,13 +67,15 @@ function clampSpeed(vx: number, vy: number): [number, number] {
 type Props = {
   jobs: { skills: string[] }[];
   onSkillClick?: (skill: string) => void;
+  autoStart?: boolean;
 };
 
-export default function SkillsGraph({ jobs, onSkillClick }: Props) {
+export default function SkillsGraph({ jobs, onSkillClick, autoStart = true }: Props) {
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const onClickRef   = useRef(onSkillClick);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [started, setStarted] = useState(autoStart);
   const [placeMode, setPlaceMode] = useState<"off" | "attract" | "avoid">("off");
   const placeModeRef = useRef(placeMode);
   useEffect(() => { placeModeRef.current = placeMode; }, [placeMode]);
@@ -105,6 +107,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
   useEffect(() => { onClickRef.current = onSkillClick; }, [onSkillClick]);
 
   useEffect(() => {
+    if (!started) return;
     const canvas    = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -374,7 +377,7 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       ro.disconnect();
       visObserver.disconnect();
     };
-  }, [jobs, isFullscreen]);
+  }, [jobs, isFullscreen, started]);
 
   const legend = (
     <div className="flex flex-wrap gap-3">
@@ -464,13 +467,26 @@ export default function SkillsGraph({ jobs, onSkillClick }: Props) {
       <div
         ref={containerRef}
         data-keep-highlight="true"
-        className={`overflow-hidden ${placeMode !== "off" ? "cursor-crosshair" : ""} ${
+        className={`relative overflow-hidden ${placeMode !== "off" ? "cursor-crosshair" : ""} ${
           isFullscreen
             ? "flex-1"
             : "w-full h-72 rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 md:backdrop-blur"
         }`}
       >
-        <canvas ref={canvasRef} style={{ display: "block" }} />
+        <canvas ref={canvasRef} style={{ display: started ? "block" : "none" }} />
+        {!started && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-3 cursor-pointer group"
+            onClick={() => setStarted(true)}
+          >
+            <div className="w-14 h-14 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:scale-110 transition-all duration-300">
+              <Play className="h-6 w-6 text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white transition-colors ml-0.5" />
+            </div>
+            <span className="text-[10px] font-mono font-bold tracking-[0.2em] text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+              LAUNCH SIMULATION
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Footer */}
