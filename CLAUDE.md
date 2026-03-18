@@ -50,10 +50,14 @@ Canvas-based flocking simulation in `components/skills-graph.tsx`. Features:
 - Publications use static previews (YouTube thumbnails, images) instead of iframes
 
 ## Style Conventions
+See `aesthetic.md` for the full visual guide. Key rules:
 - Font: monospace for labels, tracking, and UI elements
 - Glass-morphism cards: `bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10`
 - Shadows use rgba with varying depths
 - All animations use CSS transitions (not framer-motion)
+- **Buttons are monochrome** (black/white), NOT colored — accent colors are only for labels, dots, borders
+- Primary CTA: `bg-black text-white dark:bg-white dark:text-black`
+- Ghost/secondary: `variant="ghost"` with gray text
 
 ## Dev Commands
 ```bash

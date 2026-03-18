@@ -205,7 +205,7 @@ export default function PageContent(props: PageContentProps) {
           <Button
             asChild
             size="sm"
-            className="bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 shadow-[0_4px_12px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.5)] transition-all duration-300 hover:-translate-y-0.5"
+            className="bg-black text-white hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-0.5"
           >
             <a href="/writeups">
               <span className="hidden sm:inline">Writeups</span>
@@ -215,8 +215,9 @@ export default function PageContent(props: PageContentProps) {
           </Button>
           <Button
             asChild
+            variant="ghost"
             size="sm"
-            className="bg-emerald-500 text-white hover:bg-emerald-600 dark:bg-emerald-500 dark:hover:bg-emerald-400 shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)] transition-all duration-300 hover:-translate-y-0.5"
+            className="text-gray-700 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition-all duration-300"
           >
             <a href="/notes">
               <span className="hidden sm:inline">Notes</span>
