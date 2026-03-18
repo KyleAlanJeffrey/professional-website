@@ -320,7 +320,7 @@ export default function AHRSWriteupPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/4.png`} alt="Simulated 45 degree rotation" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/6.png`} alt="Simulated 45 degree rotation" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 5:</span> Simulated 45&deg; rotation
@@ -328,7 +328,7 @@ export default function AHRSWriteupPage() {
             </figure>
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/5.png`} alt="Drift after 9 revolutions" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/7.png`} alt="Drift after 9 revolutions" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 6:</span> DCM drift &mdash; body frame vectors lose orthonormality after 9 revolutions
@@ -350,7 +350,7 @@ export default function AHRSWriteupPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/6.png`} alt="Experimental drift 3D" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/9.png`} alt="Experimental drift 3D" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 7a:</span> Experimental drift after 6 rotations (3D view)
@@ -358,7 +358,7 @@ export default function AHRSWriteupPage() {
             </figure>
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/7.png`} alt="Experimental drift norm" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/10.png`} alt="Experimental drift norm" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 7b:</span> Body frame vector norms diverge from 1.0 within 30 seconds
@@ -420,7 +420,7 @@ export default function AHRSWriteupPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/8.png`} alt="Closed loop without bias" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/11.png`} alt="Closed loop without bias" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 8:</span> Without bias correction
@@ -428,7 +428,7 @@ export default function AHRSWriteupPage() {
             </figure>
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/9.png`} alt="With bias drift" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/12.png`} alt="With bias drift" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 9:</span> With bias (uncorrected)
@@ -436,7 +436,7 @@ export default function AHRSWriteupPage() {
             </figure>
             <figure>
               <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                <img src={`${MEDIA}/10.png`} alt="With bias corrected" className="w-full h-auto" loading="lazy" />
+                <img src={`${MEDIA}/13.png`} alt="With bias corrected" className="w-full h-auto" loading="lazy" />
               </div>
               <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 10:</span> With bias estimate &mdash; stable
@@ -462,12 +462,12 @@ export default function AHRSWriteupPage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 my-8">
             {[
-              { src: `${MEDIA}/11.png`, label: "Kp = 0.1" },
-              { src: `${MEDIA}/12.png`, label: "Kp = 0.5" },
-              { src: `${MEDIA}/13.png`, label: "Kp = 1" },
+              { src: `${MEDIA}/18.png`, label: "Kp = 0.1" },
+              { src: `${MEDIA}/15.png`, label: "Kp = 0.5" },
+              { src: `${MEDIA}/17.png`, label: "Kp = 1" },
               { src: `${MEDIA}/14.png`, label: "Kp = 5" },
-              { src: `${MEDIA}/15.png`, label: "Kp = 10" },
-              { src: `${MEDIA}/17.png`, label: "Expected (MATLAB)" },
+              { src: `${MEDIA}/19.png`, label: "Kp = 10" },
+              { src: `${MEDIA}/20.png`, label: "Expected (MATLAB)" },
             ].map((fig) => (
               <figure key={fig.label}>
                 <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
@@ -490,7 +490,7 @@ export default function AHRSWriteupPage() {
 
           <figure className="my-8">
             <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-              <img src={`${MEDIA}/17.png`} alt="Actual closed loop feedback" className="w-full h-auto" loading="lazy" />
+              <img src={`${MEDIA}/21.png`} alt="Actual closed loop feedback" className="w-full h-auto" loading="lazy" />
             </div>
             <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
               <span className="font-mono font-bold text-sky-500 dark:text-sky-400">Fig 17:</span> Experimental closed loop accelerometer feedback
