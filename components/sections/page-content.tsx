@@ -9,7 +9,7 @@ import ProjectsSection from "@/components/sections/projects-section";
 import PublicationsSection from "@/components/sections/publications-section";
 import TwitterSection from "@/components/sections/twitter-section";
 import WorkSection from "@/components/sections/work-section";
-import { ArrowUpRight, Download, Moon, Sun } from "lucide-react";
+import { ArrowUpRight, Download, FileText, Moon, Sun } from "lucide-react";
 import { ReactNode, useEffect, useState } from "react";
 
 type PageContentProps = {
@@ -214,9 +214,10 @@ export default function PageContent(props: PageContentProps) {
                 href="/resume.pdf"
                 download
                 onClick={() => (window as any).gtag?.("event", "resume_download")}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-mono text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-mono font-bold tracking-[0.05em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
               >
-                <Download className="h-4 w-4" />
+                <FileText className="h-4 w-4" />
+                <span className="hidden sm:inline">CV</span>
               </a>
               <button
                 onClick={toggleDarkMode}
