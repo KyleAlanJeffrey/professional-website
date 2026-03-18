@@ -2,6 +2,7 @@
 
 import { useApp } from "@/components/providers/app-provider";
 import { FileText, Home, Moon, Sun } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
@@ -18,7 +19,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 w-full border-b border-black/[0.06] dark:border-white/[0.06] bg-[#fafafa]/80 dark:bg-[#0b0c0f]/80 md:backdrop-blur-xl">
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
         <div className="flex items-center gap-1">
-          <a
+          <Link
             href="/"
             className={`flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200 ${
               isHome
@@ -28,12 +29,12 @@ export default function Navbar() {
             aria-label="Home"
           >
             <Home className="h-4 w-4" />
-          </a>
+          </Link>
           <div className="w-px h-4 bg-black/[0.08] dark:bg-white/[0.08] mx-1" />
           {NAV_ITEMS.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-mono font-bold tracking-[0.05em] transition-all duration-200 ${
@@ -44,7 +45,7 @@ export default function Navbar() {
               >
                 <span className={`w-1.5 h-1.5 rounded-full ${item.dot} ${isActive ? "opacity-100" : "opacity-60 group-hover:opacity-100"} transition-opacity`} />
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </div>

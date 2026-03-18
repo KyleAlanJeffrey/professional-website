@@ -13,10 +13,12 @@ Personal portfolio website for Kyle Jeffrey (robotics/agriculture AI engineer). 
 ## Architecture
 - `app/` — Next.js app router pages and API utilities
 - `components/sections/` — Major page sections (home, work, github, projects, publications, twitter, contact)
-- `components/` — Reusable components (commit, job, project, skills-graph, section-title, etc.)
+- `components/` — Reusable components (commit, job, project, skills-graph, section-title, navbar, etc.)
+- `components/providers/` — React context providers (`app-provider` for theme, `github-data-provider`)
 - `data/` — Static JSON data files (bio, jobs, work_projects, tweets)
 - `hooks/` — Custom hooks (`use-in-view` for intersection observer)
-- `components/providers/` — React context providers (github-data-provider)
+- `lib/notes.ts` — Obsidian vault reader (filesystem, frontmatter, wikilinks, remark/rehype)
+- `content/notes/` — Git submodule pointing to Obsidian vault
 
 ## Key Patterns
 
@@ -44,10 +46,30 @@ Canvas-based flocking simulation in `components/skills-graph.tsx`. Features:
 - `boidsRef` / `fieldPointsRef` persist state across portal remounts
 - IntersectionObserver pauses animation when off-screen
 
+### Navigation
+- **Always use `<Link>` from `next/link`** for internal page links — never plain `<a>` tags. `<a>` causes full page reloads and white flash. `<Link>` enables client-side navigation where the layout shell persists.
+- Keep `<a>` only for external links and file downloads (e.g., resume PDF).
+- Shared `Navbar` component (`components/navbar.tsx`) is used on all pages.
+
+### URL Search Params (Next.js 15 App Router)
+- Use `useSearchParams()` from `next/navigation` to read query params in client components.
+- **`useSearchParams` auto-re-renders on back/forward** — no manual sync with `useEffect` needed.
+- Derive state directly from `searchParams.get()` instead of syncing to local `useState`.
+- On statically rendered routes, wrap components using `useSearchParams()` in `<Suspense>`.
+- For **shallow URL updates** (no server re-fetch), use `window.history.pushState()` — Next.js hooks pick up the change automatically.
+- For **full navigation** with server re-fetch, use `router.push()` from `useRouter()`.
+- **Never set state during render** from searchParams — causes React error #418 (hydration mismatch).
+
+### Dark Mode
+- Centralized in `AppProvider` (`components/providers/app-provider.tsx`) via `useApp()` hook.
+- Layout inline script reads `localStorage("theme")` and applies dark class before first paint (prevents FOUC).
+- Default is dark mode. Toggle persists to `localStorage` key `"theme"` (`"dark"` or `"light"`).
+
 ### Performance
 - `backdrop-blur` uses `md:backdrop-blur` (disabled on mobile for GPU performance)
 - Boids canvas pauses when scrolled out of view
 - Publications use static previews (YouTube thumbnails, images) instead of iframes
+- Hero section content (h1, image) must NOT have fade-in animations — delays FCP/LCP
 
 ## Style Conventions
 See `aesthetic.md` for the full visual guide. Key rules:
@@ -66,6 +88,15 @@ npm run build    # Production build
 npm run lint     # ESLint
 npx tsc --noEmit # Type check (note: api.ts has pre-existing errors)
 ```
+
+## Notes System
+- Obsidian vault is a git submodule at `content/notes/`
+- Vercel build command: `git submodule update --init --recursive && npm run build`
+- `lib/notes.ts` reads `.md` files at build time, parses frontmatter (optional), resolves `[[wikilinks]]`
+- Notes page (`app/notes/`) is Obsidian-style: sidebar file tree + content pane
+- Catch-all route `app/notes/[...slug]/` preserves vault directory structure
+- Tags are derived from folder names when frontmatter has no `tags` field
+- `![[image embeds]]` are currently stripped (vault images not served)
 
 ## GitHub Integration
 - Fetches repos, commits, languages from GitHub API using token in `NEXT_PUBLIC_GITHUB_API_TOKEN`

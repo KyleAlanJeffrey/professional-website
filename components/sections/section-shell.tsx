@@ -26,12 +26,16 @@ export default function SectionShell({
     <section
       ref={ref}
       id={id}
-      className={`${className} ${highlighted ? highlightClassName : ""} transition-all duration-700 ease-out ${
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      }`}
+      className={`${className} ${highlighted ? highlightClassName : ""}`}
     >
-      {decorations}
-      {children}
+      <div
+        className={`transition-all duration-700 ease-out ${
+          inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
+        {decorations}
+        {children}
+      </div>
     </section>
   );
 }

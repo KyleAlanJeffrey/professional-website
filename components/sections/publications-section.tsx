@@ -252,7 +252,7 @@ export default function PublicationsSection() {
   return (
     <SectionShell
       id="publications"
-      className="mt-16 md:mt-24 max-w-[90rem] mx-auto cv-auto"
+      className="mt-16 md:mt-24 max-w-[90rem] mx-auto"
     >
       <div className="relative overflow-hidden rounded-3xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-white/90 via-white/75 to-slate-100/45 dark:from-[#0b0c0f]/80 dark:via-white/5 dark:to-slate-900/60 p-6 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.2)]">
         <div className="absolute inset-0 pointer-events-none">

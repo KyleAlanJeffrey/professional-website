@@ -49,7 +49,7 @@ export default function TwitterSection({
   return (
     <SectionShell
       id="twitter"
-      className="mt-14 md:mt-20 max-w-[90rem] mx-auto transition-all duration-300 rounded-2xl cv-auto relative isolate"
+      className="mt-14 md:mt-20 max-w-[90rem] mx-auto transition-all duration-300 rounded-2xl relative isolate"
       highlighted={highlightSectionId === "twitter"}
       highlightClassName="ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
       decorations={
