@@ -190,32 +190,39 @@ export default function PageContent(props: PageContentProps) {
           ))}
         </div>
 
-        <div className="fixed -top-0.5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-0 rounded-b-2xl border border-t-0 border-black/[0.08] dark:border-white/[0.1] bg-white/80 dark:bg-[#141414]/80 md:backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)] px-2 pt-2.5 pb-2">
-          {[
-            { href: "/resume.pdf", label: "Resume", shortLabel: null, download: true, icon: <Download className="h-3.5 w-3.5" />, onClick: () => (window as any).gtag?.("event", "resume_download"), color: "text-indigo-500/70 dark:text-indigo-400/70 hover:text-indigo-600 dark:hover:text-indigo-300" },
-            { href: "/writeups", label: "Writeups", shortLabel: "W", download: false, icon: null, onClick: undefined, color: "text-violet-500/70 dark:text-violet-400/70 hover:text-violet-600 dark:hover:text-violet-300" },
-            { href: "/notes", label: "Notes", shortLabel: "N", download: false, icon: null, onClick: undefined, color: "text-emerald-500/70 dark:text-emerald-400/70 hover:text-emerald-600 dark:hover:text-emerald-300" },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              {...(item.download ? { download: true } : {})}
-              onClick={item.onClick}
-              className={`relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-mono font-bold tracking-[0.15em] ${item.color} hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300`}
-            >
-              {item.icon}
-              <span className="hidden sm:inline">{item.label}</span>
-              {item.shortLabel && <span className="sm:hidden">{item.shortLabel}</span>}
+        <nav className="sticky top-0 z-50 w-full border-b border-black/[0.06] dark:border-white/[0.06] bg-white/80 dark:bg-[#0b0b0b]/80 md:backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
+            <a href="/" className="text-sm font-black font-mono tracking-tight text-gray-900 dark:text-white">
+              KJ
             </a>
-          ))}
-          <div className="w-px h-5 bg-black/[0.08] dark:bg-white/[0.1] mx-0.5" />
-          <button
-            onClick={toggleDarkMode}
-            className="flex items-center justify-center w-8 h-8 rounded-xl text-gray-500 dark:text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300"
-          >
-            {isDarkMode ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
-          </button>
-        </div>
+            <div className="flex items-center gap-1">
+              {[
+                { href: "/resume.pdf", label: "Resume", download: true, icon: <Download className="h-3.5 w-3.5" />, onClick: () => (window as any).gtag?.("event", "resume_download"), dot: "bg-sky-500" },
+                { href: "/writeups", label: "Writeups", download: false, icon: null, onClick: undefined, dot: "bg-indigo-500" },
+                { href: "/notes", label: "Notes", download: false, icon: null, onClick: undefined, dot: "bg-emerald-500" },
+              ].map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  {...(item.download ? { download: true } : {})}
+                  onClick={item.onClick}
+                  className="group flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-mono font-bold tracking-[0.1em] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${item.dot} opacity-60 group-hover:opacity-100 transition-opacity`} />
+                  {item.icon}
+                  <span className="hidden sm:inline">{item.label}</span>
+                </a>
+              ))}
+              <div className="w-px h-4 bg-black/[0.08] dark:bg-white/[0.08] mx-1" />
+              <button
+                onClick={toggleDarkMode}
+                className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 dark:text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
+              >
+                {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            </div>
+          </div>
+        </nav>
 
         <div className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 -rotate-90 origin-center -mr-24 z-20">
           <div
