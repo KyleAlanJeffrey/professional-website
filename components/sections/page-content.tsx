@@ -61,7 +61,7 @@ export default function PageContent(props: PageContentProps) {
 
   return (
     <div
-      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-4 overflow-clip"
+      className="min-h-screen bg-[#fafafa] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-4 overflow-clip"
       style={{
         backgroundImage:
           "radial-gradient(1200px circle at 10% 2%, rgba(245,158,11,0.07), transparent 58%), radial-gradient(1000px circle at 88% 14%, rgba(14,165,233,0.06), transparent 56%), radial-gradient(950px circle at 14% 48%, rgba(249,115,22,0.05), transparent 60%), radial-gradient(900px circle at 82% 62%, rgba(56,189,248,0.045), transparent 58%), radial-gradient(980px circle at 42% 92%, rgba(251,191,36,0.045), transparent 62%)",

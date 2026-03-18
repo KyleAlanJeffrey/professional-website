@@ -15,7 +15,7 @@ export default function Navbar() {
   const isHome = pathname === "/";
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-black/[0.06] dark:border-white/[0.06] bg-[#f6f2ea]/80 dark:bg-[#0b0c0f]/80 md:backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 w-full border-b border-black/[0.06] dark:border-white/[0.06] bg-[#fafafa]/80 dark:bg-[#0b0c0f]/80 md:backdrop-blur-xl">
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
         <div className="flex items-center gap-1">
           <a
