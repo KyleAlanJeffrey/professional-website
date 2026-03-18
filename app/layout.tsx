@@ -1,3 +1,4 @@
+import { AppProvider } from "@/components/providers/app-provider";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
@@ -177,8 +178,10 @@ html {
             __html: `
 (() => {
   try {
+    const t = localStorage.getItem("theme");
+    if (t === "light") return;
     document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", "dark");
+    if (!t) localStorage.setItem("theme", "dark");
   } catch (_) {}
 })();
             `,
@@ -192,7 +195,9 @@ html {
         />
       </head>
       <body>
+        <AppProvider>
         {children}
+        </AppProvider>
         <Script
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "598d535d83d9428dbc1a9b4b3f6dc273"}'

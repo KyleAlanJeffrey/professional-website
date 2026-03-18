@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const [activeSection, setActiveSection] = useState("home");
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const jobs = jobsData.jobs ?? [];
   const [highlightSkill, setHighlightSkill] = useState<string | null>(null);
   const [highlightSectionId, setHighlightSectionId] = useState<string | null>(
@@ -19,10 +18,6 @@ export default function HomePage() {
     null,
   );
 
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("theme", "dark");
-  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -99,16 +94,6 @@ export default function HomePage() {
     };
   }, []);
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    if (!isDarkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -243,8 +228,6 @@ export default function HomePage() {
   return (
     <PageContent
       activeSection={activeSection}
-      isDarkMode={isDarkMode}
-      toggleDarkMode={toggleDarkMode}
       scrollToSection={scrollToSection}
       scrollToJob={scrollToJob}
       scrollToTweet={scrollToTweet}
