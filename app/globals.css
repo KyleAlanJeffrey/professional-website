@@ -95,6 +95,135 @@
   }
 }
 
+/* ─── Note prose styles ─── */
+.note-content {
+  line-height: 1.8;
+  color: theme("colors.gray.700");
+}
+.dark .note-content {
+  color: theme("colors.gray.300");
+}
+.note-content h1,
+.note-content h2,
+.note-content h3,
+.note-content h4 {
+  font-family: monospace;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: theme("colors.gray.900");
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+.dark .note-content h1,
+.dark .note-content h2,
+.dark .note-content h3,
+.dark .note-content h4 {
+  color: white;
+}
+.note-content h1 { font-size: 1.75rem; }
+.note-content h2 { font-size: 1.4rem; }
+.note-content h3 { font-size: 1.15rem; }
+.note-content h4 { font-size: 1rem; }
+.note-content p {
+  margin-bottom: 1.25em;
+}
+.note-content a {
+  color: theme("colors.emerald.600");
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.dark .note-content a {
+  color: theme("colors.emerald.400");
+}
+.note-content a:hover {
+  color: theme("colors.emerald.500");
+}
+.note-content code {
+  font-family: monospace;
+  font-size: 0.875em;
+  background: theme("colors.gray.100");
+  border-radius: 0.25rem;
+  padding: 0.15em 0.4em;
+}
+.dark .note-content code {
+  background: rgba(255, 255, 255, 0.1);
+}
+.note-content pre {
+  background: theme("colors.gray.50");
+  border: 1px solid theme("colors.gray.200");
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.5em;
+}
+.dark .note-content pre {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.note-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+}
+.note-content blockquote {
+  border-left: 2px solid theme("colors.emerald.500");
+  padding-left: 1rem;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: theme("colors.gray.500");
+}
+.dark .note-content blockquote {
+  color: theme("colors.gray.400");
+}
+.note-content ul,
+.note-content ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+.note-content ul { list-style-type: disc; }
+.note-content ol { list-style-type: decimal; }
+.note-content li {
+  margin-bottom: 0.35em;
+}
+.note-content img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  margin: 1.5em 0;
+}
+.note-content hr {
+  border: none;
+  border-top: 1px solid theme("colors.gray.200");
+  margin: 2em 0;
+}
+.dark .note-content hr {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.note-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5em;
+  font-size: 0.9em;
+}
+.note-content th,
+.note-content td {
+  border: 1px solid theme("colors.gray.200");
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+.dark .note-content th,
+.dark .note-content td {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.note-content th {
+  font-family: monospace;
+  font-weight: 700;
+  background: theme("colors.gray.50");
+}
+.dark .note-content th {
+  background: rgba(255, 255, 255, 0.05);
+}
+
 /* Compact react-tweet embeds */
 [data-theme] [class*="tweet-"] {
   --tweet-container-margin: 0;

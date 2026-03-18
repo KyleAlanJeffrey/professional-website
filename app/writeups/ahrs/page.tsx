@@ -1,18 +1,11 @@
 "use client";
 
-import { ArrowLeft, Download } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import Navbar from "@/components/navbar";
+import { Download } from "lucide-react";
 
 const MEDIA = "/writeups/ahrs/media";
 
 export default function AHRSWriteupPage() {
-  const [mounted, setMounted] = useState(false);
-
-  useState(() => {
-    setMounted(true);
-  });
-
   return (
     <main className="min-h-screen bg-white dark:bg-[#0b0b0b] relative overflow-hidden">
       {/* Background decorations */}
@@ -21,25 +14,7 @@ export default function AHRSWriteupPage() {
         <div className="absolute top-1/3 -right-48 h-[500px] w-[500px] rounded-full bg-gradient-to-bl from-amber-200/20 via-sky-200/10 to-transparent blur-3xl dark:from-amber-500/5 dark:via-sky-500/5" />
       </div>
 
-      {/* Navigation */}
-      <nav
-        className={`sticky top-0 z-50 border-b border-black/5 dark:border-white/5 bg-white/80 dark:bg-[#0b0b0b]/80 md:backdrop-blur-xl transition-all duration-700 ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-        }`}
-      >
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/writeups"
-            className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-mono"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            All Writeups
-          </Link>
-          <span className="text-xs text-sky-500 dark:text-sky-400 tracking-[0.3em] font-bold font-mono">
-            AHRS
-          </span>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Content */}
       <article className="max-w-4xl mx-auto px-6 py-16 md:py-24">

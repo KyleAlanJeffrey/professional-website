@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft, Download, Github } from "lucide-react";
-import Link from "next/link";
+import Navbar from "@/components/navbar";
+import { Download, Github } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useState, useCallback } from "react";
 
@@ -44,13 +44,8 @@ const TOC_ITEMS: { id: string; label: string; level: 0 | 1 | 2 }[] = [
 ];
 
 export default function SeniorThesisPage() {
-  const [mounted, setMounted] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [tocOpen, setTocOpen] = useState(false);
-
-  useState(() => {
-    setMounted(true);
-  });
 
   const openLightbox = useCallback((index: number) => {
     setLightboxIndex(index);
@@ -88,20 +83,11 @@ export default function SeniorThesisPage() {
         <div className="absolute bottom-20 left-1/4 h-64 w-64 rounded-full bg-gradient-to-tr from-emerald-200/20 to-transparent blur-3xl dark:from-emerald-500/5" />
       </div>
 
-      {/* Navigation */}
-      <nav
-        className={`sticky top-0 z-50 border-b border-black/5 dark:border-white/5 bg-white/80 dark:bg-[#0b0b0b]/80 md:backdrop-blur-xl transition-all duration-700 ${
-          mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-        }`}
-      >
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link
-            href="/writeups"
-            className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-mono"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            All Writeups
-          </Link>
+      <Navbar />
+
+      {/* TOC bar */}
+      <div className="sticky top-12 z-40 border-b border-black/[0.04] dark:border-white/[0.04] bg-white/60 dark:bg-[#0b0b0b]/60 md:backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-6 py-2 flex items-center justify-end">
           <button
             onClick={() => setTocOpen(!tocOpen)}
             className="text-xs text-indigo-500 dark:text-indigo-400 tracking-[0.3em] font-bold font-mono hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
@@ -110,7 +96,6 @@ export default function SeniorThesisPage() {
           </button>
         </div>
 
-        {/* Table of Contents dropdown */}
         {tocOpen && (
           <div className="absolute right-4 top-full mt-1 w-64 rounded-xl border border-black/10 dark:border-white/10 bg-white/95 dark:bg-[#1a1a1a]/95 md:backdrop-blur-xl shadow-2xl p-4 z-50">
             <span className="text-xs font-mono font-bold tracking-wider text-indigo-600 dark:text-indigo-400 mb-3 block">
@@ -134,7 +119,7 @@ export default function SeniorThesisPage() {
             </nav>
           </div>
         )}
-      </nav>
+      </div>
 
       {/* Content */}
       <article className="max-w-4xl mx-auto px-6 py-16 md:py-24">
