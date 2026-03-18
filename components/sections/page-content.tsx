@@ -190,28 +190,28 @@ export default function PageContent(props: PageContentProps) {
           ))}
         </div>
 
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-0 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white/70 dark:bg-[#1a1a1a]/70 md:backdrop-blur-2xl shadow-[0_4px_24px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] px-1.5 py-1.5">
+        <div className="fixed -top-0.5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-0 rounded-b-2xl border border-t-0 border-black/[0.08] dark:border-white/[0.1] bg-white/80 dark:bg-[#141414]/80 md:backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.04)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)] px-2 pt-2.5 pb-2">
           {[
-            { href: "/resume.pdf", label: "Resume", shortLabel: null, download: true, icon: <Download className="h-3.5 w-3.5" />, onClick: () => (window as any).gtag?.("event", "resume_download") },
-            { href: "/writeups", label: "Writeups", shortLabel: "W", download: false, icon: null, onClick: undefined },
-            { href: "/notes", label: "Notes", shortLabel: "N", download: false, icon: null, onClick: undefined },
-          ].map((item, i) => (
+            { href: "/resume.pdf", label: "Resume", shortLabel: null, download: true, icon: <Download className="h-3.5 w-3.5" />, onClick: () => (window as any).gtag?.("event", "resume_download"), color: "hover:text-indigo-600 dark:hover:text-indigo-400" },
+            { href: "/writeups", label: "Writeups", shortLabel: "W", download: false, icon: null, onClick: undefined, color: "hover:text-violet-600 dark:hover:text-violet-400" },
+            { href: "/notes", label: "Notes", shortLabel: "N", download: false, icon: null, onClick: undefined, color: "hover:text-emerald-600 dark:hover:text-emerald-400" },
+          ].map((item) => (
             <a
               key={item.href}
               href={item.href}
               {...(item.download ? { download: true } : {})}
               onClick={item.onClick}
-              className="relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-mono font-bold tracking-[0.15em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300"
+              className={`relative flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-mono font-bold tracking-[0.15em] text-gray-500 dark:text-gray-400 ${item.color} hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300`}
             >
               {item.icon}
               <span className="hidden sm:inline">{item.label}</span>
               {item.shortLabel && <span className="sm:hidden">{item.shortLabel}</span>}
             </a>
           ))}
-          <div className="w-px h-5 bg-black/[0.06] dark:bg-white/[0.08] mx-0.5" />
+          <div className="w-px h-5 bg-black/[0.08] dark:bg-white/[0.1] mx-0.5" />
           <button
             onClick={toggleDarkMode}
-            className="flex items-center justify-center w-8 h-8 rounded-xl text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300"
+            className="flex items-center justify-center w-8 h-8 rounded-xl text-gray-500 dark:text-gray-400 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-300"
           >
             {isDarkMode ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
