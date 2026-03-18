@@ -63,7 +63,7 @@ export default function PageContent(props: PageContentProps) {
 
   return (
     <div
-      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-16 overflow-x-clip"
+      className="min-h-screen bg-[#f6f2ea] dark:bg-[#0b0c0f] transition-colors duration-300 relative pb-4 overflow-clip"
       style={{
         backgroundImage:
           "radial-gradient(1200px circle at 10% 2%, rgba(245,158,11,0.07), transparent 58%), radial-gradient(1000px circle at 88% 14%, rgba(14,165,233,0.06), transparent 56%), radial-gradient(950px circle at 14% 48%, rgba(249,115,22,0.05), transparent 60%), radial-gradient(900px circle at 82% 62%, rgba(56,189,248,0.045), transparent 58%), radial-gradient(980px circle at 42% 92%, rgba(251,191,36,0.045), transparent 62%)",
@@ -171,7 +171,7 @@ export default function PageContent(props: PageContentProps) {
         </div>
 
         <nav className="sticky top-0 z-50 w-full border-b border-black/[0.06] dark:border-white/[0.06] bg-white/80 dark:bg-[#0b0b0b]/80 md:backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
+          <div className="max-w-[90rem] mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
             <a href="/" className="text-sm font-black font-mono tracking-tight text-gray-900 dark:text-white">
               KJ
             </a>

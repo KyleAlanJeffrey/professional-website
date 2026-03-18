@@ -62,7 +62,7 @@ export default function GithubSection() {
   return (
     <SectionShell
       id="github"
-      className="mt-16 md:mt-24 max-w-7xl mx-auto cv-auto relative isolate"
+      className="mt-16 md:mt-24 max-w-[90rem] mx-auto cv-auto relative isolate"
       decorations={
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute top-10 -right-10 h-56 w-56 rounded-full bg-gradient-to-br from-emerald-200/35 via-cyan-200/15 to-transparent blur-3xl animate-pulse [animation-duration:9s] dark:from-emerald-400/10 dark:via-cyan-400/5"></div>

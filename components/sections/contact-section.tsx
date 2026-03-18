@@ -52,7 +52,7 @@ export default function ContactSection() {
   return (
     <SectionShell
       id="contact"
-      className="mt-16 md:mt-24 max-w-7xl mx-auto cv-auto relative isolate"
+      className="mt-16 md:mt-24 max-w-[90rem] mx-auto cv-auto relative isolate"
       decorations={
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute top-16 right-36 h-14 w-14 rounded-full border border-indigo-300/40 dark:border-indigo-300/20"></div>

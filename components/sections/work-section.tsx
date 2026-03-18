@@ -31,7 +31,7 @@ export default function WorkSection({
   return (
     <SectionShell
       id="work"
-      className="mt-16 md:mt-24 max-w-7xl mx-auto transition-all duration-300 rounded-2xl relative isolate"
+      className="mt-16 md:mt-24 max-w-[90rem] mx-auto transition-all duration-300 rounded-2xl relative isolate"
       highlighted={highlightSectionId === "work"}
       highlightClassName="ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
       decorations={

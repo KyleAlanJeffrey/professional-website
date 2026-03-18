@@ -40,7 +40,7 @@ export default function HomeSection({
   );
 
   return (
-    <section id="home" className="max-w-7xl mx-auto pt-6 lg:pt-16 pb-10 lg:pb-20 relative">
+    <section id="home" className="max-w-[90rem] mx-auto pt-4 lg:pt-8 pb-10 lg:pb-20 relative">
       <h2 className="sr-only">Robotics Software Engineer Portfolio and AI Projects</h2>
 
       {/* ─── Hero: Full-width name + photo overlap ─── */}
