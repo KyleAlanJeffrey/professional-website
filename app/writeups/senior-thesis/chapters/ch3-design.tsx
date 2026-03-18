@@ -313,15 +313,24 @@ export default function Chapter3({ openLightbox }: { openLightbox: (i: number) =
           </div>
 
           <FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <FigureGrid cols={3}>
               <Figure src={ALL_FIGURES[20].src} alt={ALL_FIGURES[20].alt} caption={ALL_FIGURES[20].caption} figNum={ALL_FIGURES[20].figNum} onClick={() => openLightbox(20)} />
+              <Figure src={ALL_FIGURES[21].src} alt={ALL_FIGURES[21].alt} caption={ALL_FIGURES[21].caption} figNum={ALL_FIGURES[21].figNum} onClick={() => openLightbox(21)} />
+              <Figure src={ALL_FIGURES[22].src} alt={ALL_FIGURES[22].alt} caption={ALL_FIGURES[22].caption} figNum={ALL_FIGURES[22].figNum} onClick={() => openLightbox(22)} />
+            </FigureGrid>
+          </FadeIn>
+
+          <FadeIn>
+            <FigureGrid>
               <Figure src={ALL_FIGURES[23].src} alt={ALL_FIGURES[23].alt} caption={ALL_FIGURES[23].caption} figNum={ALL_FIGURES[23].figNum} onClick={() => openLightbox(23)} />
-            </div>
+              <Figure src={ALL_FIGURES[24].src} alt={ALL_FIGURES[24].alt} caption={ALL_FIGURES[24].caption} figNum={ALL_FIGURES[24].figNum} onClick={() => openLightbox(24)} />
+            </FigureGrid>
           </FadeIn>
 
           <FadeIn>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
               <Figure src={ALL_FIGURES[25].src} alt={ALL_FIGURES[25].alt} caption={ALL_FIGURES[25].caption} figNum={ALL_FIGURES[25].figNum} onClick={() => openLightbox(25)} />
+              <Figure src={ALL_FIGURES[26].src} alt={ALL_FIGURES[26].alt} caption={ALL_FIGURES[26].caption} figNum={ALL_FIGURES[26].figNum} onClick={() => openLightbox(26)} />
               <Figure src={ALL_FIGURES[27].src} alt={ALL_FIGURES[27].alt} caption={ALL_FIGURES[27].caption} figNum={ALL_FIGURES[27].figNum} onClick={() => openLightbox(27)} />
               <Figure src={ALL_FIGURES[30].src} alt={ALL_FIGURES[30].alt} caption={ALL_FIGURES[30].caption} figNum={ALL_FIGURES[30].figNum} onClick={() => openLightbox(30)} />
             </div>
