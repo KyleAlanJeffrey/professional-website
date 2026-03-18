@@ -193,6 +193,7 @@ export default function PageContent(props: PageContentProps) {
               <a
                 href="/resume.pdf"
                 download
+                aria-label="Download resume PDF"
                 onClick={() => (window as any).gtag?.("event", "resume_download")}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm font-mono font-bold tracking-[0.05em] text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
               >
@@ -201,6 +202,7 @@ export default function PageContent(props: PageContentProps) {
               </a>
               <button
                 onClick={toggleDarkMode}
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                 className="flex items-center justify-center w-8 h-8 rounded-lg text-gray-400 dark:text-gray-500 hover:text-amber-500 dark:hover:text-amber-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all duration-200"
               >
                 {isDarkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
