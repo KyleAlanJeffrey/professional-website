@@ -1,48 +1,40 @@
 "use client";
 
+import { CustomTweet } from "@/components/custom-tweet";
 import SectionTitle from "@/components/section-title";
 import tweetsData from "@/data/tweets.json";
 import SectionShell from "@/components/sections/section-shell";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-
-const Tweet = dynamic(() => import("react-tweet").then((mod) => mod.Tweet), {
-  ssr: false,
-});
 
 type TwitterSectionProps = {
   highlightSectionId: string | null;
   highlightTweetIndex: number | null;
-  isDarkMode: boolean;
 };
 
 export default function TwitterSection({
   highlightSectionId,
   highlightTweetIndex,
-  isDarkMode,
 }: TwitterSectionProps) {
-  const [shouldRenderTweets, setShouldRenderTweets] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
   const tweetIds = Array.isArray(tweetsData)
     ? tweetsData.map((id) => String(id))
     : [];
 
   useEffect(() => {
-    const twitterSection = document.getElementById("twitter");
-    if (!twitterSection) return;
+    const el = document.getElementById("twitter");
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShouldRenderTweets(true);
-            observer.disconnect();
-          }
-        });
+        if (entries[0]?.isIntersecting) {
+          setShouldRender(true);
+          observer.disconnect();
+        }
       },
       { rootMargin: "300px 0px" },
     );
 
-    observer.observe(twitterSection);
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
@@ -73,55 +65,33 @@ export default function TwitterSection({
         </div>
       </div>
 
-      <div className="p-1 md:p-2">
-        <div data-theme={isDarkMode ? "dark" : "light"} className="flex justify-start">
-          {shouldRenderTweets && tweetIds.length > 0 ? (
-            <div className="flex flex-wrap justify-start items-start gap-3 w-full">
-              {tweetIds.map((id, index) => (
-                <div
-                  key={id}
-                  id={`tweet-${index}`}
-                  className={`w-full sm:flex-1 sm:basis-[280px] sm:min-w-[260px] sm:max-w-[420px] flex justify-start rounded-2xl transition-all duration-300 ${
-                    highlightTweetIndex === index
-                      ? "ring-2 ring-sky-400/70 bg-slate-100/50 dark:bg-white/5 shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
-                      : ""
-                  }`}
-                >
-                  <Tweet id={id} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {tweetIds.map((id, index) => (
+          <div
+            key={id}
+            id={`tweet-${index}`}
+            className={`transition-all duration-300 ${
+              highlightTweetIndex === index
+                ? "ring-2 ring-sky-400/70 rounded-2xl shadow-[0_16px_40px_rgba(56,189,248,0.2)]"
+                : ""
+            }`}
+          >
+            {shouldRender ? <CustomTweet id={id} /> : (
+              <div className="rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#161618] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] animate-pulse h-full">
+                <div className="flex items-center gap-2.5 mb-3">
+                  <div className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-700 shrink-0" />
+                  <div className="h-3.5 w-40 bg-gray-200 dark:bg-gray-700 rounded" />
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-wrap justify-start items-start gap-3 w-full">
-              {tweetIds.map((_, i) => (
-                <div
-                  key={i}
-                  className="w-full sm:flex-1 sm:basis-[280px] sm:min-w-[260px] sm:max-w-[420px] rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 p-4 md:backdrop-blur shadow-[0_14px_30px_rgba(0,0,0,0.12)] animate-pulse"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="flex-1">
-                      <div className="h-4 w-28 bg-gray-300 dark:bg-gray-700 mb-1.5"></div>
-                      <div className="h-3 w-20 bg-gray-300 dark:bg-gray-700"></div>
-                    </div>
-                  </div>
-                  <div className="space-y-2 mb-4">
-                    <div className="h-3.5 w-full bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="h-3.5 w-11/12 bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="h-3.5 w-4/5 bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="h-3.5 w-2/3 bg-gray-300 dark:bg-gray-700"></div>
-                  </div>
-                  <div className="h-40 w-full rounded-xl bg-gray-300 dark:bg-gray-700 mb-4"></div>
-                  <div className="flex gap-8">
-                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
-                    <div className="h-4 w-10 bg-gray-300 dark:bg-gray-700"></div>
-                  </div>
+                <div className="space-y-2 mb-3">
+                  <div className="h-3.5 w-full bg-gray-200 dark:bg-gray-700 rounded" />
+                  <div className="h-3.5 w-4/5 bg-gray-200 dark:bg-gray-700 rounded" />
+                  <div className="h-3.5 w-3/5 bg-gray-200 dark:bg-gray-700 rounded" />
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+                <div className="aspect-video rounded-xl bg-gray-200 dark:bg-gray-700" />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </SectionShell>
   );

@@ -204,7 +204,6 @@ export default function PageContent(props: PageContentProps) {
         <TwitterSection
           highlightSectionId={highlightSectionId}
           highlightTweetIndex={highlightTweetIndex}
-          isDarkMode={isDarkMode}
         />
 
         <ContactSection />
