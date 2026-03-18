@@ -462,12 +462,12 @@ export default function AHRSWriteupPage() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 my-8">
             {[
-              { src: "kp-0.1.png", label: "Kp = 0.1" },
-              { src: "kp-0.5.png", label: "Kp = 0.5" },
-              { src: "kp-1.png", label: "Kp = 1" },
-              { src: "kp-5.png", label: "Kp = 5" },
-              { src: "kp-10.png", label: "Kp = 10" },
-              { src: "expected-closed-loop.jpg", label: "Expected (MATLAB)" },
+              { src: `${MEDIA}/11.png`, label: "Kp = 0.1" },
+              { src: `${MEDIA}/12.png`, label: "Kp = 0.5" },
+              { src: `${MEDIA}/13.png`, label: "Kp = 1" },
+              { src: `${MEDIA}/14.png`, label: "Kp = 5" },
+              { src: `${MEDIA}/15.png`, label: "Kp = 10" },
+              { src: `${MEDIA}/17.png`, label: "Expected (MATLAB)" },
             ].map((fig) => (
               <figure key={fig.label}>
                 <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
