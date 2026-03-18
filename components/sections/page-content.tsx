@@ -213,6 +213,16 @@ export default function PageContent(props: PageContentProps) {
             </a>
           </Button>
           <Button
+            asChild
+            size="sm"
+            className="bg-emerald-500 text-white hover:bg-emerald-600 dark:bg-emerald-500 dark:hover:bg-emerald-400 shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)] transition-all duration-300 hover:-translate-y-0.5"
+          >
+            <a href="/notes">
+              Notes
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+          </Button>
+          <Button
             variant="ghost"
             size="icon"
             onClick={toggleDarkMode}
