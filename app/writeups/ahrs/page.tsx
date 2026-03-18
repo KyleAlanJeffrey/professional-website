@@ -471,7 +471,7 @@ export default function AHRSWriteupPage() {
             ].map((fig) => (
               <figure key={fig.label}>
                 <div className="rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden">
-                  <img src={`${MEDIA}/${fig.src}`} alt={fig.label} className="w-full h-auto" loading="lazy" />
+                  <img src={fig.src} alt={fig.label} className="w-full h-auto" loading="lazy" />
                 </div>
                 <figcaption className="mt-2 text-xs font-mono text-gray-500 dark:text-gray-400 text-center">
                   {fig.label}
