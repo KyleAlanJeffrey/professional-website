@@ -32,6 +32,12 @@ export default function Chapter3({ openLightbox }: { openLightbox: (i: number) =
             per additional part. Trajectory score: flat 5 if the desired half-circle is met, 0 otherwise.
             The categories are summed and then the fault score is subtracted.
           </p>
+          <p>
+            The Kano et al. design is too complex for Walker &mdash; Kano&apos;s research focused on control
+            theory actuation over design simplicity. The Koh et al. design focused on design simplicity using
+            fixed rigid legs, but features little gait modulation. The investigation begins between the
+            complexity of the Kano design and the simplicity of the Koh design, with the design of Long et al.
+          </p>
         </div>
 
         {/* Existing designs survey */}
@@ -203,10 +209,22 @@ export default function Chapter3({ openLightbox }: { openLightbox: (i: number) =
               shape from 0&deg; to 90&deg; defines the entire profile.
             </p>
             <p>
+              The cam shape is prescribed by four quadrant equations: S&#8321; = f(&theta;) for 0&deg;&ndash;90&deg;,
+              S&#8322; = f(&pi;&minus;&theta;) for 90&deg;&ndash;180&deg;,
+              S&#8323; = d&minus;f(&theta;&minus;&pi;) for 180&deg;&ndash;270&deg;, and
+              S&#8324; = d&minus;f(2&pi;&minus;&theta;) for 270&deg;&ndash;360&deg;.
+            </p>
+            <p>
               The cam profile is derived from: since the upper half creates a straight-line trajectory at
               height &minus;H, we get R = &minus;H/sin(&theta;), and
               S&#8321; = f(&theta;) = (L + d)/2 &minus; H/sin(&theta;). The minimum theoretical angle
               &lambda; = arcsin(2H/(L+d)) defines where the function goes to negative infinity.
+            </p>
+            <p>
+              The variable &alpha; defines an angle arbitrarily greater than &lambda; as a smoother connection
+              point, from which it would be impossible to create a smooth curve directly from &lambda;. Iterative
+              testing for smooth cam curves determines &alpha;. Refer to Conte and De Boor for inspiration on
+              polynomial approximations and interpolation.
             </p>
             <p>
               Crow finds that choosing an angular span of <strong>60&deg;</strong> maximizes the axle

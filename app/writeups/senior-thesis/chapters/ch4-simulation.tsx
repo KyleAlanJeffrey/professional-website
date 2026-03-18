@@ -18,7 +18,7 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
             This chapter strays from simply mimicking millipede motion and focuses on maximizing the
             stability of the robot design based upon the developed cam actuator. My analysis recognizes
             the thrust benefits of millipede motion but focuses on stability rather than speed or
-            thrust potential.
+            thrust potential. Garcia&apos;s study of millipede locomotion further explores the thrust benefits. An understanding of the stability of the system proves its efficacy, which future studies can then modulate for a specific analysis of insect gaits.
           </p>
         </div>
 
@@ -200,7 +200,7 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
               <strong> centipede 8-leg configuration</strong> was the most stable overall. Centipede gaits exhibited
               extreme <strong>vertical instability</strong> (large CoG oscillations in Y) but excellent <strong>horizontal
               stability</strong> (smooth, consistent forward progress). Millipede configurations moved slower
-              with greater velocity variability.
+              with greater velocity variability. The centipede motion tends towards more chaotic swaying as well as drift but within a confined region. Of the tested locomotive patterns, the centipede motion with eight legs is the most stable.
             </p>
           </div>
 
@@ -257,6 +257,9 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
               Key finding: <strong>centipede locomotion with neighboring legs 60&deg; out of phase</strong> provides
               the most stable system, with zero ground-contact-loss time for configurations with 3+ leg pairs.
               This creates greater stability with fewer legs, lowering the cost of the final robot.
+            </p>
+            <p>
+              The lack of physical modeling of the connections and body had a negligible effect on studying the stability of the system&apos;s gait dynamics.
             </p>
           </div>
 

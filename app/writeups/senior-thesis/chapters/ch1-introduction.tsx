@@ -25,6 +25,9 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               movement systems evolved precisely for their habitat.
             </p>
             <p>
+              Existing studies have investigated the particular robust locomotive characteristics of millipedes and centipedes as motivation for solving chaotic terrain traversal.
+            </p>
+            <p>
               Though previous papers have attempted to recreate omnipede platforms by emulating
               millipede behavior, the resulting designs often use <strong>numerous motors for each
               body segment</strong> and complicated control schemes, decreasing the ease of reproduction.
@@ -98,6 +101,12 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               Wilson, and Minelli provide the biological basis for understanding myriapod locomotion
               and anatomy.
             </p>
+            <p>
+              Regarding the research goal of developing a simple robot platform, the critical difference between these subgenera is leg motion. Millipede leg trajectory has been modeled along a geometrically simple, 2-axis trajectory with relative accuracy. The millipede&apos;s body suspends statically in the air as it moves forward. In contrast, the centipede&apos;s gait involves complexity in leg movement and lateral oscillatory body movement. The static body and leg movement of the millipede make it the primary inspiration for research.
+            </p>
+            <p>
+              Both insects incorporate a wave-like motion that propagates through the legs when traversing. This wave-like phenomenon is an effect of metachronal gait. A metachronal rhythm is not a Myriapoda-specific gait pattern, but in the Myriapoda, it manifests through a sequential movement of legs. Kano et al. reviewed metachronal gait through study and production of a closed feedback millipede robot. The metachronal wave propagating through the right and left side of millipede legs are in phase with each other, while the centipede&apos;s traveling waves are 180&deg; out of phase. This difference in phase and lateral undulating locomotion causes most centipedes to move faster than millipedes. However, what the millipede lacks in speed, it compensates in thrust capabilities for burrowing.
+            </p>
           </div>
 
           {/* 1.3.1 Leg Anatomy */}
@@ -108,7 +117,7 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
             <p>
               Manton&apos;s foundational analysis of arthropod locomotion showed that while millipede legs
               contain many segments, they are <strong>mostly rigid</strong> and can be simplified to a single
-              rotating segment for modeling purposes. The leg motion occurs primarily in a 2D plane
+              rotating segment for modeling purposes. Fig. 1.2 shows the many leg structures that the Kentish Pin-head Millipede has, but Manton notes that most add no further motion and are almost entirely rigid. The leg motion occurs primarily in a 2D plane
               perpendicular to the body axis, which greatly simplifies the kinematic model.
             </p>
             <p>
@@ -143,6 +152,7 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
               duty cycle is the same across all legs and that the millipede does little to change angular
               velocity. The 6:4 ratio represents the time legs spend in forward stroke to backstroke.
               The phase difference between neighboring legs is also affected by duty cycle shift.
+              The wavelength of the metachronal wave is a more apt description of the changing dynamics of millipede gait. The comparison between legs in backstroke to forward stroke &mdash; the ratio of legs in propulsive state to transfer state &mdash; is an effect of the changing metachronal wave.
             </p>
           </div>
 

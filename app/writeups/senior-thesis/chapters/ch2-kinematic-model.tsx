@@ -43,6 +43,12 @@ export default function Chapter2({ openLightbox }: { openLightbox: (i: number) =
             of each leg traces a <strong>circle of reference</strong>. When walking on a surface, this circle
             is trimmed to a segment, creating a cycloid trajectory split into two distinct phases.
           </p>
+          <p>
+            As described in Section 1.3.1, the legs of a millipede can be modeled on a two-dimensional
+            plane and assumed to maintain the same trajectory. Other studies explored this reductive
+            model and garnered working locomotive robotic systems. This simplified kinematic system
+            is shown to be effective by Koh et al., Garcia, and Long et al.
+          </p>
         </div>
 
         <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
@@ -67,6 +73,11 @@ export default function Chapter2({ openLightbox }: { openLightbox: (i: number) =
             Garcia validated this model by tracking live millipede footage in After Effects, overlaying
             the theoretical cycloid trajectory onto the tracked leg positions. The fit confirmed the
             circle-of-reference model is representative of real millipede motion.
+          </p>
+          <p>
+            This model for the leg trajectory is standard in bio-inspired robot design and is often
+            used in robotics to describe any poly-pedal system. The half-circle trajectory of the
+            foot traces out a cycloid when moving forward.
           </p>
           <p>
             The time phase between adjacent legs is &tau;<sub>t</sub> = d / V<sub>wave</sub>. The
@@ -144,7 +155,9 @@ export default function Chapter2({ openLightbox }: { openLightbox: (i: number) =
             The metachronal wave can be modulated for different purposes. Higher duty cycles increase
             the number of legs on the ground at any time, generating more thrust &mdash; Garcia noted this
             is the mode used during burrowing. Lower duty cycles reduce ground contact time per leg,
-            increasing stride frequency and speed. This modulation is achieved purely by varying the
+            increasing stride frequency and speed. The lower duty cycle gait creates greater velocities
+            for the millipede, in contrast to the higher duty cycle gait that produces greater thrust
+            and lower speed. This modulation is achieved purely by varying the
             duty cycle parameter, making it straightforward to implement in a robotic system with
             a single control variable per leg pair.
           </p>

@@ -90,6 +90,12 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             5.2 Testing
           </h3>
 
+          <div className="prose-custom mb-6">
+            <p>
+              The objective of testing the leg mechanism with a limited budget is to acquire experimental data compared to the simulation data. Comparable data experimentally proves the developed Simscape Multibody simulation environment concerning the type of data obtained, i.e., gait dynamics.
+            </p>
+          </div>
+
           <h4 className="text-xl font-bold font-mono tracking-tight text-gray-900 dark:text-white mb-3">
             5.2.1 Home-Brew vs. Ideal
           </h4>
@@ -144,6 +150,9 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               ground contact span</strong>. Normalized position data was overlaid on the ideal trajectory,
               yielding a <strong>maximum error of 4.6mm</strong> &mdash; well within acceptable tolerances for the
               target application.
+            </p>
+            <p>
+              Typically, cameras record at a standard rate of 30 frames per second (fps), or possibly 60 fps, but the iPhone uses software that automatically slowed down parts of the video and added inconsistencies in using the frames as a determination of time.
             </p>
             <p>
               After Effects motion-tracked a green dot on a piece of paper attached to the foot
@@ -321,6 +330,9 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
               This thesis contributes a <strong>literature review of omnipede gait kinematics</strong>, a
               verified <strong>Simscape Multibody simulation environment</strong> for omnipede robots, and a
               robust, affordable prototype of the Wan &amp; Song cam leg actuator using modern 3D printing.
+            </p>
+            <p>
+              After considering several leg actuators, a novel, simple actuation device by Wan &amp; Song emulating the idealized gait kinematics of the Myriapoda developed by Sathirapongsasuti et al. proved a robust leg mechanism for Walker. This paper contributes to robotics and mechanical engineering a simulation environment for omnipedes based upon Sathirapongsasuti&apos;s kinematic model verified by austere sensor technology.
             </p>
             <p>
               In the observation of millipede vs. centipede locomotion through a literature review,
