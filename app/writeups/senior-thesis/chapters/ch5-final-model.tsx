@@ -1,7 +1,7 @@
 "use client";
 
-import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard, ModelCard } from "../components/ui";
+import { ALL_FIGURES } from "../components/figures";
+import { FadeIn, Figure, FigureGrid, GlassCard } from "../components/ui";
 
 export default function Chapter5({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -20,6 +20,7 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
         </div>
 
         {/* 5.1 Print Faults and Fixes */}
+        <div id="ch5-faults" className="scroll-mt-20" />
         <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
           5.1 Print Faults &amp; Fixes
         </h3>
@@ -304,20 +305,6 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
             <Figure src={ALL_FIGURES[58].src} alt={ALL_FIGURES[58].alt} caption={ALL_FIGURES[58].caption} figNum={ALL_FIGURES[58].figNum} onClick={() => openLightbox(58)} className="mb-8" />
           </FadeIn>
 
-          {/* Hardware test footage */}
-          <FadeIn>
-            <GlassCard label="HARDWARE TEST FOOTAGE">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {[
-                  { src: `${MEDIA}/ch5-hardware/supplementary-3.mp4`, label: "Cam mechanism in operation" },
-                  { src: `${MEDIA}/ch5-hardware/supplementary-4.avi`, label: "Leg trajectory test (1)" },
-                  { src: `${MEDIA}/ch5-hardware/supplementary-5.avi`, label: "Leg trajectory test (2)" },
-                ].map((video) => (
-                  <VideoCard key={video.label} src={video.src} label={video.label} />
-                ))}
-              </div>
-            </GlassCard>
-          </FadeIn>
         </div>
 
         {/* 5.3 Conclusion & Future Work */}
@@ -360,15 +347,6 @@ export default function Chapter5({ openLightbox }: { openLightbox: (i: number) =
           </div>
         </div>
 
-        <ModelCard
-          label="3D PRINT FILES — FINAL CAM MECHANISM"
-          models={[
-            { src: `${MEDIA}/ch5-hardware/models/cam-body.stl`, name: "Cam Body", format: "stl" },
-            { src: `${MEDIA}/ch5-hardware/models/cam-rotor.stl`, name: "Rotor Arm", format: "stl" },
-            { src: `${MEDIA}/ch5-hardware/models/cam-leg.stl`, name: "Leg", format: "stl" },
-            { src: `${MEDIA}/ch5-hardware/models/cam-peg.stl`, name: "Peg", format: "stl" },
-          ]}
-        />
       </section>
     </FadeIn>
   );

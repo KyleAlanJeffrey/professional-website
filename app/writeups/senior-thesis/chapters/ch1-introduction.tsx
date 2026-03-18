@@ -1,7 +1,7 @@
 "use client";
 
-import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { Cite, FadeIn, Figure, FigureGrid, GlassCard, VideoCard } from "../components/ui";
+import { ALL_FIGURES } from "../components/figures";
+import { Cite, FadeIn, Figure, FigureGrid } from "../components/ui";
 
 export default function Chapter1({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -210,21 +210,6 @@ export default function Chapter1({ openLightbox }: { openLightbox: (i: number) =
             </div>
           </div>
 
-          {/* Biological reference footage */}
-          <FadeIn>
-            <GlassCard label="BIOLOGICAL REFERENCE FOOTAGE">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  { src: `${MEDIA}/ch1-introduction/biological-insect-gait-1.mp4`, label: "Millipede metachronal wave in motion" },
-                  { src: `${MEDIA}/ch1-introduction/biological-insect-gait-2.mp4`, label: "Myriapoda gait and terrain traversal" },
-                  { src: `${MEDIA}/ch1-introduction/biological-insect-gait-3.mp4`, label: "Millipede locomotion — close-up" },
-                  { src: `${MEDIA}/ch1-introduction/biological-insect-gait-4.mp4`, label: "Centipede gait comparison" },
-                ].map((video) => (
-                  <VideoCard key={video.label} src={video.src} label={video.label} />
-                ))}
-              </div>
-            </GlassCard>
-          </FadeIn>
         </div>
       </section>
     </FadeIn>

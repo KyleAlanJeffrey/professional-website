@@ -24,7 +24,7 @@ export default function Chapter2({ openLightbox }: { openLightbox: (i: number) =
           </p>
         </div>
 
-        <div className="prose-custom mb-8">
+        <div id="ch2-literature" className="scroll-mt-20 prose-custom mb-8">
           <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
             2.1 Literature Review
           </h3>

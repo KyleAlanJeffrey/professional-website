@@ -1,7 +1,7 @@
 "use client";
 
-import { ALL_FIGURES, MEDIA } from "../components/figures";
-import { FadeIn, Figure, FigureGrid, GlassCard, VideoCard, ModelCard } from "../components/ui";
+import { ALL_FIGURES } from "../components/figures";
+import { FadeIn, Figure, FigureGrid, GlassCard } from "../components/ui";
 
 export default function Chapter4({ openLightbox }: { openLightbox: (i: number) => void }) {
   return (
@@ -23,6 +23,7 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
         </div>
 
         {/* 4.1 Kinematic Equation Analysis */}
+        <div id="ch4-kinematic" className="scroll-mt-20" />
         <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4">
           4.1 Kinematic Equation Analysis
         </h3>
@@ -100,6 +101,7 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
         </FadeIn>
 
         {/* 4.2 Simscape Multibody Simulations */}
+        <div id="ch4-simscape" className="scroll-mt-20" />
         <h3 className="text-2xl font-black font-mono tracking-tight text-gray-900 dark:text-white mb-4 mt-8">
           4.2 Simscape Multibody Simulations
         </h3>
@@ -165,29 +167,6 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
           <Figure src={ALL_FIGURES[37].src} alt={ALL_FIGURES[37].alt} caption={ALL_FIGURES[37].caption} figNum={ALL_FIGURES[37].figNum} onClick={() => openLightbox(37)} className="mb-8" />
         </FadeIn>
 
-        {/* Simscape simulation recordings */}
-        <FadeIn>
-          <GlassCard label="SIMSCAPE SIMULATION RECORDINGS">
-            <div className="prose-custom !mb-4">
-              <p className="!text-sm">
-                From early proof-of-concept through final gait comparisons &mdash;
-                each generation increased simulation fidelity.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {[
-                { src: `${MEDIA}/ch4-simulation/simscape/gen1-simulation/gen1-millipede-model.mp4`, label: "Gen 1 — Early proof of concept" },
-                { src: `${MEDIA}/ch4-simulation/simscape/gen2-simulation/gen2-model-v3.mp4`, label: "Gen 2 — Custom cam attempt" },
-                { src: `${MEDIA}/ch4-simulation/simscape/sim4/sim4-leg-test-harness.mp4`, label: "Gen 3 — Single leg test harness" },
-                { src: `${MEDIA}/ch4-simulation/simscape/sim4/sim4-6legs-rigid-body.mp4`, label: "Gen 3 — 6-leg rigid body" },
-                { src: `${MEDIA}/ch4-simulation/simscape/leg-comparisons/6-legs/centipede-like/centi-6legs-60deg-iso.mp4`, label: "Centipede-like, 6 legs, 60° offset" },
-                { src: `${MEDIA}/ch4-simulation/simscape/leg-comparisons/8-legs/centipede-like/centi-8legs-90deg-iso.mp4`, label: "Centipede-like, 8 legs, 90° offset" },
-              ].map((video) => (
-                <VideoCard key={video.label} src={video.src} label={video.label} />
-              ))}
-            </div>
-          </GlassCard>
-        </FadeIn>
 
         {/* 4.3 Results */}
         <div id="ch4-results" className="scroll-mt-20 mt-12">
@@ -278,12 +257,6 @@ export default function Chapter4({ openLightbox }: { openLightbox: (i: number) =
           </div>
         </div>
 
-        <ModelCard
-          label="CAD MODEL — SIMULATION BODY"
-          models={[
-            { src: `${MEDIA}/ch4-simulation/models/body-segment-with-rotor.step`, name: "Body Segment + Rotor", format: "step" },
-          ]}
-        />
       </section>
     </FadeIn>
   );
