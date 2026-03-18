@@ -1,5 +1,29 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
+
+function LazyRender({ children, className = "", rootMargin = "200px" }: { children: React.ReactNode; className?: string; rootMargin?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { rootMargin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  return (
+    <div ref={ref} className={className}>
+      {visible ? children : <div style={{ minHeight: 200 }} />}
+    </div>
+  );
+}
+
 export function Cite({ n }: { n: number | number[] }) {
   const nums = Array.isArray(n) ? n : [n];
   return (
@@ -78,17 +102,19 @@ export function Figure({
 }) {
   return (
     <figure className={`group ${className}`}>
-      <div
-        className="relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 cursor-zoom-in hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-colors"
-        onClick={onClick}
-      >
-        <img
-          src={src}
-          alt={alt}
-          className="w-full h-auto"
-          loading="lazy"
-        />
-      </div>
+      <LazyRender>
+        <div
+          className="relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 cursor-zoom-in hover:border-indigo-300 dark:hover:border-indigo-500/40 transition-colors"
+          onClick={onClick}
+        >
+          <img
+            src={src}
+            alt={alt}
+            className="w-full h-auto"
+            loading="lazy"
+          />
+        </div>
+      </LazyRender>
       {(caption || figNum) && (
         <figcaption className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
           {figNum && (
