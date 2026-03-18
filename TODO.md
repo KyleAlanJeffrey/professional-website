@@ -5,17 +5,12 @@
 - What you're currently reading, building, thinking about
 - Low maintenance, high personality
 
-## Timeline View
-- A visual career timeline (not just job cards) showing the arc from UCSC → Google Brain → Google X → Stout AG with key milestones
-- Vertical spine + dots connecting roles, pulsing active dot on current role
-- Proportional duration bars showing tenure length visually
-- Year markers along the spine (2021, 2022, 2023...)
-- Compact career arc header strip as a scrubber above the detailed cards
-
-## Writing / Notes (MDX)
-- Short-form technical notes or blog posts (MDX files in `app/`)
-- Amber color slot is open — use it for this section
-- New section on main page + individual post pages with slug routing
+## Notes Section Improvements
+- Fix markdown formatting issues (some Obsidian syntax not rendering correctly)
+- Fix `[[wikilinks]]` — links don't navigate to the correct note in the sidebar viewer
+- Back button should respect browser history so you can navigate between previously viewed notes
+- Handle `![[image embeds]]` — currently stripped, consider resolving to vault assets
+- Consider adding search within the file tree sidebar
 
 ## 3D Globe
 - Canvas/WebGL library (e.g. `globe.gl` or `three-globe`, ~50–100kb)
