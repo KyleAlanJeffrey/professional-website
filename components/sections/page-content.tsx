@@ -190,7 +190,7 @@ export default function PageContent(props: PageContentProps) {
           ))}
         </div>
 
-        <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-1 sm:gap-2">
           <Button
             asChild
             variant="ghost"
@@ -199,7 +199,7 @@ export default function PageContent(props: PageContentProps) {
           >
             <a href="/resume.pdf" download aria-label="Download resume PDF" onClick={() => (window as any).gtag?.("event", "resume_download")}>
               <Download className="h-4 w-4" />
-              Resume
+              <span className="hidden sm:inline">Resume</span>
             </a>
           </Button>
           <Button
@@ -208,7 +208,8 @@ export default function PageContent(props: PageContentProps) {
             className="bg-indigo-500 text-white hover:bg-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 shadow-[0_4px_12px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_20px_rgba(99,102,241,0.5)] transition-all duration-300 hover:-translate-y-0.5"
           >
             <a href="/writeups">
-              Writeups
+              <span className="hidden sm:inline">Writeups</span>
+              <span className="sm:hidden">W</span>
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </Button>
@@ -218,7 +219,8 @@ export default function PageContent(props: PageContentProps) {
             className="bg-emerald-500 text-white hover:bg-emerald-600 dark:bg-emerald-500 dark:hover:bg-emerald-400 shadow-[0_4px_12px_rgba(16,185,129,0.4)] hover:shadow-[0_6px_20px_rgba(16,185,129,0.5)] transition-all duration-300 hover:-translate-y-0.5"
           >
             <a href="/notes">
-              Notes
+              <span className="hidden sm:inline">Notes</span>
+              <span className="sm:hidden">N</span>
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </Button>
