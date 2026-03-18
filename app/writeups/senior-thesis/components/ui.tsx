@@ -129,7 +129,7 @@ export function VideoCard({
       <video
         src={src}
         controls
-        preload="metadata"
+        preload="none"
         suppressHydrationWarning
         className="w-full rounded-lg border border-black/10 dark:border-white/10"
       />
