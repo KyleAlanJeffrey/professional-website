@@ -2,8 +2,8 @@
 
 import type { NoteMeta } from "@/lib/notes";
 import { Check, ChevronRight, Copy, File, Folder, PanelLeftClose, PanelLeft, Search } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams, usePathname } from "next/navigation";
+import { useMemo, useState, useCallback } from "react";
 
 type TreeNode = {
   name: string;
@@ -131,12 +131,14 @@ export default function NotesList({
   notes: NoteMeta[];
   noteContents: Record<string, string>;
 }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [search, setSearch] = useState("");
   const [copied, setCopied] = useState(false);
+
+  // Derive active note directly from URL — useSearchParams re-renders on back/forward
+  const activeSlug = searchParams.get("note");
 
   // Filter notes by search query
   const filteredNotes = useMemo(() => {
@@ -152,19 +154,12 @@ export default function NotesList({
 
   const tree = useMemo(() => buildTree(filteredNotes), [filteredNotes]);
 
-  // Push to history so back/forward works between notes
+  // Shallow URL update — no server re-fetch, history entry for back/forward
   const handleSelect = useCallback((slug: string) => {
-    setActiveSlug(slug);
-    router.push(`/notes?note=${encodeURIComponent(slug)}`, { scroll: false });
-  }, [router]);
-
-  // Sync with URL when browser back/forward is used
-  const currentUrlSlug = searchParams.get("note");
-  useEffect(() => {
-    if (currentUrlSlug && currentUrlSlug !== activeSlug) {
-      setActiveSlug(currentUrlSlug);
-    }
-  }, [currentUrlSlug]); // eslint-disable-line react-hooks/exhaustive-deps
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("note", slug);
+    window.history.pushState(null, "", `${pathname}?${params.toString()}`);
+  }, [searchParams, pathname]);
 
   const activeNote = notes.find((n) => n.slug === activeSlug);
   const activeHtml = activeSlug ? noteContents[activeSlug] ?? "" : "";
