@@ -161,6 +161,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://static.cloudflareinsights.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://static.cloudflareinsights.com" />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};
@@ -192,17 +196,17 @@ html {
         <Script
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "598d535d83d9428dbc1a9b4b3f6dc273"}'
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         {gaId ? (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
             <Script
               id="google-analytics"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `
 window.dataLayer = window.dataLayer || [];
@@ -217,7 +221,7 @@ gtag('config', '${gaId}');
         {fbPixelId ? (
           <Script
             id="facebook-pixel"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
 !function(f,b,e,v,n,t,s)
