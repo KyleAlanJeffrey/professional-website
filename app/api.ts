@@ -11,6 +11,32 @@ const myGithubUsernames = [
   "kylejeffrey",
 ];
 
+export type TechStack = {
+  framework?: string[];
+  language?: string[];
+  host?: string[];
+  database?: string[];
+};
+
+export async function fetchTechStack(repoName: string): Promise<TechStack | null> {
+  if (!accessToken) return null;
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${username}/${repoName}/contents/tech-stack.json`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: "application/vnd.github.v3.raw",
+        },
+      },
+    );
+    if (!response.ok) return null;
+    return await response.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function getCommitDiffToMain(
   repoPath: string,
   parentSha: string,

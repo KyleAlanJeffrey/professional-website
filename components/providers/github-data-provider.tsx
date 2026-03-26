@@ -1,7 +1,7 @@
 "use client";
 
 import { GithubRepoType } from "@/components/project";
-import { getAllCommits, getAllRepos, getLanguageStats } from "@/app/api";
+import { getAllCommits, getAllRepos, getLanguageStats, fetchTechStack } from "@/app/api";
 import {
   createContext,
   ReactNode,
@@ -56,7 +56,7 @@ export default function GithubDataProvider({
       console.log("Token not grabbed");
     }
 
-    getAllRepos().then((data) => {
+    getAllRepos().then(async (data) => {
       const allRepos = data.map((repo) => {
         const topics = Array.isArray(repo.topics) ? [...repo.topics] : [];
         const isPinned = topics.includes("pinned");
@@ -72,7 +72,21 @@ export default function GithubDataProvider({
           ...(pypiMatch ? { pypiPackage: pypiMatch[1] } : {}),
         };
       });
-      setGithubRepos(allRepos);
+
+      // Fetch tech-stack.json for pinned repos
+      const pinnedRepos = allRepos.filter((r) => r.pinned);
+      const techStacks = await Promise.all(
+        pinnedRepos.map((repo) => fetchTechStack(repo.name)),
+      );
+      const techStackMap = new Map(
+        pinnedRepos.map((repo, i) => [repo.name, techStacks[i]]),
+      );
+      const reposWithTechStack = allRepos.map((repo) => ({
+        ...repo,
+        ...(techStackMap.get(repo.name) ? { techStack: techStackMap.get(repo.name)! } : {}),
+      }));
+
+      setGithubRepos(reposWithTechStack);
       getLanguageStats(data).then((stats) => {
         setLanguageStats(stats);
       });
